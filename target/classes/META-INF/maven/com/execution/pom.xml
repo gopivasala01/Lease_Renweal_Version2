@@ -4,7 +4,11 @@
   <artifactId>execution</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <name>Lease-Renewal-2.0</name>
-  <dependencies>
+
+
+  
+  <dependencies>  
+	
   <dependency>
 		    <groupId>io.github.bonigarcia</groupId>
 		    <artifactId>webdrivermanager</artifactId>
@@ -53,10 +57,23 @@
     <artifactId>tess4j</artifactId>
     <version>5.8.0</version>
 </dependency>
-
+<dependency>
+  <groupId>com</groupId>
+  <artifactId>execution</artifactId>
+  <version>1.0</version>
+  <scope>system</scope>
+  <systemPath>${project.basedir}/src/main/resources/HomeRiverDataReading.jar</systemPath>
+</dependency>
   </dependencies>
   <build>
     <plugins>
+		<plugin>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-maven-plugin</artifactId>
+        <configuration>
+            <includeSystemScope>true</includeSystemScope>
+        </configuration>
+    </plugin>
       <plugin>
         <artifactId>maven-compiler-plugin</artifactId>
         <configuration>
