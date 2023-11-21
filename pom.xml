@@ -57,13 +57,6 @@
     <artifactId>tess4j</artifactId>
     <version>5.8.0</version>
 </dependency>
-<dependency>
-  <groupId>com</groupId>
-  <artifactId>execution</artifactId>
-  <version>1.0</version>
-  <scope>system</scope>
-  <systemPath>${project.basedir}/src/main/resources/HomeRiverDataReading.jar</systemPath>
-</dependency>
   </dependencies>
   <build>
     <plugins>
