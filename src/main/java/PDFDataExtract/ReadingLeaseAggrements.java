@@ -2,6 +2,8 @@ package PDFDataExtract;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.text.PDFTextStripper;
@@ -11,6 +13,7 @@ import GenericLibrary.GenericMethods;
 
 public class ReadingLeaseAggrements {
 
+	
 	public static String text="";
 	public static String modifiedtext="";
 	public static String commencementDate ="";
@@ -22,12 +25,20 @@ public class ReadingLeaseAggrements {
 	public static String petRent = "";
 	public static String rbpAmount = "";
 	public static String rubsAmount = "";
+	public static String renewalExecutionDate="";
+	
+	
+	public static String leaseRenewalFee= "";
+	public static String increasedRent_amount = "";
+	public static final String HVACAirFilterFee = "";
+	
 	public static File file;
 	
 	public static boolean petRentFlag=false;
 	public static boolean monthlyTaxAmountFlag=false;
 	public static boolean rbpFlag=false;
 	public static boolean rubsFlag=false;
+	
 	
 	public static boolean getDataFromLeaseAgreements() throws Exception {
 		
@@ -70,6 +81,28 @@ public class ReadingLeaseAggrements {
 			    //System.out.println(text);
 			    System.out.println("------------------------------------------------------------------");
 			    
+			    String pattern = "\\d{1,2}/\\d{1,2}/\\d{4}"; 
+			    Pattern datePattern = Pattern.compile(pattern);
+			    Matcher matcher = datePattern.matcher(text);
+		    	 while (matcher.find()) {
+		    		 renewalExecutionDate = matcher.group();
+		 	    	
+		 	    }
+		    	 String[] SplitDate = renewalExecutionDate.split("/");
+
+		       	 for (int i = 0; i < 2; i++) {
+		       	     if (SplitDate[i].length() == 1) {
+		       	         // Add a leading zero for single-digit values in the first two components
+		       	         SplitDate[i] = "0" + SplitDate[i];
+		       	     }
+		       	 }
+		       	 
+		       	 renewalExecutionDate= SplitDate[0]+"/"+ SplitDate[1]+"/"+SplitDate[2];
+
+		    	 System.out.println("Last date mentioned on the page: " + renewalExecutionDate);
+			    
+			    
+			    
 			    // Monthly Rent
 			    commencementDate = dataExtractionClass.getDates(text, dataExtractionClass.getDataOf("commencementDateFromPDF"));
 			    
@@ -107,6 +140,8 @@ public class ReadingLeaseAggrements {
 			    	rubsAmount = dataExtractionClass.getValuesWithStartandEndText(text,dataExtractionClass.getDataOf("rubsFromPDF"));
 			    	System.out.println("RUBS Amount = "+ rubsAmount);
 			    }
+			    leaseRenewalFee = dataExtractionClass.getValues(text,dataExtractionClass.getDataOf("leaseRenewalFromPDF"));
+			    System.out.println("Lease Renewal Admin Fee = "+ leaseRenewalFee);
 			    
 			    
 			    

@@ -18,11 +18,15 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
+import org.openqa.selenium.Alert;
+import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import ExtractData.DatabaseClass;
@@ -82,6 +86,18 @@ public class GenericMethods {
 		    RunnerClass.failedReason = RunnerClass.failedReason+","+ "Login failed";
 			return false;
 		}
+	}
+	
+	public static boolean closeDriver() {
+		 try
+		  {
+			  RunnerClass.driver.quit();
+		  }
+		  catch(Exception e1) {
+			  e1.printStackTrace();
+			  return false;
+		  }
+		return true;
 	}
 	
 	
@@ -262,6 +278,7 @@ public class GenericMethods {
 	    	LocalDate lastDayOfMonth = LocalDate.parse(date, DateTimeFormatter.ofPattern("M/dd/yyyy"))
 	    	       .with(TemporalAdjusters.lastDayOfMonth());
 	    	String newDate = new SimpleDateFormat("MM/dd/yyyy").format(new SimpleDateFormat("yyyy-MM-dd").parse(lastDayOfMonth.toString()));
+	    	System.out.println(newDate);
 	    	return newDate;
 	    }
 	    public static String monthDifference(String date1, String date2) throws Exception
@@ -280,6 +297,24 @@ public class GenericMethods {
            String x =  Duration.between( LocalDate.parse(date1,formatter),  LocalDate.parse(date2,formatter)).toString();
 			return "";
 	    }
+	    
+		public static boolean compareBeforeDates(String date1, String date2)
+		{
+			try
+			{
+				SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+				System.out.println(sdf.parse(date1).before(sdf.parse(date2)));
+				if(sdf.parse(date1).before(sdf.parse(date2)))
+					return true;
+				else return false;
+			}
+			catch(Exception e)
+			{
+			return false;
+			}
+		}
+	    
+	    
 	    public static String getCurrentDate()
 	    {
 	    	currentTime ="";
@@ -309,6 +344,24 @@ public class GenericMethods {
 	        return false;
 	    }
 
+	    
+	    public static void handleAlerts() {
+	        try {
+	            Alert alert = RunnerClass.driver.switchTo().alert();
+	            alert.accept();
+	        } catch (NoAlertPresentException ignored) {
+	            // Alert not present, continue with the rest of the code
+	        }
+	    }
+	    
+	    public static WebElement findElementWithWait(By locator) {
+	        try {
+	            return RunnerClass.wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
+	        } catch (Exception e)
+	        {
+	            return null;
+	        }
+	    }
 	
 	
 }
