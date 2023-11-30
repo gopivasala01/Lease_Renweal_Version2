@@ -29,7 +29,7 @@ public class dataExtractionClass {
 			String splitBy  = naming[i].split("\\^")[2].toLowerCase();
 			try {
 				String monthlyRent = text.substring(text.indexOf(subStringValue));
-				rent = monthlyRent.substring(monthlyRent.indexOf(priorText)+priorText.length()).trim().split(splitBy)[0].trim();//.replaceAll("[a-ZA-Z,]", "");
+				rent = monthlyRent.substring(monthlyRent.indexOf(priorText)+priorText.length()).trim().split(splitBy)[0].trim();
 				rent = rent.replaceAll("[^0-9a-zA-Z./]","");
 				
 				if(hasSpecialCharacters(rent) == true)

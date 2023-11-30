@@ -15,6 +15,7 @@ public class ReadingLeaseAggrements {
 
 	
 	public static String text="";
+	public static String firstPageText="";
 	public static String modifiedtext="";
 	public static String commencementDate ="";
 	public static String expirationDate ="";
@@ -78,17 +79,33 @@ public class ReadingLeaseAggrements {
 			    text = text.replaceAll(System.lineSeparator(), " ");
 			    text = text.trim().replaceAll(" +", " ");
 			    text = text.toLowerCase();
+			    
+			    PDFTextStripper stripper = new PDFTextStripper();
+				stripper.setStartPage(1);
+				stripper.setEndPage(1);
+				firstPageText = stripper.getText(document);
+				firstPageText = firstPageText.replaceAll(System.lineSeparator(), " ");
+				firstPageText = firstPageText.replaceAll(" +", " ");
 			    //System.out.println(text);
 			    System.out.println("------------------------------------------------------------------");
 			    
 			    String pattern = "\\d{1,2}/\\d{1,2}/\\d{4}"; 
 			    Pattern datePattern = Pattern.compile(pattern);
-			    Matcher matcher = datePattern.matcher(text);
-		    	 while (matcher.find()) {
-		    		 renewalExecutionDate = matcher.group();
-		 	    	
-		 	    }
-		    	 String[] SplitDate = renewalExecutionDate.split("/");
+
+			    Matcher matcher = datePattern.matcher(firstPageText);
+			    
+			    while (matcher.find()) {
+			    	renewalExecutionDate = matcher.group();
+			    }
+			    if(renewalExecutionDate.isEmpty())
+			    {
+			    	 matcher = datePattern.matcher(text);
+			    	 while (matcher.find()) {
+			    		 renewalExecutionDate = matcher.group();
+			 	    	
+			 	    }
+			    }
+			    String[] SplitDate = renewalExecutionDate.split("/");
 
 		       	 for (int i = 0; i < 2; i++) {
 		       	     if (SplitDate[i].length() == 1) {

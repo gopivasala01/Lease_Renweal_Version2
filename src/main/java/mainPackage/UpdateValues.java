@@ -145,7 +145,6 @@ public class UpdateValues {
 		 }
 		GetDataFromSQL.updateTable(query);
 		
-		String autoCharges ="";
 		String query1 ="";
 		//if(RunnerClass.portfolioType=="MCH")
 		//{

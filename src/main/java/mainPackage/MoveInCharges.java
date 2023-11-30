@@ -78,11 +78,6 @@ public class MoveInCharges {
 		{
 		 //Get All Auto Charges from Table
 		GetDataFromSQL.getMoveInCharges();
-		/*
-		RunnerClass.driver.navigate().refresh();
-		RunnerClass.js.executeScript("window.scrollBy(0,document.body.scrollHeight)");
-		RunnerClass.driver.findElement(Locators.ledgerTab).click();
-		*/
 		Thread.sleep(2000);
 		List<WebElement> existingMoveInCharges_ChargeCodes = RunnerClass.driver.findElements(Locators.moveInCharges_List);
 		List<WebElement> existingMoveInCharges_Amount = RunnerClass.driver.findElements(Locators.moveInCharge_List_Amount);

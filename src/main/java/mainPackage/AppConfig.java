@@ -15,7 +15,7 @@ public class AppConfig {
 	public static String pdfImage = "C:\\SantoshMurthyP\\Tessaract Images\\";
 	
 	public static String test ="";
-    public static String pendingRenewalLeases = "Select  Company,buildingName,OwnerName from Automation.leaseRenewalAutomation2 ";//where NotAutomatedFields != ',Unable to download Lease Agreement' ";//where NotAutomatedFields in ('Building Not Available',',Building Not Found') ";//where Status = 'In Progress'";
+    public static String pendingRenewalLeases = "Select  Company,buildingName,OwnerName from Automation.leaseRenewalAutomation2 order by AsOfDate desc";//where NotAutomatedFields != ',Unable to download Lease Agreement' ";//where NotAutomatedFields in ('Building Not Available',',Building Not Found') ";//where Status = 'In Progress'";
 		  
 	public static String connectionUrl = "jdbc:sqlserver://azrsrv001.database.windows.net;databaseName=HomeRiverDB;user=service_sql02;password=xzqcoK7T;encrypt=true;trustServerCertificate=true;";
     public static String downloadFilePath = "C:\\Users\\gopi\\Documents\\BaseRent Update Files\\New folder";

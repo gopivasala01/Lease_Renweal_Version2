@@ -96,7 +96,7 @@ public class DatabaseClass {
 	public static boolean navigateToLease(String company,String leaseName, String buildingAbbrivation,String completeBuildingName,WebDriver driver) {
 		try {
 			
-			if(navigateUsingLeaseEntityID(company,leaseName,buildingAbbrivation,driver) == false) {
+			if(navigateUsingLeaseEntityID(company,leaseName,completeBuildingName,driver) == false) {
 				if(searchBuilding(company,leaseName ,buildingAbbrivation,completeBuildingName,driver)==true) {
 					return true;
 				}

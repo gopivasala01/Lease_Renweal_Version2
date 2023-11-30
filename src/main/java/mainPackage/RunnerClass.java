@@ -81,6 +81,9 @@ public class RunnerClass {
 			FileUtils.cleanDirectory(new File(AppConfig.downloadFilePath));
 			}
 			catch(Exception e) {}
+		  if(company.equals("California PFW")) {
+			  company = "California pfw";
+		  }
 		
 		  
 		  completeBuildingAbbreviation = buildingAbbreviation;  //This will be used when Building not found in first attempt
@@ -138,12 +141,30 @@ public class RunnerClass {
             	  GenericMethods.closeDriver();
             	  continue;
         	  }
+        	  if(AutoCharges.addingNewAutoCharges()==false) {
+        		  String updateSuccessStatus = "Update [Automation].leaseRenewalAutomation2 Set Status ='Failed', StatusID=3,NotAutomatedFields='"+failedReason+"',LeaseCompletionDate= getDate() where BuildingName like '%"+buildingAbbreviation+"%'";
+            	  GetDataFromSQL.updateTable(updateSuccessStatus);
+            	  GenericMethods.closeDriver();
+            	  continue;
+        	  }
+        	  if(OtherInformation.addingOtherInformation() ==false) {
+        		  String updateSuccessStatus = "Update [Automation].leaseRenewalAutomation2 Set Status ='Failed', StatusID=3,NotAutomatedFields='"+failedReason+"',LeaseCompletionDate= getDate() where BuildingName like '%"+buildingAbbreviation+"%'";
+            	  GetDataFromSQL.updateTable(updateSuccessStatus);
+            	  GenericMethods.closeDriver();
+            	  continue;
+        	  }
+        	  else {
+        		  String updateSuccessStatus = "Update [Automation].leaseRenewalAutomation2 Set Status ='Completed', StatusID=4,NotAutomatedFields='" + failedReason + "',LeaseCompletionDate= getDate() where BuildingName like '%" + buildingAbbreviation + "%'";
+            	  GetDataFromSQL.updateTable(updateSuccessStatus);
+            	  GenericMethods.closeDriver();
+            	  continue;
+        	  }
           }
             						  
           catch(Exception e) {
 			  e.printStackTrace();
 		  } 		
-          GenericMethods.closeDriver();
+         
        
              
           

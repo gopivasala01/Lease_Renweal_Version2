@@ -345,8 +345,9 @@ public class GenericMethods {
 	    }
 
 	    
-	    public static void handleAlerts() {
+	    public static void handleAlerts() throws InterruptedException {
 	        try {
+	        	 Thread.sleep(1000);
 	            Alert alert = RunnerClass.driver.switchTo().alert();
 	            alert.accept();
 	        } catch (NoAlertPresentException ignored) {
