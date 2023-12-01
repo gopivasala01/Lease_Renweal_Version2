@@ -37,7 +37,6 @@ public class RunnerClass {
 	public static String[][] autoCharges;
 	public static String[][] moveInCharges;
 	public static String [] statusList;
-	public static String currentDate = "";
 	public static HashMap<String,String> failedReaonsList= new HashMap<String,String>();
 	public static String leaseStatuses[][];
 	public static String UWStatuses[][];
@@ -49,7 +48,6 @@ public class RunnerClass {
 	public static String portfolioType;
 	public static boolean published;
 	public static boolean listingAgent;
-	public static String currentTime;
 	public static int statusID;
 	public static String renewalExecutionDate = "";
 	public static boolean checkifMoveInDateIsLessThan5DaysToEOM = false;
@@ -58,8 +56,7 @@ public class RunnerClass {
 	public static String arizonaRentCode = "";
 	public static String completeBuildingAbbreviation;
 	public static String portfolioName;
-	
-	
+
 
 	public static void main(String[] args) throws Exception {
 		// TODO Auto-generated method stub
@@ -74,8 +71,8 @@ public class RunnerClass {
 		  leaseOwnerName = pendingRenewalLeases[i][2];
 		  statusID =0;
 		  failedReason = "";
-		  
-		  
+		  GenericMethods.generateLogs();
+	        
 		  try
 			{
 			FileUtils.cleanDirectory(new File(AppConfig.downloadFilePath));

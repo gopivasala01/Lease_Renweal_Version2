@@ -18,6 +18,12 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
+import org.apache.log4j.ConsoleAppender;
+import org.apache.log4j.FileAppender;
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
+import org.apache.log4j.PatternLayout;
+import org.apache.log4j.PropertyConfigurator;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -38,7 +44,7 @@ import mainPackage.RunnerClass;
 public class GenericMethods {
 
 	public static String currentTime;
-	
+	public static Logger logger;
 	
 	public static boolean login()
 	{
@@ -61,10 +67,12 @@ public class GenericMethods {
         RunnerClass.driver.findElement(Locators.username).sendKeys(AppConfig.username); 
         RunnerClass.driver.findElement(Locators.password).sendKeys(AppConfig.password);
         RunnerClass.driver.findElement(Locators.signInButton).click();
+        logger.info("login successful");
         RunnerClass.actions = new Actions(RunnerClass.driver);
         RunnerClass.js = (JavascriptExecutor)RunnerClass.driver;
         RunnerClass.driver.manage().timeouts().implicitlyWait(2,TimeUnit.SECONDS);
         RunnerClass.wait = new WebDriverWait(RunnerClass.driver, Duration.ofSeconds(2));
+        
         try
         {
         if(RunnerClass.driver.findElement(Locators.loginError).isDisplayed())
@@ -363,6 +371,43 @@ public class GenericMethods {
 	            return null;
 	        }
 	    }
-	
+	    public static void generateLogs() {
+	    	try {
+	    		File directoryPath = new File(AppConfig.logFilePath);
+		    	String currentDate = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+		        //List of all files and directories
+		        File[] files = directoryPath.listFiles();
+		        for(File file:files) {
+		          if(!file.getName().contains(currentDate)) {
+		        	  file.delete();
+		          }
+		        }
+	    	}
+	    	catch(Exception e) {
+	    		System.out.print("log file doesnot exists");
+	    	}
+	    	 // creates pattern layout
+	        PatternLayout layout = new PatternLayout();
+	        String conversionPattern = "%-7p %d [%t] %c %x - %m%n";
+	        layout.setConversionPattern(conversionPattern);
+	 
+
+	 
+	        // creates file appender
+	        FileAppender fileAppender = new FileAppender(); 
+	        fileAppender.setFile(AppConfig.logFilePath+"\\"+"PWLog - "+LocalDate.now()+".txt");
+	        fileAppender.setLayout(layout);
+	        fileAppender.activateOptions();
+	 
+	        // configures the root logger
+	        Logger rootLogger = Logger.getRootLogger();
+	        rootLogger.setLevel(Level.DEBUG);
+	       // rootLogger.addAppender(consoleAppender);
+	        rootLogger.addAppender(fileAppender);
+	 
+	        // creates a custom logger and log messages
+	        logger = Logger.getLogger(RunnerClass.class);
+	    }
+	    
 	
 }
