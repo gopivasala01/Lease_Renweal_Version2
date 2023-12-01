@@ -374,17 +374,25 @@ public class GenericMethods {
 	    public static void generateLogs() {
 	    	try {
 	    		File directoryPath = new File(AppConfig.logFilePath);
-		    	String currentDate = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+	    		LocalDate todayDate = LocalDate.now();
+	    		LocalDate yesterdayDate = todayDate.minusDays(1);
+	    		LocalDate dayBeforeYesterdayDate = todayDate.minusDays(2);
+		    	String currentDate = todayDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+		    	String yesterdayDateString = yesterdayDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+		    	String dayBeforeYesterdayDateString = dayBeforeYesterdayDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
 		        //List of all files and directories
 		        File[] files = directoryPath.listFiles();
 		        for(File file:files) {
-		          if(!file.getName().contains(currentDate)) {
+		          if(file.getName().contains(currentDate) || file.getName().contains(yesterdayDateString) || file.getName().contains(dayBeforeYesterdayDateString)) {
+		        	  continue;
+		          }
+		          else {
 		        	  file.delete();
 		          }
 		        }
 	    	}
 	    	catch(Exception e) {
-	    		System.out.print("log file doesnot exists");
+	    		System.out.print("Error in deleting log file");
 	    	}
 	    	 // creates pattern layout
 	        PatternLayout layout = new PatternLayout();
