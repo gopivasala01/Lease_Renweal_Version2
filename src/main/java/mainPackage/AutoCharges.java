@@ -50,7 +50,7 @@ public class AutoCharges {
 				String autoChargeAmount = existingAutoChargeAmounts.get(k).getText();
 				String endDateAutoCharge = endDates.get(k).getText();
 				String startDatelist = startDates.get(k).getText();
-				System.out.println(autoChargeCode + "  ||  " + autoChargeAmount + "  ||  " + endDateAutoCharge);
+				GenericMethods.logger.info(autoChargeCode + "  ||  " + autoChargeAmount + "  ||  " + endDateAutoCharge);
 
 				if (endDateAutoCharge.trim().isEmpty()) {
 					if ((AppConfig.getMonthOnMonthRentChargeCode(RunnerClass.company))
@@ -73,6 +73,7 @@ public class AutoCharges {
 						editButtons.get(k).click();
 						lastDayOfTheStartDate3 = GenericMethods
 								.lastDateOfTheMonth(GenericMethods.firstDayOfMonth(UpdateValues.secondFullMonth, -1));
+						GenericMethods.logger.info("Last Day of First Full Month= "+lastDayOfTheStartDate3);
 						WebElement endDateField = RunnerClass.driver.findElement(Locators.autoCharge_EndDate);
 						endDateField.clear();
 						endDateField.sendKeys(Keys.chord(Keys.CONTROL, "a", Keys.DELETE));
@@ -105,7 +106,7 @@ public class AutoCharges {
 							&& !autoChargeAmount.replaceAll("[^0-9]", "")
 									.equals(ReadingLeaseAggrements.monthlyRent.replaceAll("[^0-9]", ""))) {
 						previousMonthlyRent = autoChargeAmount;
-						System.out.println("Previous Month rent= " +previousMonthlyRent);
+						GenericMethods.logger.info("Previous Month rent= " +previousMonthlyRent);
 						editButtons.get(k).click();
 						editingExistingAutoCharge();
 						saveAnAutoCharge();
@@ -157,7 +158,7 @@ public class AutoCharges {
 			e.printStackTrace();
 			RunnerClass.failedReason = RunnerClass.failedReason + ","
 					+ "Something went wrong in clearing previous auto charges";
-			System.out.println("Something went wrong in clearing previous auto charges");
+			GenericMethods.logger.error("Something went wrong in clearing previous auto charges");
 			RunnerClass.driver.navigate().refresh();
 			RunnerClass.js.executeScript("window.scrollBy(0, document.body.scrollHeight)");
 			return false;
@@ -261,11 +262,11 @@ public class AutoCharges {
 									.equals(amount.replaceAll("[^0-9]", ""))
 							&& (startDate.equals(autoChargeStartDate) || autoChargeEndDate.trim().equals(""))) {
 						availabilityCheck = true;
-						System.out.println(description + " already available");
+						GenericMethods.logger.info(description + " already available");
 						break;
 					}
 					if (autoChargeAmount == "Error" || autoChargeAmount == "0.00") {
-						System.out.println(description + " Amount Error");
+						GenericMethods.logger.error(description + " Amount Error");
 						RunnerClass.failedReason = RunnerClass.failedReason + "," + " issue in adding Auto Charge - "
 								+ description;
 						RunnerClass.statusID = 1;
@@ -275,7 +276,7 @@ public class AutoCharges {
 				}
 				if (availabilityCheck == false) {
 					if (amount == "Error" || amount == "0" || amount == "0.00") {
-						System.out.println(" issue in adding Auto Charge - " + description);
+						GenericMethods.logger.error(" issue in adding Auto Charge - " + description);
 						RunnerClass.failedReason = RunnerClass.failedReason + "," + " issue in adding Auto Charge - "
 								+ description;
 						RunnerClass.statusID = 1;
@@ -297,7 +298,7 @@ public class AutoCharges {
 		} catch (Exception e) {
 			e.printStackTrace();
 			RunnerClass.failedReason = RunnerClass.failedReason + "," + "Something went wrong in adding auto charges";
-			System.out.println("Something went wrong in adding auto charges");
+			GenericMethods.logger.error("Something went wrong in adding auto charges");
 			RunnerClass.driver.navigate().refresh();
 			return false;
 		}
@@ -341,7 +342,7 @@ public class AutoCharges {
 			try {
 				e.printStackTrace();
 				RunnerClass.statusID = 1;
-				System.out.println("Issue in adding Move in Charge" + description);
+				GenericMethods.logger.error("Issue in adding Move in Charge" + description);
 				RunnerClass.failedReason = RunnerClass.failedReason + "," + "Issue in adding Auto Charge - "
 						+ description;
 				RunnerClass.driver.findElement(Locators.autoCharge_CancelButton).click();

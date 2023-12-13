@@ -17,6 +17,8 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import GenericLibrary.GenericMethods;
+
 
 
 
@@ -60,7 +62,7 @@ public class DatabaseClass {
 	            	return false;
 	            	
 	            }
-	            System.out.println("No of Rows = "+rows);
+	            GenericMethods.logger.info("No of Rows = "+rows);
 	            IDFromLeaseDashboard = new String[rows][1];
 	           int  i=0;
 	            while(rs.next())
@@ -128,7 +130,7 @@ public class DatabaseClass {
 				 else {
 					 leaseEntityID = EntityID;
 						String URL = "https://app.propertyware.com/pw/leases/lease_detail.do?entityID="+leaseEntityID;
-						System.out.println("URL = "+URL);
+						GenericMethods.logger.info("URL = "+URL);
 						try {
 							driver.manage().timeouts().implicitlyWait(10,TimeUnit.SECONDS);
 					        wait = new WebDriverWait(driver, Duration.ofSeconds(10));
@@ -152,7 +154,7 @@ public class DatabaseClass {
 						}
 						catch(Exception e)
 						{
-							System.out.println("Building Not Available");
+							GenericMethods.logger.error("Building Not Available");
 							//RunnerClass.failedReason= "Building Not Available";
 							return false;
 						}
@@ -181,7 +183,7 @@ public class DatabaseClass {
 			if(getEntityID(Query) == true) {
 				buildingEntityID = EntityID;
 				String URL = "https://app.propertyware.com/pw/leases/lease_detail.do?entityID="+leaseEntityID;
-				System.out.println("URL = "+URL);
+				GenericMethods.logger.info("URL = "+URL);
 				driver.navigate().to(URL);
 				return true;
 			}
@@ -246,7 +248,7 @@ public class DatabaseClass {
 					driver.manage().timeouts().implicitlyWait(2,TimeUnit.SECONDS);
 					if(driver.findElement(Locators.noItemsFoundMessagewhenLeaseNotFound).isDisplayed())
 					{
-						System.out.println("Building Not Found");
+						GenericMethods.logger.error("Building Not Found");
 						return false;
 					}
 					}
@@ -268,7 +270,7 @@ public class DatabaseClass {
 					driver.manage().timeouts().implicitlyWait(2,TimeUnit.SECONDS);
 					if(driver.findElement(Locators.noItemsFoundMessagewhenLeaseNotFound).isDisplayed())
 					{
-						System.out.println("Building Not Found");
+						GenericMethods.logger.error("Building Not Found");
 						return false;
 					}
 					}
@@ -276,7 +278,7 @@ public class DatabaseClass {
 					}
 					catch(Exception e)
 					{
-				    System.out.println("Building Not Found");
+						GenericMethods.logger.error("Building Not Found");
 				    return false;
 					}
 				}
@@ -287,7 +289,7 @@ public class DatabaseClass {
 			}
 			driver.manage().timeouts().implicitlyWait(10,TimeUnit.SECONDS);
 			Thread.sleep(3000);
-			System.out.println(building);
+			GenericMethods.logger.info("Building Name " +building);
 		// Select Lease from multiple leases
 			List<WebElement> displayedCompanies =null;
 			try
@@ -353,7 +355,7 @@ public class DatabaseClass {
 						catch(Exception e)
 						{
 							e.printStackTrace();
-							System.out.println("Unable to Click Lease Owner Name");
+							GenericMethods.logger.error("Unable to Click Lease Owner Name");
 						  //  RunnerClass.failedReason =  RunnerClass.failedReason+","+  "Unable to Click Lease Onwer Name";
 							return false;
 						}
@@ -364,14 +366,14 @@ public class DatabaseClass {
 				if(leaseSelected==false)
 				{
 				    
-					System.out.println("Building Not Found");
+					GenericMethods.logger.error("Building Not Found");
 					//RunnerClass.failedReason =  RunnerClass.failedReason+","+ "Building Not Found";
 					return false;
 				}
 	         } catch(Exception e) 
 		     {
 	         
-	        	 System.out.println("Issue in selecting Building");
+	        	 GenericMethods.logger.error("Issue in selecting Building");
 	        	 //RunnerClass.failedReason = RunnerClass.failedReason+","+  "Issue in selecting Building";
 	        	 return false;
 		     }

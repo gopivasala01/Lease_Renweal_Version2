@@ -37,21 +37,23 @@ public class UpdateValues {
 			startDate = GenericMethods.convertDate(ReadingLeaseAggrements.commencementDate);
 			endDate = GenericMethods.convertDate(ReadingLeaseAggrements.expirationDate);
 			lastDayOfPreviousMonthUsingStartDate = GenericMethods.lastDateOfTheMonth(GenericMethods.firstDayOfMonth(startDate, -1));
+			GenericMethods.logger.info("Last day of Previous Month = " +lastDayOfPreviousMonthUsingStartDate);
 			firstFullMonth = GenericMethods.firstDayOfMonth(startDate, 1);
+			GenericMethods.logger.info("First Full Month = " +firstFullMonth);
 			secondFullMonth = GenericMethods.firstDayOfMonth(startDate, 2);
-			
+			GenericMethods.logger.info("Second Full Month = " +secondFullMonth);
 			
 			try {
 	        	boolean comparisonResult = GenericMethods.compareBeforeDates(startDate,endDate);
 
 	        	if (comparisonResult == false) 
 	        	{
-	        	    System.out.println("End Date is before Start Date");
+	        		GenericMethods.logger.info("End Date is before Start Date");
 	        	    // Handle the situation where the End Date is before the Start Date
 	        	} 
 	        	 else 
 	        	{
-	        	    System.out.println("End Date is after Start Date");
+	        		 GenericMethods.logger.info("End Date is after Start Date");
 	        	    // Handle the situation where the End Date is after the Start Date
 	        	}
 	        } 
@@ -62,7 +64,7 @@ public class UpdateValues {
 	        }		
 			
 		} catch (Exception e) {
-			 System.out.println("Issue in getting or Converting dates");
+			GenericMethods.logger.error("Issue in getting or Converting dates");
 		     RunnerClass.failedReason = RunnerClass.failedReason + "," + "Issue in getting or Converting dates";
 		     return false;
 		}
@@ -202,7 +204,7 @@ public class UpdateValues {
 			catch(Exception e)
 			{
 				e.printStackTrace();
-				System.out.println("Issue in adding values to MoveIn charges table");
+				GenericMethods.logger.error("Issue in adding values to MoveIn charges table");
 				RunnerClass.failedReason =  RunnerClass.failedReason+","+"Internal Error - consolidating Move In charges";
 				return false;
 			}
@@ -214,7 +216,7 @@ public class UpdateValues {
 		catch(Exception e)
 		{
 			e.printStackTrace();
-			System.out.println("Issue in adding values to Auto charges table");
+			GenericMethods.logger.error("Issue in adding values to Auto charges table");
 			RunnerClass.failedReason =  RunnerClass.failedReason+","+"Internal Error - consolidating auto charges";
 			return false;
 		}

@@ -27,7 +27,7 @@ public class GetDataFromSQL {
 		        Statement stmt = conn.createStatement();) 
 		    {
 		      stmt.executeUpdate(sql);
-		      System.out.println("Database updated successfully ");
+		      GenericMethods.logger.info("Database updated successfully ");
 		      stmt.close();
 	            conn.close();
 		    } catch (SQLException e) {
@@ -56,7 +56,7 @@ public class GetDataFromSQL {
 		            	// Move to beginning
 		            	rs.beforeFirst();
 		            }
-		            System.out.println("No of Rows = "+rows);
+		            GenericMethods.logger.info("No of Rows = "+rows);
 		            RunnerClass.pendingRenewalLeases = new String[rows][3];
 		           int  i=0;
 		            while(rs.next())
@@ -65,7 +65,7 @@ public class GetDataFromSQL {
 		            	String 	company =  (String) rs.getObject(1);
 		                String  buildingAbbreviation = (String) rs.getObject(2);
 		                String  ownerName = (String) rs.getObject(3);
-		                System.out.println(company +" |  "+buildingAbbreviation+" | "+ownerName);
+		                GenericMethods.logger.info(company +" |  "+buildingAbbreviation+" | "+ownerName);
 		    				//Company
 		    				RunnerClass.pendingRenewalLeases[i][0] = company;
 		    				//Building Abbreviation
@@ -74,7 +74,7 @@ public class GetDataFromSQL {
 		    				RunnerClass.pendingRenewalLeases[i][2] = ownerName;
 		    				i++;
 		            }	
-		            System.out.println("Total Pending Buildings  = " +RunnerClass.pendingRenewalLeases.length);
+		            GenericMethods.logger.info("Total Pending Buildings  = " +RunnerClass.pendingRenewalLeases.length);
 		            //for(int j=0;j<RunnerClass.pendingBuildingList.length;j++)
 		            //{
 		            //	System.out.println(RunnerClass.pendingBuildingList[j][j]);
@@ -97,7 +97,7 @@ public class GetDataFromSQL {
 		        Statement stmt = conn.createStatement();) 
 		    {
 		      stmt.executeUpdate(query);
-		      System.out.println("Record Updated");
+		      GenericMethods.logger.info("Record Updated");
 		      stmt.close();
 	            conn.close();
 		    } catch (SQLException e) 
@@ -125,7 +125,7 @@ public class GetDataFromSQL {
 		            	// Move to beginning
 		            	rs.beforeFirst();
 		            }
-		            System.out.println("No of buildings with status = "+rows);
+		            GenericMethods.logger.info("No of buildings with status = "+rows);
 		            RunnerClass.autoCharges = new String[rows][5];
 		           int  i=0;
 		            while(rs.next())
@@ -137,7 +137,7 @@ public class GetDataFromSQL {
 		                String  endDate = (String) rs.getObject(4);
 		                String  description = (String) rs.getObject(5);
 		                
-		                System.out.println(chargeCode +" | "+amount+" | "+startDate+" | "+endDate+" | "+description);
+		                GenericMethods.logger.info(chargeCode +" | "+amount+" | "+startDate+" | "+endDate+" | "+description);
 		    				//Company
 		    				RunnerClass.autoCharges[i][0] = chargeCode;
 		    				//Building Abbreviation
@@ -186,7 +186,7 @@ public class GetDataFromSQL {
 		            	// Move to beginning
 		            	rs.beforeFirst();
 		            }
-		            System.out.println("No of buildings with status = "+rows);
+		            GenericMethods.logger.info("No of buildings with status = "+rows);
 		            RunnerClass.moveInCharges = new String[rows][5];
 		           int  i=0;
 		            while(rs.next())
@@ -198,7 +198,7 @@ public class GetDataFromSQL {
 		                String  endDate = (String) rs.getObject(4);
 		                String  description = (String) rs.getObject(5);
 		                
-		                System.out.println(chargeCode +" |  "+amount+" | "+startDate+" | "+endDate+" | "+description);
+		                GenericMethods.logger.info(chargeCode +" |  "+amount+" | "+startDate+" | "+endDate+" | "+description);
 		    				//Company
 		    				RunnerClass.moveInCharges[i][0] = chargeCode;
 		    				//Building Abbreviation

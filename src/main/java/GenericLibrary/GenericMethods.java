@@ -67,17 +67,16 @@ public class GenericMethods {
         RunnerClass.driver.findElement(Locators.username).sendKeys(AppConfig.username); 
         RunnerClass.driver.findElement(Locators.password).sendKeys(AppConfig.password);
         RunnerClass.driver.findElement(Locators.signInButton).click();
-        logger.info("login successful");
         RunnerClass.actions = new Actions(RunnerClass.driver);
         RunnerClass.js = (JavascriptExecutor)RunnerClass.driver;
         RunnerClass.driver.manage().timeouts().implicitlyWait(2,TimeUnit.SECONDS);
         RunnerClass.wait = new WebDriverWait(RunnerClass.driver, Duration.ofSeconds(2));
-        
+        logger.info("login successful");
         try
         {
         if(RunnerClass.driver.findElement(Locators.loginError).isDisplayed())
         {
-        	System.out.println("Login failed");
+        	logger.error("Login failed");
 		    RunnerClass.failedReason = RunnerClass.failedReason+","+ "Login failed";
 			return false;
         }
@@ -90,7 +89,7 @@ public class GenericMethods {
 		catch(Exception e)
 		{
 			e.printStackTrace();
-			System.out.println("Login failed");
+			logger.error("Login failed");
 		    RunnerClass.failedReason = RunnerClass.failedReason+","+ "Login failed";
 			return false;
 		}
@@ -100,8 +99,10 @@ public class GenericMethods {
 		 try
 		  {
 			  RunnerClass.driver.quit();
+			  logger.info("Browser closed");
 		  }
 		  catch(Exception e1) {
+			  logger.error("Browser closing failed");
 			  e1.printStackTrace();
 			  return false;
 		  }
@@ -151,7 +152,7 @@ public class GenericMethods {
 				 if(documents.get(i).getText().startsWith(AppConfig.LeaseAgreementFileNames[j])&&!documents.get(i).getText().contains("Termination")&&!documents.get(i).getText().contains("_Mod"))//&&documents.get(i).getText().contains(AppConfig.getCompanyCode(RunnerClass.company)))
 				 {
 				 	documents.get(i).click();
-				 	System.out.println(documents.get(i).getText());
+				 	logger.info(documents.get(i).getText());
 					checkLeaseAgreementAvailable = true;
 					break;
 				 }
@@ -161,14 +162,14 @@ public class GenericMethods {
 			}
 			if(checkLeaseAgreementAvailable==false)
 			{
-				System.out.println("Unable to download Lease Agreement");
+				logger.error("Unable to download Lease Agreement");
 			    RunnerClass.failedReason =  RunnerClass.failedReason+","+ "Unable to download Lease Agreement";
 				return false;
 			}
 		 
 		}
 		catch(Exception e) {
-			System.out.println("Unable to download Lease Agreement");
+			logger.error("Unable to download Lease Agreement");
 		    RunnerClass.failedReason =  RunnerClass.failedReason+","+ "Unable to download Lease Agreement";
 			return false;
 		}
@@ -189,7 +190,7 @@ public class GenericMethods {
 		SimpleDateFormat format1 = new SimpleDateFormat("MMMM dd, yyyy");
 	    SimpleDateFormat format2 = new SimpleDateFormat("MM/dd/yyyy");
 	    Date date = format1.parse(dateRaw.trim().replaceAll(" +", " "));
-	    System.out.println(format2.format(date));
+	    logger.info(format2.format(date));
 		return format2.format(date).toString();
 		}
 		catch(Exception e)
@@ -199,7 +200,7 @@ public class GenericMethods {
 			SimpleDateFormat format1 = new SimpleDateFormat("MMMM dd yyyy");
 		    SimpleDateFormat format2 = new SimpleDateFormat("MM/dd/yyyy");
 		    Date date = format1.parse(dateRaw.trim().replaceAll(" +", " "));
-		    System.out.println(format2.format(date));
+		    logger.info(format2.format(date));
 			return format2.format(date).toString();
 			}
 			catch(Exception e2)
@@ -211,7 +212,7 @@ public class GenericMethods {
 				SimpleDateFormat format1 = new SimpleDateFormat("MMMM dd yyyy");
 			    SimpleDateFormat format2 = new SimpleDateFormat("MM/dd/yyyy");
 			    Date date = format1.parse(dateRaw.trim().replaceAll(" +", " "));
-			    System.out.println(format2.format(date));
+			    logger.info(format2.format(date));
 				return format2.format(date).toString();
 				}
 				catch(Exception e3)
@@ -221,7 +222,7 @@ public class GenericMethods {
 					SimpleDateFormat format1 = new SimpleDateFormat("MMMM dd,yyyy");
 				    SimpleDateFormat format2 = new SimpleDateFormat("MM/dd/yyyy");
 				    Date date = format1.parse(dateRaw.trim().replaceAll(" +", " "));
-				    System.out.println(format2.format(date));
+				    logger.info(format2.format(date));
 					return format2.format(date).toString();
 					}
 					catch(Exception e4)
@@ -231,7 +232,7 @@ public class GenericMethods {
 						SimpleDateFormat format1 = new SimpleDateFormat("MMMM dd.yyyy");
 					    SimpleDateFormat format2 = new SimpleDateFormat("MM/dd/yyyy");
 					    Date date = format1.parse(dateRaw.trim().replaceAll(" +", " "));
-					    System.out.println(format2.format(date));
+					    logger.info(format2.format(date));
 						return format2.format(date).toString();
 						}
 						catch(Exception e5)
@@ -241,7 +242,7 @@ public class GenericMethods {
 							SimpleDateFormat format1 = new SimpleDateFormat("M/dd/yyyy");
 						    SimpleDateFormat format2 = new SimpleDateFormat("MM/dd/yyyy");
 						    Date date = format1.parse(dateRaw.trim().replaceAll(" +", " "));
-						    System.out.println(format2.format(date));
+						    logger.info(format2.format(date));
 							return format2.format(date).toString();
 							}
 							catch(Exception e6)
@@ -268,7 +269,7 @@ public class GenericMethods {
 	        //else c.add(Calendar.MONTH, 2);
 	        c.set(Calendar.DAY_OF_MONTH, 01);
 	        String firstDate = sdf.format(c.getTime());
-	        System.out.println(firstDate);
+	        //logger.info("First date " + firstDate);
 	        return firstDate;
 	    }
 	    public static String getCurrentDateTime()
@@ -286,7 +287,7 @@ public class GenericMethods {
 	    	LocalDate lastDayOfMonth = LocalDate.parse(date, DateTimeFormatter.ofPattern("M/dd/yyyy"))
 	    	       .with(TemporalAdjusters.lastDayOfMonth());
 	    	String newDate = new SimpleDateFormat("MM/dd/yyyy").format(new SimpleDateFormat("yyyy-MM-dd").parse(lastDayOfMonth.toString()));
-	    	System.out.println(newDate);
+	    	 //logger.info("Last Date of Month "+newDate);
 	    	return newDate;
 	    }
 	    public static String monthDifference(String date1, String date2) throws Exception
@@ -311,7 +312,7 @@ public class GenericMethods {
 			try
 			{
 				SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
-				System.out.println(sdf.parse(date1).before(sdf.parse(date2)));
+				logger.info(sdf.parse(date1).before(sdf.parse(date2)));
 				if(sdf.parse(date1).before(sdf.parse(date2)))
 					return true;
 				else return false;
@@ -399,7 +400,10 @@ public class GenericMethods {
 	        String conversionPattern = "%-7p %d [%t] %c %x - %m%n";
 	        layout.setConversionPattern(conversionPattern);
 	 
-
+	        // creates console appender
+	        ConsoleAppender consoleAppender = new ConsoleAppender();
+	        consoleAppender.setLayout(layout);
+	        consoleAppender.activateOptions();
 	 
 	        // creates file appender
 	        FileAppender fileAppender = new FileAppender(); 
@@ -410,7 +414,7 @@ public class GenericMethods {
 	        // configures the root logger
 	        Logger rootLogger = Logger.getRootLogger();
 	        rootLogger.setLevel(Level.DEBUG);
-	       // rootLogger.addAppender(consoleAppender);
+	        rootLogger.addAppender(consoleAppender);
 	        rootLogger.addAppender(fileAppender);
 	 
 	        // creates a custom logger and log messages

@@ -87,7 +87,7 @@ public class ReadingLeaseAggrements {
 				firstPageText = firstPageText.replaceAll(System.lineSeparator(), " ");
 				firstPageText = firstPageText.replaceAll(" +", " ");
 			    //System.out.println(text);
-			    System.out.println("------------------------------------------------------------------");
+				GenericMethods.logger.info("------------------------------------------------------------------");
 			    
 			    String pattern = "\\d{1,2}/\\d{1,2}/\\d{4}"; 
 			    Pattern datePattern = Pattern.compile(pattern);
@@ -116,7 +116,7 @@ public class ReadingLeaseAggrements {
 		       	 
 		       	 renewalExecutionDate= SplitDate[0]+"/"+ SplitDate[1]+"/"+SplitDate[2];
 
-		    	 System.out.println("Last date mentioned on the page: " + renewalExecutionDate);
+		       	GenericMethods.logger.info("Last date mentioned on the page: " + renewalExecutionDate);
 			    
 			    
 			    
@@ -124,41 +124,41 @@ public class ReadingLeaseAggrements {
 			    commencementDate = dataExtractionClass.getDates(text, dataExtractionClass.getDataOf("commencementDateFromPDF"));
 			    
 				//commencementDate = LeaseAgreementDownloadandGetData.getDates(getDataOf("commencementDateFromPDF"));
-			    System.out.println("Start date = "+ commencementDate);
+			    GenericMethods.logger.info("Start date = "+ commencementDate);
 			    expirationDate = dataExtractionClass.getDates(text,dataExtractionClass.getDataOf("expirationDateFromPDF"));
-			    System.out.println("End date = "+ expirationDate);
+			    GenericMethods.logger.info("End date = "+ expirationDate);
 			    monthlyRent = dataExtractionClass.getValues(text,dataExtractionClass.getDataOf("monthlyRentFromPDF"));
-			    System.out.println("Monthly Rent Amount = "+ monthlyRent);
+			    GenericMethods.logger.info("Monthly Rent Amount = "+ monthlyRent);
 			    monthlyTaxAmountFlag = dataExtractionClass.getFlags(text,dataExtractionClass.getDataOf("monthlyRentTaxAmountAvailablityCheck"));
 			    if(monthlyTaxAmountFlag == true) {
 			    	monthlyTaxRent = dataExtractionClass.getValues(text,dataExtractionClass.getDataOf("monthlyRentTaxAmountFromPDF"));
-			    	System.out.println("Monthly Tax Amount = "+ monthlyTaxRent);
+			    	GenericMethods.logger.info("Monthly Tax Amount = "+ monthlyTaxRent);
 			    	if(!monthlyRent.equals("Error") || !monthlyTaxRent.equals("Error") || !monthlyTaxRent.equals("0.00")) {
 			    		Float totalMonthlyRentWithTaxRaw = Float.parseFloat(monthlyRent)+Float.parseFloat(monthlyTaxRent);
 			    		totalMonthlyRentWithTax = String.format("%.2f",totalMonthlyRentWithTaxRaw);
-			    		System.out.println("Total Monthly rent with Tax Amount = "+ totalMonthlyRentWithTax);
+			    		GenericMethods.logger.info("Total Monthly rent with Tax Amount = "+ totalMonthlyRentWithTax);
 			    	}
 			    	
 			    }
 			    proratedRent = dataExtractionClass.getValues(text,dataExtractionClass.getDataOf("proratedRentFromPDF"));
-			    System.out.println("Prorated Amount = "+ proratedRent);
+			    GenericMethods.logger.info("Prorated Amount = "+ proratedRent);
 			    petRentFlag = dataExtractionClass.getFlags(text,dataExtractionClass.getDataOf("petRentAvailablityCheck"));
 			    if(petRentFlag == true) {
 			    	petRent = dataExtractionClass.getValues(text,dataExtractionClass.getDataOf("petRentFromPDF"));
-			    	System.out.println("Pet Rent Amount = "+ petRent);
+			    	GenericMethods.logger.info("Pet Rent Amount = "+ petRent);
 			    }
 			    rbpFlag = dataExtractionClass.getFlags(text,dataExtractionClass.getDataOf("rbpAvailabilityCheck"));
 			    if(rbpFlag == true) {
 			    	rbpAmount = dataExtractionClass.getValues(text,dataExtractionClass.getDataOf("rbpFromPDF"));
-			    	System.out.println("RBP Amount = "+ rbpAmount);
+			    	GenericMethods.logger.info("RBP Amount = "+ rbpAmount);
 			    }
 			    rubsFlag =dataExtractionClass.getFlags(text,dataExtractionClass.getDataOf("rubsAvailabilityCheck"));
 			    if(rubsFlag == true) {
 			    	rubsAmount = dataExtractionClass.getValuesWithStartandEndText(text,dataExtractionClass.getDataOf("rubsFromPDF"));
-			    	System.out.println("RUBS Amount = "+ rubsAmount);
+			    	GenericMethods.logger.info("RUBS Amount = "+ rubsAmount);
 			    }
 			    leaseRenewalFee = dataExtractionClass.getValues(text,dataExtractionClass.getDataOf("leaseRenewalFromPDF"));
-			    System.out.println("Lease Renewal Admin Fee = "+ leaseRenewalFee);
+			    GenericMethods.logger.info("Lease Renewal Admin Fee = "+ leaseRenewalFee);
 			    
 			    
 			    

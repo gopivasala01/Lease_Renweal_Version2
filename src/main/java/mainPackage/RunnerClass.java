@@ -61,17 +61,18 @@ public class RunnerClass {
 	public static void main(String[] args) throws Exception {
 		// TODO Auto-generated method stub
 
-		
+		GenericMethods.generateLogs();
 		GetDataFromSQL.getBuildingsList();
+		
 		for(int i=0;i<pendingRenewalLeases.length;i++) 
 		{
-		  System.out.println(" Record -- "+(i+1));
+		  GenericMethods.logger.info(" Record -- "+(i+1));
 		  company = pendingRenewalLeases[i][0];
 		  buildingAbbreviation =pendingRenewalLeases[i][1];
 		  leaseOwnerName = pendingRenewalLeases[i][2];
 		  statusID =0;
 		  failedReason = "";
-		  GenericMethods.generateLogs();
+		  
 	        
 		  try
 			{
