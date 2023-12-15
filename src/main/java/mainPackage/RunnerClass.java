@@ -17,27 +17,27 @@ import GenericLibrary.GenericMethods;
 import PDFDataExtract.ReadingLeaseAggrements;
 
 public class RunnerClass {
-	
-	public static String[][] pendingRenewalLeases; 
-    public static String company;
-    public static String buildingAbbreviation;
-    public static String leaseOwnerName;
-    public static WebDriver driver;
-    public static Alert alert;
-    
+
+	public static String[][] pendingRenewalLeases;
+	public static String company;
+	public static String buildingAbbreviation;
+	public static String leaseOwnerName;
+	public static WebDriver driver;
+	public static Alert alert;
+
 	public static ChromeOptions options;
 	public static Actions actions;
 	public static JavascriptExecutor js;
 	public static WebDriverWait wait;
 	public static String[][] pendingBuildingList;
 	public static int updateStatus;
-	public static String failedReason ="";
+	public static String failedReason = "";
 	public static ArrayList<String> successBuildings = new ArrayList<String>();
 	public static ArrayList<String> failedBuildings = new ArrayList<String>();
 	public static String[][] autoCharges;
 	public static String[][] moveInCharges;
-	public static String [] statusList;
-	public static HashMap<String,String> failedReaonsList= new HashMap<String,String>();
+	public static String[] statusList;
+	public static HashMap<String, String> failedReaonsList = new HashMap<String, String>();
 	public static String leaseStatuses[][];
 	public static String UWStatuses[][];
 	public static String downloadFilePath;
@@ -57,120 +57,126 @@ public class RunnerClass {
 	public static String completeBuildingAbbreviation;
 	public static String portfolioName;
 
-
 	public static void main(String[] args) throws Exception {
 		// TODO Auto-generated method stub
 
 		GenericMethods.generateLogs();
 		GetDataFromSQL.getBuildingsList();
-		
-		for(int i=0;i<pendingRenewalLeases.length;i++) 
-		{
+
+		for (int i = 0; i < pendingRenewalLeases.length; i++) {
 			GenericMethods.logger.info("-------------------------------------------------------------------------------------------");
-		  GenericMethods.logger.info(" Record -- "+(i+1));
-		  company = pendingRenewalLeases[i][0];
-		  buildingAbbreviation =pendingRenewalLeases[i][1];
-		  leaseOwnerName = pendingRenewalLeases[i][2];
-		  statusID =0;
-		  failedReason = "";
-		  
-	        
-		  try
-			{
-			FileUtils.cleanDirectory(new File(AppConfig.downloadFilePath));
+			GenericMethods.logger.info(" Record -- " + (i + 1));
+			company = pendingRenewalLeases[i][0];
+			buildingAbbreviation = pendingRenewalLeases[i][1];
+			leaseOwnerName = pendingRenewalLeases[i][2];
+			statusID = 0;
+			failedReason = "";
+
+			try {
+				FileUtils.cleanDirectory(new File(AppConfig.downloadFilePath));
+			} catch (Exception e) {
 			}
-			catch(Exception e) {}
-		  if(company.equals("California PFW")) {
-			  company = "California pfw";
-		  }
-		
-		  
-		  completeBuildingAbbreviation = buildingAbbreviation;  //This will be used when Building not found in first attempt
-          try
-          {
-           String a = buildingAbbreviation;
-           a = a.replace(" " , "");
-           int b = a.length()-1;
-          char c =  a.charAt(a.indexOf('-')+1);
-           if(a.indexOf('-')>=1&&a.indexOf('-')==(b-1))
-				buildingAbbreviation = buildingAbbreviation;
-			else
-				if(a.indexOf('-')>=1&&a.charAt(a.indexOf('-')+1)=='(')
-           buildingAbbreviation = buildingAbbreviation.split("-")[0].trim();
-				else buildingAbbreviation = buildingAbbreviation;
-          }
-          catch(Exception e) {}
-          
-          
-          try {
-        	  if(GenericMethods.login() == false) {
-        		  String updateSuccessStatus = "Update [Automation].leaseRenewalAutomation2 Set Status ='Failed', StatusID=3,NotAutomatedFields='"+failedReason+"',LeaseCompletionDate= getDate() where BuildingName like '%"+buildingAbbreviation+"%'";
-            	  GetDataFromSQL.updateTable(updateSuccessStatus);
-            	  GenericMethods.closeDriver();
-            	  continue;
-            	  
-        	  }
-        	  if(DatabaseClass.navigateToLease(company,leaseOwnerName,buildingAbbreviation,completeBuildingAbbreviation,driver) == false) {  
-        		  String updateSuccessStatus = "Update [Automation].leaseRenewalAutomation2 Set Status ='Failed', StatusID=3,NotAutomatedFields='"+failedReason+"',LeaseCompletionDate= getDate() where BuildingName like '%"+buildingAbbreviation+"%'";
-            	  GetDataFromSQL.updateTable(updateSuccessStatus);
-            	  GenericMethods.closeDriver();
-            	  continue;
-        	  }
-        	  if(GenericMethods.downloadLeaseAgreement() == false) {
-        		  String updateSuccessStatus = "Update [Automation].leaseRenewalAutomation2 Set Status ='Failed', StatusID=3,NotAutomatedFields='"+failedReason+"',LeaseCompletionDate= getDate() where BuildingName like '%"+buildingAbbreviation+"%'";
-            	  GetDataFromSQL.updateTable(updateSuccessStatus);
-            	  GenericMethods.closeDriver();
-            	  continue;
-        	  }
-        	  if(ReadingLeaseAggrements.getDataFromLeaseAgreements()==false) {
-        		  String updateSuccessStatus = "Update [Automation].leaseRenewalAutomation2 Set Status ='Failed', StatusID=3,NotAutomatedFields='"+failedReason+"',LeaseCompletionDate= getDate() where BuildingName like '%"+buildingAbbreviation+"%'";
-            	  GetDataFromSQL.updateTable(updateSuccessStatus);
-            	  GenericMethods.closeDriver();
-            	  continue;
-        	  }
-        	  if(MoveInCharges.verifyLedgerForMonhtlyRentStartDate()==false) {
-        		  String updateSuccessStatus = "Update [Automation].leaseRenewalAutomation2 Set Status ='Failed', StatusID=3,NotAutomatedFields='"+failedReason+"',LeaseCompletionDate= getDate() where BuildingName like '%"+buildingAbbreviation+"%'";
-            	  GetDataFromSQL.updateTable(updateSuccessStatus);
-            	  GenericMethods.closeDriver();
-            	  continue;
-        	  }
-        	  if(AutoCharges.clearExistingAutoCharges()==false) {
-        		  String updateSuccessStatus = "Update [Automation].leaseRenewalAutomation2 Set Status ='Failed', StatusID=3,NotAutomatedFields='"+failedReason+"',LeaseCompletionDate= getDate() where BuildingName like '%"+buildingAbbreviation+"%'";
-            	  GetDataFromSQL.updateTable(updateSuccessStatus);
-            	  GenericMethods.closeDriver();
-            	  continue;
-        	  }
-        	  if(AutoCharges.addingNewAutoCharges()==false) {
-        		  String updateSuccessStatus = "Update [Automation].leaseRenewalAutomation2 Set Status ='Failed', StatusID=3,NotAutomatedFields='"+failedReason+"',LeaseCompletionDate= getDate() where BuildingName like '%"+buildingAbbreviation+"%'";
-            	  GetDataFromSQL.updateTable(updateSuccessStatus);
-            	  GenericMethods.closeDriver();
-            	  continue;
-        	  }
-        	  if(OtherInformation.addingOtherInformation() ==false) {
-        		  String updateSuccessStatus = "Update [Automation].leaseRenewalAutomation2 Set Status ='Failed', StatusID=3,NotAutomatedFields='"+failedReason+"',LeaseCompletionDate= getDate() where BuildingName like '%"+buildingAbbreviation+"%'";
-            	  GetDataFromSQL.updateTable(updateSuccessStatus);
-            	  GenericMethods.closeDriver();
-            	  continue;
-        	  }
-        	  else {
-        		  String updateSuccessStatus = "Update [Automation].leaseRenewalAutomation2 Set Status ='Completed', StatusID=4,NotAutomatedFields='" + failedReason + "',LeaseCompletionDate= getDate() where BuildingName like '%" + buildingAbbreviation + "%'";
-            	  GetDataFromSQL.updateTable(updateSuccessStatus);
-            	  GenericMethods.closeDriver();
-            	  continue;
-        	  }
-          }
-            						  
-          catch(Exception e) {
-			  e.printStackTrace();
-		  } 		
-         
-       
-             
-          
+			if (company.equals("California PFW")) {
+				company = "California pfw";
+			}
+
+			completeBuildingAbbreviation = buildingAbbreviation; // This will be used when Building not found in first
+																	// attempt
+			try {
+				String a = buildingAbbreviation;
+				a = a.replace(" ", "");
+				int b = a.length() - 1;
+				char c = a.charAt(a.indexOf('-') + 1);
+				if (a.indexOf('-') >= 1 && a.indexOf('-') == (b - 1))
+					buildingAbbreviation = buildingAbbreviation;
+				else if (a.indexOf('-') >= 1 && a.charAt(a.indexOf('-') + 1) == '(')
+					buildingAbbreviation = buildingAbbreviation.split("-")[0].trim();
+				else
+					buildingAbbreviation = buildingAbbreviation;
+			} catch (Exception e) {
+			}
+
+			try {
+				if (GenericMethods.login() == false) {
+					String updateSuccessStatus = "Update [Automation].leaseRenewalAutomation2 Set Status ='Failed', StatusID=3,NotAutomatedFields='"
+							+ failedReason + "',LeaseCompletionDate= getDate() where BuildingName like '%"
+							+ buildingAbbreviation + "%'";
+					GetDataFromSQL.updateTable(updateSuccessStatus);
+					GenericMethods.closeDriver();
+					continue;
+
+				}
+				if (DatabaseClass.navigateToLease(company, leaseOwnerName, buildingAbbreviation,
+						completeBuildingAbbreviation, driver) == false) {
+					String updateSuccessStatus = "Update [Automation].leaseRenewalAutomation2 Set Status ='Failed', StatusID=3,NotAutomatedFields='"
+							+ failedReason + "',LeaseCompletionDate= getDate() where BuildingName like '%"
+							+ buildingAbbreviation + "%'";
+					GetDataFromSQL.updateTable(updateSuccessStatus);
+					GenericMethods.closeDriver();
+					continue;
+				}
+				if (GenericMethods.downloadLeaseAgreement() == false) {
+					String updateSuccessStatus = "Update [Automation].leaseRenewalAutomation2 Set Status ='Failed', StatusID=3,NotAutomatedFields='"
+							+ failedReason + "',LeaseCompletionDate= getDate() where BuildingName like '%"
+							+ buildingAbbreviation + "%'";
+					GetDataFromSQL.updateTable(updateSuccessStatus);
+					GenericMethods.closeDriver();
+					continue;
+				}
+				if (ReadingLeaseAggrements.getDataFromLeaseAgreements() == false) {
+					String updateSuccessStatus = "Update [Automation].leaseRenewalAutomation2 Set Status ='Failed', StatusID=3,NotAutomatedFields='"
+							+ failedReason + "',LeaseCompletionDate= getDate() where BuildingName like '%"
+							+ buildingAbbreviation + "%'";
+					GetDataFromSQL.updateTable(updateSuccessStatus);
+					GenericMethods.closeDriver();
+					continue;
+				}
+				if (MoveInCharges.verifyLedgerForMonhtlyRentStartDate() == false) {
+					String updateSuccessStatus = "Update [Automation].leaseRenewalAutomation2 Set Status ='Failed', StatusID=3,NotAutomatedFields='"
+							+ failedReason + "',LeaseCompletionDate= getDate() where BuildingName like '%"
+							+ buildingAbbreviation + "%'";
+					GetDataFromSQL.updateTable(updateSuccessStatus);
+					GenericMethods.closeDriver();
+					continue;
+				}
+				if (AutoCharges.clearExistingAutoCharges() == false) {
+					String updateSuccessStatus = "Update [Automation].leaseRenewalAutomation2 Set Status ='Failed', StatusID=3,NotAutomatedFields='"
+							+ failedReason + "',LeaseCompletionDate= getDate() where BuildingName like '%"
+							+ buildingAbbreviation + "%'";
+					GetDataFromSQL.updateTable(updateSuccessStatus);
+					GenericMethods.closeDriver();
+					continue;
+				}
+				if (AutoCharges.addingNewAutoCharges() == false) {
+					String updateSuccessStatus = "Update [Automation].leaseRenewalAutomation2 Set Status ='Failed', StatusID=3,NotAutomatedFields='"
+							+ failedReason + "',LeaseCompletionDate= getDate() where BuildingName like '%"
+							+ buildingAbbreviation + "%'";
+					GetDataFromSQL.updateTable(updateSuccessStatus);
+					GenericMethods.closeDriver();
+					continue;
+				}
+				if (OtherInformation.addingOtherInformation() == false) {
+					String updateSuccessStatus = "Update [Automation].leaseRenewalAutomation2 Set Status ='Failed', StatusID=3,NotAutomatedFields='"
+							+ failedReason + "',LeaseCompletionDate= getDate() where BuildingName like '%"
+							+ buildingAbbreviation + "%'";
+					GetDataFromSQL.updateTable(updateSuccessStatus);
+					GenericMethods.closeDriver();
+					continue;
+				} else {
+					String updateSuccessStatus = "Update [Automation].leaseRenewalAutomation2 Set Status ='Completed', StatusID=4,NotAutomatedFields='"
+							+ failedReason + "',LeaseCompletionDate= getDate() where BuildingName like '%"
+							+ buildingAbbreviation + "%'";
+					GetDataFromSQL.updateTable(updateSuccessStatus);
+					GenericMethods.closeDriver();
+					continue;
+				}
+			}
+
+			catch (Exception e) {
+				e.printStackTrace();
+			}
+
 		}
 	}
-	
-	
-	
 
 }

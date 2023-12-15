@@ -265,7 +265,7 @@ public class AutoCharges {
 						GenericMethods.logger.info(description + " already available");
 						break;
 					}
-					if (autoChargeAmount == "Error" || autoChargeAmount == "0.00") {
+					if (autoChargeAmount.equalsIgnoreCase("Error") || autoChargeAmount == "0.00" || autoChargeAmount.equalsIgnoreCase("n/a")) {
 						GenericMethods.logger.error(description + " Amount Error");
 						RunnerClass.failedReason = RunnerClass.failedReason + "," + " issue in adding Auto Charge - "
 								+ description;
@@ -275,7 +275,7 @@ public class AutoCharges {
 					}
 				}
 				if (availabilityCheck == false) {
-					if (amount == "Error" || amount == "0" || amount == "0.00") {
+					if (amount.equalsIgnoreCase("Error") || amount == "0" || amount == "0.00" || amount.equalsIgnoreCase("n/a")) {
 						GenericMethods.logger.error(" issue in adding Auto Charge - " + description);
 						RunnerClass.failedReason = RunnerClass.failedReason + "," + " issue in adding Auto Charge - "
 								+ description;

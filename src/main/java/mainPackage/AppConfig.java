@@ -18,8 +18,8 @@ public class AppConfig {
     public static String pendingRenewalLeases = "Select  Company,buildingName,OwnerName from Automation.leaseRenewalAutomation2  order by AsOfDate desc";//where NotAutomatedFields != ',Unable to download Lease Agreement' ";//where NotAutomatedFields in ('Building Not Available',',Building Not Found') ";//where Status = 'In Progress'";
 		  
 	public static String connectionUrl = "jdbc:sqlserver://azrsrv001.database.windows.net;databaseName=HomeRiverDB;user=service_sql02;password=xzqcoK7T;encrypt=true;trustServerCertificate=true;";
-    public static String downloadFilePath = "C:\\SantoshMurthyP\\Lease Audit Automation\\LEase";
-    public static String logFilePath = "C:\\SantoshMurthyP\\Lease Audit Automation\\Log Files";
+    public static String downloadFilePath = "C:\\Users\\gopi\\Documents\\BaseRent Update Files\\New folder";
+    public static String logFilePath = "C:\\Users\\gopi\\Documents\\BaseRent Update Files\\LogsFolder";
     public static String[] LeaseAgreementFileNames = {"RT Renewal Signed","RT - RENEWAL","RT_Full_Lease","Full Lease -","RENEWAL","renewal_","Renewal","Full_Lease","Full"};
     
     public static String buildingPageURL = "https://app.propertyware.com/pw/leases/lease_detail.do?entityID=";
