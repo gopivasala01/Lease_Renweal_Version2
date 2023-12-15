@@ -31,7 +31,7 @@ public class ReadingLeaseAggrements {
 	
 	public static String leaseRenewalFee= "";
 	public static String increasedRent_amount = "";
-	public static final String HVACAirFilterFee = "";
+	public static  String HVACAirFilterFee = "";
 	
 	public static File file;
 	
@@ -42,7 +42,26 @@ public class ReadingLeaseAggrements {
 	
 	
 	public static boolean getDataFromLeaseAgreements() throws Exception {
-		
+		 text="";
+		 firstPageText="";
+		 modifiedtext="";
+		 commencementDate ="";
+		 expirationDate ="";
+		 monthlyRent = "";
+		 monthlyTaxRent = "";
+		 totalMonthlyRentWithTax = "";
+		 proratedRent = "";
+		 petRent = "";
+		 rbpAmount = "";
+		 rubsAmount = "";
+		 renewalExecutionDate="";
+		 leaseRenewalFee= "";
+		 increasedRent_amount = "";
+		 HVACAirFilterFee = "";
+		 petRentFlag=false;
+		 monthlyTaxAmountFlag=false;
+		 rbpFlag=false;
+		 rubsFlag=false;
 		
 		try {
 			Thread.sleep(10000);

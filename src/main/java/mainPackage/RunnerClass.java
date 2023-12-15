@@ -66,6 +66,7 @@ public class RunnerClass {
 		
 		for(int i=0;i<pendingRenewalLeases.length;i++) 
 		{
+			GenericMethods.logger.info("-------------------------------------------------------------------------------------------");
 		  GenericMethods.logger.info(" Record -- "+(i+1));
 		  company = pendingRenewalLeases[i][0];
 		  buildingAbbreviation =pendingRenewalLeases[i][1];

@@ -68,7 +68,8 @@ public class MoveInCharges {
 					.findElements(Locators.moveInCharge_List_Date);
 			// RunnerClass.renewalExecutionDate =
 			// RunnerClass.convertDate(PDFReader.renewalExecutionDate);
-			for (int i = 0; i < RunnerClass.moveInCharges.length; i++) {
+			for (int i = 0; i < RunnerClass.moveInCharges.length; i++) 
+			{
 
 				boolean availabilityCheck = false;
 				String chargeCode = RunnerClass.moveInCharges[i][0];
@@ -77,7 +78,8 @@ public class MoveInCharges {
 				String endDate = RunnerClass.moveInCharges[i][3];
 				String description = RunnerClass.moveInCharges[i][4];
 
-				for (int k = 0; k < existingMoveInCharges_ChargeCodes.size(); k++) {
+				for (int k = 0; k < existingMoveInCharges_ChargeCodes.size(); k++) 
+				{
 					String moveinautoChargeCodes = existingMoveInCharges_ChargeCodes.get(k).getText();
 					String moveinautoChargeAmount = existingMoveInCharges_Amount.get(k).getText();
 					String moveinautoChargeStartDate = existingMoveInCharges_Date.get(k).getText();
@@ -93,7 +95,7 @@ public class MoveInCharges {
 				}
 				// Add new Charge if it is not there
 				if (availabilityCheck == false) {
-					if (amount == "Error" || amount == "0.00") {
+					if (amount.equalsIgnoreCase("Error") || amount == "0.00") {
 						GenericMethods.logger.error("Issue in Adding Move in charge - " + description);
 						RunnerClass.failedReason = RunnerClass.failedReason + "," + "Issue in Adding Move in charge - "
 								+ description;
