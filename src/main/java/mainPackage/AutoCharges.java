@@ -22,6 +22,11 @@ public class AutoCharges {
 	public static List<WebElement> discription_List;
 	public static List<WebElement> editButtons;
 	public static List<WebElement> delButtons;
+	public static boolean monthlyRentEdit = false;
+	public static boolean HVACEdit = false;
+	public static boolean RBPEdit = false;
+	public static boolean petRentEdit = false;
+	public static boolean RUBSEdit = false;
 
 	public static boolean clearExistingAutoCharges() throws Exception {
 
@@ -105,6 +110,7 @@ public class AutoCharges {
 					if (autoChargeCode.equals(AppConfig.getMonthlyRentChargeCode(RunnerClass.company))
 							&& !autoChargeAmount.replaceAll("[^0-9]", "")
 									.equals(ReadingLeaseAggrements.monthlyRent.replaceAll("[^0-9]", ""))) {
+						monthlyRentEdit = true;
 						previousMonthlyRent = autoChargeAmount;
 						GenericMethods.logger.info("Previous Month rent= " +previousMonthlyRent);
 						editButtons.get(k).click();
@@ -114,6 +120,7 @@ public class AutoCharges {
 					}
 					if (AppConfig.getHVACAirFilterFeeChargeCode(RunnerClass.company)
 							.contains(autoChargeCode.replaceAll("[.]", ""))) {
+						HVACEdit = true;
 						editButtons.get(k).click();
 						editingExistingAutoCharge();
 						saveAnAutoCharge();
@@ -123,6 +130,7 @@ public class AutoCharges {
 							.contains(autoChargeCode.replaceAll("[.]", "")) && ReadingLeaseAggrements.rbpFlag == true
 							&& !autoChargeAmount.replaceAll("[^0-9]", "")
 									.equals(ReadingLeaseAggrements.rbpAmount.replaceAll("[^0-9]", "")))) {
+						RBPEdit = true;
 						editButtons.get(k).click();
 						editingExistingAutoCharge();
 						saveAnAutoCharge();
@@ -133,6 +141,7 @@ public class AutoCharges {
 							.contains(autoChargeCode.replaceAll("[.]", ""))
 							&& (!autoChargeAmount.replaceAll("[^0-9]", "")
 									.equals(ReadingLeaseAggrements.petRent.replaceAll("[^0-9]", "")))) {
+						petRentEdit = true;
 						editButtons.get(k).click();
 						editingExistingAutoCharge();
 						saveAnAutoCharge();
@@ -143,6 +152,7 @@ public class AutoCharges {
 							.contains(autoChargeCode.replaceAll("[.]", ""))
 							&& (!autoChargeAmount.replaceAll("[^0-9]", "")
 									.equals(ReadingLeaseAggrements.rubsAmount.replaceAll("[^0-9]", "")))) {
+						RUBSEdit = true;
 						editButtons.get(k).click();
 						editingExistingAutoCharge();
 						saveAnAutoCharge();
@@ -273,7 +283,7 @@ public class AutoCharges {
 						break;
 
 					}
-				}
+				} 
 				if (availabilityCheck == false) {
 					if (amount.equalsIgnoreCase("Error") || amount == "0" || amount == "0.00" || amount.equalsIgnoreCase("n/a")) {
 						GenericMethods.logger.error(" issue in adding Auto Charge - " + description);
@@ -294,7 +304,13 @@ public class AutoCharges {
 						.click(RunnerClass.driver.findElement(Locators.cancelLease)).build().perform();
 			Thread.sleep(2000);
 			DatabaseClass.intermittentPopUp(RunnerClass.driver);
-			return true;
+			if(ReVerification.verifyAutoCharges()==true) {
+				return true;
+			}
+			else {
+				return false;
+			}
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 			RunnerClass.failedReason = RunnerClass.failedReason + "," + "Something went wrong in adding auto charges";

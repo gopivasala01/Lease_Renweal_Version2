@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.openqa.selenium.WebElement;
 
+import ExtractData.DatabaseClass;
 import GenericLibrary.GenericMethods;
 import PDFDataExtract.ReadingLeaseAggrements;
 
@@ -36,9 +37,88 @@ public class ReVerification {
 				}
 			}
 			if(reVerificationCheck == false) {
-				RunnerClass.failedReason = RunnerClass.failedReason + "," + "Move in charges not added "+ description;
+				RunnerClass.failedReason = RunnerClass.failedReason + "," + "Move in charges not added - "+ description;
 				return false;
 			}
 			return false;
 		}
+	public static boolean verifyAutoCharges() {
+		try {
+			RunnerClass.driver.findElement(Locators.summaryTab).click();
+
+			Thread.sleep(2000);
+
+			DatabaseClass.intermittentPopUp(RunnerClass.driver);
+
+			RunnerClass.driver.findElement(Locators.summaryEditButton).click();
+
+			//GetDataFromSQL.getAutoCharges();
+			for (int i = 0; i < RunnerClass.autoCharges.length; i++) {
+				boolean availabilityCheck = false;
+				String chargeCode = RunnerClass.autoCharges[i][0];
+				String amount = RunnerClass.autoCharges[i][1];
+				String startDate = RunnerClass.autoCharges[i][2];
+				String endDate = RunnerClass.autoCharges[i][3];
+				String description = RunnerClass.autoCharges[i][4];
+
+				List<WebElement> existingAutoCharges = RunnerClass.driver.findElements(Locators.autoCharge_List);
+				for (int k = 0; k < existingAutoCharges.size(); k++) {
+					existingAutoCharges = RunnerClass.driver.findElements(Locators.autoCharge_List);
+					List<WebElement> existingAutoChargeAmounts = RunnerClass.driver
+							.findElements(Locators.autoCharge_List_Amounts);
+					List<WebElement> endDates = RunnerClass.driver.findElements(Locators.autoCharge_List_EndDates);
+					List<WebElement> discription_List =RunnerClass.driver.findElements(Locators.discription_List);
+					List<WebElement> startDates = RunnerClass.driver.findElements(Locators.startdateList);
+
+					String autoChargeCode = existingAutoCharges.get(k).getText();
+					String autoChargeAmount = existingAutoChargeAmounts.get(k).getText();
+					String endDateAutoCharge = endDates.get(k).getText();
+					String description_text = discription_List.get(k).getText();
+					String startDatelist = startDates.get(k).getText();
+					if (endDateAutoCharge.trim().isEmpty()) {
+						if ((autoChargeCode.equalsIgnoreCase(AppConfig.getMonthlyRentChargeCode(RunnerClass.company))
+								&& AutoCharges.monthlyRentEdit == true)
+								|| (AppConfig.getHVACAirFilterFeeChargeCode(RunnerClass.company).equalsIgnoreCase(
+										autoChargeCode.replaceAll("[.]", "")) && AutoCharges.HVACEdit == true)
+								|| (AppConfig.getResidentBenefitsPackageChargeCode(RunnerClass.company)
+										.equalsIgnoreCase(autoChargeCode.replaceAll("[.]", ""))
+										&& AutoCharges.RBPEdit == true)
+								|| (AppConfig.getPetRentChargeCode(RunnerClass.company).equalsIgnoreCase(
+										autoChargeCode.replaceAll("[.]", "")) && AutoCharges.petRentEdit == true)
+								|| (AppConfig.getResidentUtilityBillChargeCode(RunnerClass.company).equalsIgnoreCase(
+										autoChargeCode.replaceAll("[.]", "")) && AutoCharges.RUBSEdit == true)) {
+							if (chargeCode.contains(autoChargeCode.replaceAll(".", "")) && autoChargeAmount.substring(1)
+									.replaceAll("[^0-9]", "").equals(amount.replaceAll("[^0-9]", ""))
+									&& (startDate.equals(startDatelist))) {
+								availabilityCheck = true;
+								GenericMethods.logger.info(description + " - already available in Reverification");
+								break;
+							} else {
+								if (k == existingAutoCharges.size() - 1) {
+									GenericMethods.logger.error("Issue in adding Auto Charge - " + description_text);
+									RunnerClass.failedReason = RunnerClass.failedReason + ","
+											+ "Move in charges not added - " + description_text;
+									return false;
+								}
+							}
+						}
+						else {
+							if (i == (RunnerClass.autoCharges.length)-1) {
+								GenericMethods.logger.info(description_text + " - is already exists and no changes done");
+							}
+
+						}
+					}
+
+				}
+			}
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return true;
+
+	}
+	
+	
 }
