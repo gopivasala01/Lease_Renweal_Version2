@@ -78,14 +78,14 @@ public class ReVerification {
 					if (endDateAutoCharge.trim().isEmpty()) {
 						if ((autoChargeCode.equalsIgnoreCase(AppConfig.getMonthlyRentChargeCode(RunnerClass.company))
 								&& AutoCharges.monthlyRentEdit == true)
-								|| (AppConfig.getHVACAirFilterFeeChargeCode(RunnerClass.company).equalsIgnoreCase(
+								|| (AppConfig.getHVACAirFilterFeeChargeCode(RunnerClass.company).contains(
 										autoChargeCode.replaceAll("[.]", "")) && AutoCharges.HVACEdit == true)
 								|| (AppConfig.getResidentBenefitsPackageChargeCode(RunnerClass.company)
-										.equalsIgnoreCase(autoChargeCode.replaceAll("[.]", ""))
+										.contains(autoChargeCode.replaceAll("[.]", ""))
 										&& AutoCharges.RBPEdit == true)
-								|| (AppConfig.getPetRentChargeCode(RunnerClass.company).equalsIgnoreCase(
+								|| (AppConfig.getPetRentChargeCode(RunnerClass.company).contains(
 										autoChargeCode.replaceAll("[.]", "")) && AutoCharges.petRentEdit == true)
-								|| (AppConfig.getResidentUtilityBillChargeCode(RunnerClass.company).equalsIgnoreCase(
+								|| (AppConfig.getResidentUtilityBillChargeCode(RunnerClass.company).contains(
 										autoChargeCode.replaceAll("[.]", "")) && AutoCharges.RUBSEdit == true)) {
 							if (chargeCode.contains(autoChargeCode.replaceAll(".", "")) && autoChargeAmount.substring(1)
 									.replaceAll("[^0-9]", "").equals(amount.replaceAll("[^0-9]", ""))
