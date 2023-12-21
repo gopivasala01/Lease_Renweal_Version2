@@ -4,12 +4,14 @@ import java.util.List;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 
 import ExtractData.DatabaseClass;
 import GenericLibrary.GenericMethods;
 import PDFDataExtract.ReadingLeaseAggrements;
+import io.github.bonigarcia.wdm.WebDriverManager;
 
 public class AutoCharges {
 
@@ -29,6 +31,13 @@ public class AutoCharges {
 	public static boolean RUBSEdit = false;
 
 	public static boolean clearExistingAutoCharges() throws Exception {
+		lastDayOfTheStartDate3 = "";
+		previousMonthlyRent = "";
+		monthlyRentEdit = false;
+		HVACEdit = false;
+		RBPEdit = false;
+		petRentEdit = false;
+		RUBSEdit = false;
 
 		try {
 			RunnerClass.driver.navigate().refresh();
@@ -163,7 +172,14 @@ public class AutoCharges {
 			}
 
 			return true;
-		} catch (Exception e) {
+		}
+		catch (TimeoutException t) {
+				 WebDriverManager.chromedriver().clearDriverCache().setup();
+				 RunnerClass.failedReason = RunnerClass.failedReason + "," + "TimeOut Error";
+				return false;
+				
+		}
+		catch (Exception e) {
 			RunnerClass.statusID = 1;
 			e.printStackTrace();
 			RunnerClass.failedReason = RunnerClass.failedReason + ","
@@ -175,52 +191,72 @@ public class AutoCharges {
 		}
 	}
 
-	public static void editingExistingAutoCharge() throws Exception {
+	public static boolean editingExistingAutoCharge() throws Exception {
+		try {
+			if (MoveInCharges.dateCheckInLedgerForMonthlyRentStartDate == true|| !(UpdateValues.startDate.split("/")[1].equals("1")
+					|| UpdateValues.startDate.split("/")[1].equals("01"))) {
+				String lastDayOfTheStartDate2 = GenericMethods
+						.lastDateOfTheMonth(GenericMethods.firstDayOfMonth(UpdateValues.firstFullMonth, -1));
+				WebElement endDateField = RunnerClass.driver.findElement(Locators.autoCharge_EndDate);
+				endDateField.clear();
+				endDateField.sendKeys(Keys.chord(Keys.CONTROL, "a", Keys.DELETE));
 
-		if (MoveInCharges.dateCheckInLedgerForMonthlyRentStartDate == true|| !(UpdateValues.startDate.split("/")[1].equals("1")
-				|| UpdateValues.startDate.split("/")[1].equals("01"))) {
-			String lastDayOfTheStartDate2 = GenericMethods
-					.lastDateOfTheMonth(GenericMethods.firstDayOfMonth(UpdateValues.firstFullMonth, -1));
-			WebElement endDateField = RunnerClass.driver.findElement(Locators.autoCharge_EndDate);
-			endDateField.clear();
-			endDateField.sendKeys(Keys.chord(Keys.CONTROL, "a", Keys.DELETE));
+				endDateField.sendKeys(lastDayOfTheStartDate2);
+				Thread.sleep(2000);
 
-			endDateField.sendKeys(lastDayOfTheStartDate2);
-			Thread.sleep(2000);
+			} else {
+				WebElement endDateField = RunnerClass.driver.findElement(Locators.autoCharge_EndDate);
+				endDateField.clear();
+				endDateField.sendKeys(Keys.chord(Keys.CONTROL, "a", Keys.DELETE));
 
-		} else {
-			WebElement endDateField = RunnerClass.driver.findElement(Locators.autoCharge_EndDate);
-			endDateField.clear();
-			endDateField.sendKeys(Keys.chord(Keys.CONTROL, "a", Keys.DELETE));
-
-			endDateField.sendKeys(UpdateValues.lastDayOfPreviousMonthUsingStartDate);
-			Thread.sleep(2000);
-		}
-		if (!AppConfig.saveButtonOnAndOff) {
-			RunnerClass.driver.findElement(Locators.autoCharge_CancelButton).click();
-		} else {
-			RunnerClass.driver.findElement(Locators.autoCharge_SaveButton).click();
-			Thread.sleep(3000);
-
-			GenericMethods.handleAlerts();
-
-			try {
-				WebElement errorMessage = GenericMethods
-						.findElementWithWait(By.xpath("//*[@id=\"errorMessages\"]/ul/li"));
-				if (errorMessage != null && errorMessage.isDisplayed()) {
-					RunnerClass.driver.findElement(By.xpath("//*[@id=\"editAutoChargeForm\"]/div[3]/input[2]")).click();
-				}
+				endDateField.sendKeys(UpdateValues.lastDayOfPreviousMonthUsingStartDate);
+				Thread.sleep(2000);
+			}
+			if (!AppConfig.saveButtonOnAndOff) {
+				RunnerClass.driver.findElement(Locators.autoCharge_CancelButton).click();
+			} else {
+				RunnerClass.driver.findElement(Locators.autoCharge_SaveButton).click();
+				Thread.sleep(3000);
 
 				GenericMethods.handleAlerts();
-			} catch (Exception e) {
+
+				try {
+					WebElement errorMessage = GenericMethods
+							.findElementWithWait(By.xpath("//*[@id=\"errorMessages\"]/ul/li"));
+					if (errorMessage != null && errorMessage.isDisplayed()) {
+						RunnerClass.driver.findElement(By.xpath("//*[@id=\"editAutoChargeForm\"]/div[3]/input[2]")).click();
+					}
+
+					GenericMethods.handleAlerts();
+				} catch (Exception e) {
+
+				}
 
 			}
-
+			Thread.sleep(2000);
 		}
-		Thread.sleep(2000);
+		catch (TimeoutException t) {
+			 WebDriverManager.chromedriver().clearDriverCache().setup();
+			 RunnerClass.failedReason = RunnerClass.failedReason + "," + "TimeOut Error";
+			return false;
+			
 	}
+		catch (Exception e) {
+			e.printStackTrace();
+			RunnerClass.failedReason = RunnerClass.failedReason + "," + "Something went wrong in adding auto charges";
+			GenericMethods.logger.error("Something went wrong in adding auto charges");
+			RunnerClass.driver.navigate().refresh();
+			return false;
+		}
 
-	public static void saveAnAutoCharge() throws Exception {
+		return true;
+	}
+		
+
+	public static boolean saveAnAutoCharge(){
+		
+		try {
+		
 		RunnerClass.js.executeScript("window.scrollTo(0,document.body.scrollHeight)");
 		if (AppConfig.saveButtonOnAndOff == true) {
 			RunnerClass.actions.moveToElement(RunnerClass.driver.findElement(Locators.saveLease))
@@ -240,10 +276,25 @@ public class AutoCharges {
 		DatabaseClass.intermittentPopUp(RunnerClass.driver);
 
 		RunnerClass.actions.moveToElement(RunnerClass.driver.findElement(Locators.newAutoCharge)).build().perform();
+		}
+		catch (TimeoutException t) {
+			 WebDriverManager.chromedriver().clearDriverCache().setup();
+			 RunnerClass.failedReason = RunnerClass.failedReason + "," + "TimeOut Error";
+			return false;
+			
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			RunnerClass.failedReason = RunnerClass.failedReason + "," + "Something went wrong in editing existing auto charges";
+			GenericMethods.logger.error("Something went wrong in editing existing auto charges");
+			RunnerClass.driver.navigate().refresh();
+			return false;
+		}
 
+		return true;
 	}
 
-	public static boolean addingNewAutoCharges() throws Exception {
+	public static boolean addingNewAutoCharges(){
 		try {
 
 			Thread.sleep(2000);
@@ -311,7 +362,14 @@ public class AutoCharges {
 				return false;
 			}
 			
-		} catch (Exception e) {
+		} 
+		catch (TimeoutException t) {
+				 WebDriverManager.chromedriver().clearDriverCache().setup();
+				 RunnerClass.failedReason = RunnerClass.failedReason + "," + "TimeOut Error";
+				return false;
+				
+		}
+		catch (Exception e) {
 			e.printStackTrace();
 			RunnerClass.failedReason = RunnerClass.failedReason + "," + "Something went wrong in adding auto charges";
 			GenericMethods.logger.error("Something went wrong in adding auto charges");
@@ -322,7 +380,7 @@ public class AutoCharges {
 	}
 
 	public static boolean addingAnAutoCharge(String accountCode, String amount, String startDate, String endDate,
-			String description) throws Exception {
+			String description) {
 		try {
 			RunnerClass.driver.findElement(Locators.newAutoCharge).click();
 
@@ -354,17 +412,31 @@ public class AutoCharges {
 				RunnerClass.driver.findElement(Locators.autoCharge_SaveButton).click();
 			Thread.sleep(2000);
 			DatabaseClass.intermittentPopUp(RunnerClass.driver);
-		} catch (Exception e) {
+		} 
+		catch (TimeoutException t) {
+			 WebDriverManager.chromedriver().clearDriverCache().setup();
+			 RunnerClass.failedReason = RunnerClass.failedReason + "," + "TimeOut Error";
+			return false;
+			
+		}
+		catch (Exception e) {
 			try {
 				e.printStackTrace();
-				RunnerClass.statusID = 1;
 				GenericMethods.logger.error("Issue in adding Move in Charge" + description);
 				RunnerClass.failedReason = RunnerClass.failedReason + "," + "Issue in adding Auto Charge - "
 						+ description;
 				RunnerClass.driver.findElement(Locators.autoCharge_CancelButton).click();
 				return false;
-			} catch (Exception e2) {
+			}
+			catch (TimeoutException t1) {
+				 WebDriverManager.chromedriver().clearDriverCache().setup();
+				 RunnerClass.failedReason = RunnerClass.failedReason + "," + "TimeOut Error";
+				return false;
+				
+		}
+			catch (Exception e2) {
 				RunnerClass.driver.navigate().refresh();
+				return false;
 			}
 		}
 		return true;

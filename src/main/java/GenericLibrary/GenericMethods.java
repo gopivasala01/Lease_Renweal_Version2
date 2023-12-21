@@ -28,6 +28,7 @@ import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoAlertPresentException;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -80,7 +81,14 @@ public class GenericMethods {
 		    RunnerClass.failedReason = RunnerClass.failedReason+","+ "Login failed";
 			return false;
         }
+
         }
+        catch (TimeoutException t) {
+			 WebDriverManager.chromedriver().clearDriverCache().setup();
+			 RunnerClass.failedReason = RunnerClass.failedReason + "," + "TimeOut Error";
+			return false;
+			
+		}
         catch(Exception e) {}
         RunnerClass.driver.manage().timeouts().implicitlyWait(100,TimeUnit.SECONDS);
         RunnerClass.wait = new WebDriverWait(RunnerClass.driver, Duration.ofSeconds(100));
@@ -101,6 +109,12 @@ public class GenericMethods {
 			  RunnerClass.driver.quit();
 			  logger.info("Browser closed");
 		  }
+		 catch (TimeoutException t) {
+			 WebDriverManager.chromedriver().clearDriverCache().setup();
+			 RunnerClass.failedReason = RunnerClass.failedReason + "," + "TimeOut Error";
+			return false;
+			
+		}
 		  catch(Exception e1) {
 			  logger.error("Browser closing failed");
 			  e1.printStackTrace();
@@ -167,6 +181,12 @@ public class GenericMethods {
 				return false;
 			}
 		 
+		}
+		catch (TimeoutException t) {
+				 WebDriverManager.chromedriver().clearDriverCache().setup();
+				 RunnerClass.failedReason = RunnerClass.failedReason + "," + "TimeOut Error";
+				return false;
+				
 		}
 		catch(Exception e) {
 			logger.error("Unable to download Lease Agreement");

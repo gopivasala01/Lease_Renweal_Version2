@@ -112,6 +112,10 @@ public class ReVerification {
 
 				}
 			}
+			RunnerClass.actions.moveToElement(RunnerClass.driver.findElement(Locators.cancelLease))
+						.click(RunnerClass.driver.findElement(Locators.cancelLease)).build().perform();
+			Thread.sleep(2000);
+			DatabaseClass.intermittentPopUp(RunnerClass.driver);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

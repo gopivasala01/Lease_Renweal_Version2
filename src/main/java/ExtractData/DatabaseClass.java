@@ -10,6 +10,7 @@ import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -18,6 +19,8 @@ import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import GenericLibrary.GenericMethods;
+import io.github.bonigarcia.wdm.WebDriverManager;
+import mainPackage.RunnerClass;
 
 
 
@@ -107,6 +110,12 @@ public class DatabaseClass {
 				}
 			}
 		}
+		catch (TimeoutException t) {
+				 WebDriverManager.chromedriver().clearDriverCache().setup();
+				 RunnerClass.failedReason = RunnerClass.failedReason + "," + "TimeOut Error";
+				return false;
+				
+		}
 		catch(Exception e) {
 			e.printStackTrace();
 			return false;
@@ -168,6 +177,12 @@ public class DatabaseClass {
 			}
 			
 			 }
+		   catch (TimeoutException t) {
+				 WebDriverManager.chromedriver().clearDriverCache().setup();
+				 RunnerClass.failedReason = RunnerClass.failedReason + "," + "TimeOut Error";
+				return false;
+				
+			}
 		catch(Exception e)
 		{
 			e.printStackTrace();
@@ -370,7 +385,14 @@ public class DatabaseClass {
 					//RunnerClass.failedReason =  RunnerClass.failedReason+","+ "Building Not Found";
 					return false;
 				}
-	         } catch(Exception e) 
+	         } 
+		   	catch (TimeoutException t) {
+				 WebDriverManager.chromedriver().clearDriverCache().setup();
+				 RunnerClass.failedReason = RunnerClass.failedReason + "," + "TimeOut Error";
+				return false;
+				
+		   	}
+			catch(Exception e) 
 		     {
 	         
 	        	 GenericMethods.logger.error("Issue in selecting Building");

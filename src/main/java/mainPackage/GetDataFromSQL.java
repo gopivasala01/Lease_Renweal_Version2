@@ -36,7 +36,7 @@ public class GetDataFromSQL {
           
 	  }
 	
-	public static boolean getBuildingsList()
+	public static boolean getBuildingsList(String query)
 	{
 		try
 		{
@@ -45,7 +45,7 @@ public class GetDataFromSQL {
 		        ResultSet rs = null;
 		            //Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
 		            con = DriverManager.getConnection(AppConfig.connectionUrl);
-		            String SQL = AppConfig.pendingRenewalLeases;
+		            String SQL =query; 
 		            stmt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 		           // stmt = con.createStatement();
 		            rs = stmt.executeQuery(SQL);

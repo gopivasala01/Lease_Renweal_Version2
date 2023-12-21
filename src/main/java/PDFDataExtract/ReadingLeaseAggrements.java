@@ -7,9 +7,12 @@ import java.util.regex.Pattern;
 
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.text.PDFTextStripper;
+import org.openqa.selenium.TimeoutException;
 
 import ExtractData.dataExtractionClass;
 import GenericLibrary.GenericMethods;
+import io.github.bonigarcia.wdm.WebDriverManager;
+import mainPackage.RunnerClass;
 
 public class ReadingLeaseAggrements {
 
@@ -84,6 +87,12 @@ public class ReadingLeaseAggrements {
 			}
 			file = GenericMethods.getLastModified();
 		}
+		   catch (TimeoutException t) {
+				 WebDriverManager.chromedriver().clearDriverCache().setup();
+				 RunnerClass.failedReason = RunnerClass.failedReason + "," + "TimeOut Error";
+				return false;
+				
+			}
 		catch(Exception e) {
 			e.printStackTrace();
 			return false;
@@ -184,6 +193,12 @@ public class ReadingLeaseAggrements {
 			    
 		 	}
 		}
+		 catch (TimeoutException t) {
+				 WebDriverManager.chromedriver().clearDriverCache().setup();
+				 RunnerClass.failedReason = RunnerClass.failedReason + "," + "TimeOut Error";
+				return false;
+				
+			}
 		catch(Exception e2) {
 			e2.printStackTrace();
 			return false;

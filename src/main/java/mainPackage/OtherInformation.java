@@ -1,11 +1,13 @@
 package mainPackage;
 
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.support.ui.Select;
 
 import ExtractData.DatabaseClass;
 import GenericLibrary.GenericMethods;
 import PDFDataExtract.ReadingLeaseAggrements;
+import io.github.bonigarcia.wdm.WebDriverManager;
 
 public class OtherInformation {
 	public static String enrolledInRBPForPMUse = "";
@@ -66,7 +68,14 @@ public class OtherInformation {
 						RunnerClass.js.executeScript("window.scrollTo(0, document.body.scrollHeight)");
 
 					}
-				} catch (Exception e) {
+				} 
+				catch (TimeoutException t) {
+					 WebDriverManager.chromedriver().clearDriverCache().setup();
+					 RunnerClass.failedReason = RunnerClass.failedReason + "," + "TimeOut Error";
+					return false;
+					
+				}
+				catch (Exception e) {
 				}
 
 				try {
@@ -77,7 +86,14 @@ public class OtherInformation {
 							.sendKeys(Keys.chord(Keys.CONTROL, "a", Keys.DELETE));
 					RunnerClass.driver.findElement(Locators.baseRent).sendKeys(currentMonthlyRent);
 					Thread.sleep(3000);
-				} catch (Exception e) {
+				} 
+				catch (TimeoutException t) {
+					 WebDriverManager.chromedriver().clearDriverCache().setup();
+					 RunnerClass.failedReason = RunnerClass.failedReason + "," + "TimeOut Error";
+					return false;
+					
+				}
+				catch (Exception e) {
 					RunnerClass.statusID = 1;
 					e.printStackTrace();
 					RunnerClass.failedReason = RunnerClass.failedReason + ","
@@ -97,7 +113,14 @@ public class OtherInformation {
 						Select renewalStatusDropdown = new Select(
 								RunnerClass.driver.findElement(Locators.enrolledInRBPForPMUse));
 						renewalStatusDropdown.selectByValue(enrolledInRBPForPMUse);
-					} catch (Exception e) {
+					} 
+					catch (TimeoutException t) {
+						 WebDriverManager.chromedriver().clearDriverCache().setup();
+						 RunnerClass.failedReason = RunnerClass.failedReason + "," + "TimeOut Error";
+						return false;
+						
+					}
+					catch (Exception e) {
 						RunnerClass.statusID = 1;
 						e.printStackTrace();
 						RunnerClass.failedReason = RunnerClass.failedReason + ","
@@ -115,7 +138,14 @@ public class OtherInformation {
 						Select renewalStatusDropdown = new Select(
 								RunnerClass.driver.findElement(Locators.enrolledInRBPForPMUseNo));
 						renewalStatusDropdown.selectByValue(enrolledInRBPForPMUseNo);
-					} catch (Exception e) {
+					}
+					catch (TimeoutException t) {
+						 WebDriverManager.chromedriver().clearDriverCache().setup();
+						 RunnerClass.failedReason = RunnerClass.failedReason + "," + "TimeOut Error";
+						return false;
+						
+					}
+					catch (Exception e) {
 						RunnerClass.statusID = 1;
 						e.printStackTrace();
 						RunnerClass.failedReason = RunnerClass.failedReason + ","
@@ -134,7 +164,14 @@ public class OtherInformation {
 						Select renewalStatusDropdown = new Select(
 								RunnerClass.driver.findElement(Locators.RBPEnrollmentCompleteForSNUseOnly));
 						renewalStatusDropdown.selectByValue(RBPenrollmentCompleteForSNUseOnly);
-					} catch (Exception e) {
+					} 
+					catch (TimeoutException t) {
+						 WebDriverManager.chromedriver().clearDriverCache().setup();
+						 RunnerClass.failedReason = RunnerClass.failedReason + "," + "TimeOut Error";
+						return false;
+						
+					}
+					catch (Exception e) {
 						RunnerClass.statusID = 1;
 						e.printStackTrace();
 						RunnerClass.failedReason = RunnerClass.failedReason + ","
@@ -151,7 +188,14 @@ public class OtherInformation {
 						Select renewalStatusDropdown = new Select(
 								RunnerClass.driver.findElement(Locators.RBPEnrollmentCompleteForSNUseOnlyNo));
 						renewalStatusDropdown.selectByValue(RBPenrollmentCompleteForSNUseOnlyNo);
-					} catch (Exception e) {
+					} 
+					catch (TimeoutException t) {
+						 WebDriverManager.chromedriver().clearDriverCache().setup();
+						 RunnerClass.failedReason = RunnerClass.failedReason + "," + "TimeOut Error";
+						return false;
+						
+					}
+					catch (Exception e) {
 						RunnerClass.statusID = 1;
 						e.printStackTrace();
 						RunnerClass.failedReason = RunnerClass.failedReason + ","
@@ -168,7 +212,14 @@ public class OtherInformation {
 					Select renewalStatusDropdown = new Select(
 							RunnerClass.driver.findElement(Locators.renewalStatusDropdown));
 					renewalStatusDropdown.selectByValue(renewalStatus);
-				} catch (Exception e) {
+				}
+				catch (TimeoutException t) {
+					 WebDriverManager.chromedriver().clearDriverCache().setup();
+					 RunnerClass.failedReason = RunnerClass.failedReason + "," + "TimeOut Error";
+					return false;
+					
+				}
+				catch (Exception e) {
 					RunnerClass.statusID = 1;
 					e.printStackTrace();
 					RunnerClass.failedReason = RunnerClass.failedReason + "," + "Other information - Renewal Status";
@@ -182,7 +233,14 @@ public class OtherInformation {
 					RunnerClass.driver.findElement(Locators.renewalFollowUpNotes).click();
 					RunnerClass.driver.findElement(Locators.renewalFollowUpNotes).sendKeys(Keys.chord(Keys.HOME));
 					RunnerClass.driver.findElement(Locators.renewalFollowUpNotes).sendKeys(reneWalFollowupNotes);
-				} catch (Exception e) {
+				}
+				catch (TimeoutException t) {
+					 WebDriverManager.chromedriver().clearDriverCache().setup();
+					 RunnerClass.failedReason = RunnerClass.failedReason + "," + "TimeOut Error";
+					return false;
+					
+				}
+				catch (Exception e) {
 					RunnerClass.statusID = 1;
 					e.printStackTrace();
 					RunnerClass.failedReason = RunnerClass.failedReason + ","
@@ -199,7 +257,14 @@ public class OtherInformation {
 							.sendKeys(Keys.chord(Keys.CONTROL, "a", Keys.DELETE));
 					RunnerClass.driver.findElement(Locators.renewalExecutionDate).sendKeys(renewalExecutionDate);
 					Thread.sleep(2000);
-				} catch (Exception e) {
+				} 
+				catch (TimeoutException t) {
+					 WebDriverManager.chromedriver().clearDriverCache().setup();
+					 RunnerClass.failedReason = RunnerClass.failedReason + "," + "TimeOut Error";
+					return false;
+					
+				}
+				catch (Exception e) {
 					RunnerClass.statusID = 1;
 					e.printStackTrace();
 					RunnerClass.failedReason = RunnerClass.failedReason + ","
@@ -216,7 +281,14 @@ public class OtherInformation {
 							.sendKeys(Keys.chord(Keys.CONTROL, "a", Keys.DELETE));
 					RunnerClass.driver.findElement(Locators.currentMonthlyRent).sendKeys(currentMonthlyRent);
 					Thread.sleep(3000);
-				} catch (Exception e) {
+				} 
+				catch (TimeoutException t) {
+					 WebDriverManager.chromedriver().clearDriverCache().setup();
+					 RunnerClass.failedReason = RunnerClass.failedReason + "," + "TimeOut Error";
+					return false;
+					
+			}
+				catch (Exception e) {
 					RunnerClass.statusID = 1;
 					e.printStackTrace();
 					RunnerClass.failedReason = RunnerClass.failedReason + ","
@@ -226,14 +298,23 @@ public class OtherInformation {
 
 				// Prior Monthly Rent
 				try {
-					RunnerClass.actions.moveToElement(RunnerClass.driver.findElement(Locators.priorMonthlyRent)).build()
-							.perform();
-					RunnerClass.driver.findElement(Locators.priorMonthlyRent).click();
-					RunnerClass.driver.findElement(Locators.priorMonthlyRent)
-							.sendKeys(Keys.chord(Keys.CONTROL, "a", Keys.DELETE));
-					RunnerClass.driver.findElement(Locators.priorMonthlyRent).sendKeys(priorMonthlyRent);
-					Thread.sleep(3000);
-				} catch (Exception e) {
+					if(AutoCharges.previousMonthlyRent != "" || AutoCharges.previousMonthlyRent != null || AutoCharges.previousMonthlyRent != "0.00"  ) {
+						RunnerClass.actions.moveToElement(RunnerClass.driver.findElement(Locators.priorMonthlyRent)).build()
+								.perform();
+						RunnerClass.driver.findElement(Locators.priorMonthlyRent).click();
+						RunnerClass.driver.findElement(Locators.priorMonthlyRent)
+								.sendKeys(Keys.chord(Keys.CONTROL, "a", Keys.DELETE));
+						RunnerClass.driver.findElement(Locators.priorMonthlyRent).sendKeys(priorMonthlyRent);
+						Thread.sleep(3000);
+					} 
+				}
+				catch (TimeoutException t) {
+					 WebDriverManager.chromedriver().clearDriverCache().setup();
+					 RunnerClass.failedReason = RunnerClass.failedReason + "," + "TimeOut Error";
+					return false;
+					
+				}
+				catch (Exception e) {
 					RunnerClass.statusID = 1;
 					e.printStackTrace();
 					RunnerClass.failedReason = RunnerClass.failedReason + ","
@@ -249,7 +330,14 @@ public class OtherInformation {
 					RunnerClass.driver.findElement(Locators.renewalCoordinatorName)
 							.sendKeys(Keys.chord(Keys.CONTROL, "a", Keys.DELETE));
 					RunnerClass.driver.findElement(Locators.renewalCoordinatorName).sendKeys(renewalCoordinatorName);
-				} catch (Exception e) {
+				}
+				catch (TimeoutException t) {
+					 WebDriverManager.chromedriver().clearDriverCache().setup();
+					 RunnerClass.failedReason = RunnerClass.failedReason + "," + "TimeOut Error";
+					return false;
+					
+			}
+				catch (Exception e) {
 					RunnerClass.statusID = 1;
 					e.printStackTrace();
 					RunnerClass.failedReason = RunnerClass.failedReason + ","
@@ -266,7 +354,14 @@ public class OtherInformation {
 						RunnerClass.driver.findElement(Locators.petRentAmount)
 								.sendKeys(Keys.chord(Keys.CONTROL, "a", Keys.DELETE));
 						RunnerClass.driver.findElement(Locators.petRentAmount).sendKeys(petRentAmount);
-					} catch (Exception e) {
+					}
+					catch (TimeoutException t) {
+						 WebDriverManager.chromedriver().clearDriverCache().setup();
+						 RunnerClass.failedReason = RunnerClass.failedReason + "," + "TimeOut Error";
+						return false;
+						
+				}
+					catch (Exception e) {
 						RunnerClass.statusID = 1;
 						e.printStackTrace();
 						RunnerClass.failedReason = RunnerClass.failedReason + ","
@@ -287,12 +382,24 @@ public class OtherInformation {
 								.click(RunnerClass.driver.findElement(Locators.cancelLease)).build().perform();
 					Thread.sleep(3000);
 					DatabaseClass.intermittentPopUp(RunnerClass.driver);
-				} catch (Exception e) {
+				}
+				catch (TimeoutException t) {
+					 WebDriverManager.chromedriver().clearDriverCache().setup();
+					 RunnerClass.failedReason = RunnerClass.failedReason + "," + "TimeOut Error";
+					return false;
+					
+			}
+				catch (Exception e) {
 					RunnerClass.statusID = 1;
 					e.printStackTrace();
 				}
 			}
-
+			catch (TimeoutException t) {
+				 WebDriverManager.chromedriver().clearDriverCache().setup();
+				 RunnerClass.failedReason = RunnerClass.failedReason + "," + "TimeOut Error";
+				return false;
+				
+			}
 			catch (Exception e) {
 				RunnerClass.js.executeScript("window.scrollTo(0,document.body.scrollHeight)");
 				if (AppConfig.saveButtonOnAndOff == true)
@@ -307,12 +414,21 @@ public class OtherInformation {
 
 			// Related Activities
 			RelatedActivities();
-		} catch (Exception e) {
+		}
+		catch (TimeoutException t) {
+				 WebDriverManager.chromedriver().clearDriverCache().setup();
+				 RunnerClass.failedReason = RunnerClass.failedReason + "," + "TimeOut Error";
+				return false;
+				
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			
 		}
 		return true;
 	}
 
-	public static void RelatedActivities() throws Exception {
+	public static boolean RelatedActivities() throws Exception {
 		try {
 			RunnerClass.driver.navigate().refresh();
 			DatabaseClass.intermittentPopUp(RunnerClass.driver);
@@ -371,21 +487,21 @@ public class OtherInformation {
 			DatabaseClass.intermittentPopUp(RunnerClass.driver);
 			// Check if an error message is displayed
 
-		} catch (InterruptedException e1) {
-			// Handle InterruptedException if it occurs during the Thread.sleep() calls
-			RunnerClass.statusID = 1;
-			RunnerClass.failedReason = RunnerClass.failedReason + "," + "Issue in adding Related Activities";
-			GenericMethods.logger.error("Issue in adding Related Activities");
-			e1.printStackTrace();
-		} catch (Exception e) {
+		} catch (TimeoutException t) {
+			 WebDriverManager.chromedriver().clearDriverCache().setup();
+			 RunnerClass.failedReason = RunnerClass.failedReason + "," + "TimeOut Error";
+			return false;
+			
+		}
+		catch (Exception e) {
 			// Handle any other exceptions
 			RunnerClass.statusID = 1;
 			RunnerClass.failedReason = RunnerClass.failedReason + "," + "Issue in adding Related Activities";
 			GenericMethods.logger.error("Issue in adding Related Activities");
 			e.printStackTrace();
-		} finally {
-
+			return false;
 		}
+		return true;
 	}
 
 	public static void clearExistingVariableValues() {

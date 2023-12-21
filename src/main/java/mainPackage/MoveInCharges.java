@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -12,6 +13,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import ExtractData.DatabaseClass;
 import GenericLibrary.GenericMethods;
 import PDFDataExtract.ReadingLeaseAggrements;
+import io.github.bonigarcia.wdm.WebDriverManager;
 
 public class MoveInCharges {
 
@@ -49,13 +51,20 @@ public class MoveInCharges {
 			MoveInCharges.checkAvailabilityandaddMoveInCharges();
 
 			return true;
-		} catch (Exception e) {
+		} 
+		catch (TimeoutException t) {
+				 WebDriverManager.chromedriver().clearDriverCache().setup();
+				 RunnerClass.failedReason = RunnerClass.failedReason + "," + "TimeOut Error";
+				return false;
+				
+		}
+		catch (Exception e) {
 			return false;
 		}
 
 	}
 
-	public static boolean checkAvailabilityandaddMoveInCharges() throws Exception {
+	public static boolean checkAvailabilityandaddMoveInCharges() {
 		try {
 			// Get All Auto Charges from Table
 			GetDataFromSQL.getMoveInCharges();
@@ -118,7 +127,14 @@ public class MoveInCharges {
 				}
 			}
 			return true;
-		} catch (Exception e) {
+		} 
+		catch (TimeoutException t) {
+				 WebDriverManager.chromedriver().clearDriverCache().setup();
+				 RunnerClass.failedReason = RunnerClass.failedReason + "," + "TimeOut Error";
+				return false;
+				
+		}
+		catch (Exception e) {
 			RunnerClass.statusID = 1;
 			e.printStackTrace();
 			GenericMethods.logger.error("Issue in Adding Move in charges");
@@ -132,7 +148,7 @@ public class MoveInCharges {
 	}
 
 	public static boolean addingMoveInCharge(String accountCode, String amount, String startDate, String endDate,
-			String description) throws Exception {
+			String description) {
 
 		try {
 			RunnerClass.driver.navigate().refresh();
@@ -177,7 +193,14 @@ public class MoveInCharges {
 			RunnerClass.driver.manage().timeouts().implicitlyWait(100, TimeUnit.SECONDS);
 			RunnerClass.wait = new WebDriverWait(RunnerClass.driver, Duration.ofSeconds(100));
 			return true;
-		} catch (Exception e) {
+		}
+		 catch (TimeoutException t) {
+				 WebDriverManager.chromedriver().clearDriverCache().setup();
+				 RunnerClass.failedReason = RunnerClass.failedReason + "," + "TimeOut Error";
+				return false;
+				
+		}
+		catch (Exception e) {
 			RunnerClass.statusID = 1;
 			RunnerClass.driver.navigate().refresh();
 			RunnerClass.js.executeScript("window.scrollBy(0,document.body.scrollHeight)");
