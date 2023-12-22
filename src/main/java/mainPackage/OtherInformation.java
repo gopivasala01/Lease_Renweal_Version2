@@ -231,7 +231,7 @@ public class OtherInformation {
 					RunnerClass.actions.moveToElement(RunnerClass.driver.findElement(Locators.renewalFollowUpNotes))
 							.build().perform();
 					RunnerClass.driver.findElement(Locators.renewalFollowUpNotes).click();
-					RunnerClass.driver.findElement(Locators.renewalFollowUpNotes).sendKeys(Keys.chord(Keys.HOME));
+					RunnerClass.driver.findElement(Locators.renewalFollowUpNotes).sendKeys(Keys.chord(Keys.END));
 					RunnerClass.driver.findElement(Locators.renewalFollowUpNotes).sendKeys(reneWalFollowupNotes);
 				}
 				catch (TimeoutException t) {
