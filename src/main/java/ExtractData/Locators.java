@@ -22,4 +22,10 @@ public class Locators {
     public static By popupClose = By.xpath("//*[@id='editStickyBtnDiv']/input[2]");
     public static By scheduledMaintanancePopUp = By.xpath("//*[text()='Scheduled Maintenance Notification']");
     public static By scheduledMaintanancePopUpOkButton = By.id("alertDoNotShow");
+    
+    
+    public static By advancedSearch = By.linkText("Advanced Search >>");
+    public static By advancedSearch_buildingsSection = By.id("searchResultTable_buildings");
+    public static By advancedSearch_buildingAddresses = By.xpath("//*[@id='searchResultTable_buildings']/following::table[1]/tbody/tr/td[2]/a");
+    
 }

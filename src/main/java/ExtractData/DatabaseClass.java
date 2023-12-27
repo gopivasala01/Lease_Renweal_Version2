@@ -130,7 +130,7 @@ public class DatabaseClass {
 		
 		try
 		{
-			String Query = "Select LeaseEntityID from LeaseFact_Dashboard where LeaseName='" + leaseName +"' and Building= '"+buildingAbbrivation+"'";
+			String Query = "Select top 1 LeaseEntityID from LeaseFact_Dashboard where LeaseName='" + leaseName +"' and Company= '"+company+"'";
 			if(getEntityID(Query) == true) {
 				 if(EntityID == null || EntityID == "") {
 			        	//RunnerClass.failedReason = "Building Not Available";
@@ -332,7 +332,6 @@ public class DatabaseClass {
 							String lease = leaseList.get(j).getText();
 							if(lease.toLowerCase().contains(completeBuildingName.toLowerCase()))
 							{
-								
 								driver.findElement(By.xpath("(//*[@class='section'])["+(i+1)+"]/ul/li["+(j+1)+"]/a")).click();
 								leaseSelected = true;
 								break;
@@ -353,6 +352,29 @@ public class DatabaseClass {
 							}
 						}
 						}
+						if (leaseSelected == false) {
+			                String companyName1 = displayedCompanies.get(i).getText();
+			                if (companyName1.toLowerCase().contains(company.toLowerCase()) && !companyName1.contains("Legacy") && !companyName1.contains("Sandbox")) 
+			                {
+			                    List<WebElement> advancesearch = RunnerClass.driver.findElements(Locators.advancedSearch);
+			                    advancesearch.get(i).click();
+			                    RunnerClass.actions.moveToElement(RunnerClass.driver.findElement(Locators.advancedSearch_buildingsSection)).build().perform();
+			                    List<WebElement> buildingAddresses = RunnerClass.driver.findElements(Locators.advancedSearch_buildingAddresses);
+			                    for (int k = 0; k < buildingAddresses.size(); k++)
+			                    {
+			                        String address = buildingAddresses.get(k).getText();
+			                        if (address.toLowerCase().endsWith(building.toLowerCase())) 
+			                        {
+			                            buildingAddresses.get(k).click();
+			                            leaseSelected = true;
+			                            break;
+			                        }
+			                    }
+			                  //  if (checkBuildingIsClicked == true)
+			                      //  break;
+			                    }
+			            }
+						
 					}
 					if(leaseSelected==true)
 					{
