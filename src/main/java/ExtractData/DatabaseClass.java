@@ -264,6 +264,7 @@ public class DatabaseClass {
 					if(driver.findElement(Locators.noItemsFoundMessagewhenLeaseNotFound).isDisplayed())
 					{
 						GenericMethods.logger.error("Building Not Found");
+						RunnerClass.failedReason = RunnerClass.failedReason + "," + "Building Not Found";
 						return false;
 					}
 					}
@@ -286,6 +287,7 @@ public class DatabaseClass {
 					if(driver.findElement(Locators.noItemsFoundMessagewhenLeaseNotFound).isDisplayed())
 					{
 						GenericMethods.logger.error("Building Not Found");
+						RunnerClass.failedReason = RunnerClass.failedReason + "," + "Building Not Found";
 						return false;
 					}
 					}
@@ -294,6 +296,7 @@ public class DatabaseClass {
 					catch(Exception e)
 					{
 						GenericMethods.logger.error("Building Not Found");
+						RunnerClass.failedReason = RunnerClass.failedReason + "," + "Building Not Found";
 				    return false;
 					}
 				}
@@ -382,7 +385,7 @@ public class DatabaseClass {
 				{
 				    
 					GenericMethods.logger.error("Building Not Found");
-					//RunnerClass.failedReason =  RunnerClass.failedReason+","+ "Building Not Found";
+					RunnerClass.failedReason =  RunnerClass.failedReason+","+ "Building Not Found";
 					return false;
 				}
 	         } 
@@ -396,7 +399,7 @@ public class DatabaseClass {
 		     {
 	         
 	        	 GenericMethods.logger.error("Issue in selecting Building");
-	        	 //RunnerClass.failedReason = RunnerClass.failedReason+","+  "Issue in selecting Building";
+	        	 RunnerClass.failedReason = RunnerClass.failedReason+","+  "Issue in selecting Building";
 	        	 return false;
 		     }
 		return true;

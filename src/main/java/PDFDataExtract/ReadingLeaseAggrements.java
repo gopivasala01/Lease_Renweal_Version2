@@ -18,7 +18,7 @@ public class ReadingLeaseAggrements {
 
 	
 	public static String text="";
-	public static String firstPageText="";
+	public static String executionPageText="";
 	public static String modifiedtext="";
 	public static String commencementDate ="";
 	public static String expirationDate ="";
@@ -30,7 +30,7 @@ public class ReadingLeaseAggrements {
 	public static String rbpAmount = "";
 	public static String rubsAmount = "";
 	public static String renewalExecutionDate="";
-	
+	public static int executionPageNumber;
 	
 	public static String leaseRenewalFee= "";
 	public static String increasedRent_amount = "";
@@ -46,7 +46,7 @@ public class ReadingLeaseAggrements {
 	
 	public static boolean getDataFromLeaseAgreements() throws Exception {
 		 text="";
-		 firstPageText="";
+		 executionPageText="";
 		 modifiedtext="";
 		 commencementDate ="";
 		 expirationDate ="";
@@ -61,6 +61,7 @@ public class ReadingLeaseAggrements {
 		 leaseRenewalFee= "";
 		 increasedRent_amount = "";
 		 HVACAirFilterFee = "";
+		 executionPageNumber=0;
 		 petRentFlag=false;
 		 monthlyTaxAmountFlag=false;
 		 rbpFlag=false;
@@ -108,23 +109,56 @@ public class ReadingLeaseAggrements {
 			    text = text.trim().replaceAll(" +", " ");
 			    text = text.toLowerCase();
 			    
+			    String pattern = "\\d{1,2}/\\d{1,2}/\\d{4}"; 
+			    
 			    PDFTextStripper stripper = new PDFTextStripper();
-				stripper.setStartPage(1);
-				stripper.setEndPage(1);
-				firstPageText = stripper.getText(document);
-				firstPageText = firstPageText.replaceAll(System.lineSeparator(), " ");
-				firstPageText = firstPageText.replaceAll(" +", " ");
-			    //System.out.println(text);
+			    for (int page = 1; page <= document.getNumberOfPages(); page++) {
+		            // Set the start and end page
+		            stripper.setStartPage(page);
+		            stripper.setEndPage(page);
+
+		            // Extract text from the specified page
+		            String pdfText = stripper.getText(document);
+
+		            
+		            Pattern datePattern = Pattern.compile(pattern);
+		            
+		            // Matcher for the extracted text
+		            Matcher matcher = datePattern.matcher(pdfText);
+
+		            String lastOccurrence = null;
+		            while (matcher.find()) {
+	                    lastOccurrence = matcher.group();
+	                }
+		            if (lastOccurrence != null) {
+		            	renewalExecutionDate = lastOccurrence;
+	                    System.out.println("Occurrence of Pattern (Page " + page + "): " + lastOccurrence);
+	                    break;
+	                }
+		        }
+ 
+				//GenericMethods.logger.info(text);
 				GenericMethods.logger.info("------------------------------------------------------------------");
 			    
-			    String pattern = "\\d{1,2}/\\d{1,2}/\\d{4}"; 
-			    Pattern datePattern = Pattern.compile(pattern);
+			   
 
-			    Matcher matcher = datePattern.matcher(firstPageText);
-			    
+			    //Matcher matcher = datePattern.matcher(firstPageText);
+			   /* Matcher matcher = datePattern.matcher(executionPageText);
+			    int occurrenceCount = 0;
+
 			    while (matcher.find()) {
-			    	renewalExecutionDate = matcher.group();
+			        occurrenceCount++;
+
+			        // Check if it's the second occurrence
+			        if (occurrenceCount == 2) {
+			            renewalExecutionDate = matcher.group();
+			            break; // Exit the loop after finding the second occurrence
+			        }
 			    }
+			    
+			   // while (matcher.find()) {
+			    	//renewalExecutionDate = matcher.group();
+			   // }
 			    if(renewalExecutionDate.isEmpty())
 			    {
 			    	 matcher = datePattern.matcher(text);
@@ -132,7 +166,7 @@ public class ReadingLeaseAggrements {
 			    		 renewalExecutionDate = matcher.group();
 			 	    	
 			 	    }
-			    }
+			    }*/
 			    String[] SplitDate = renewalExecutionDate.split("/");
 
 		       	 for (int i = 0; i < 2; i++) {

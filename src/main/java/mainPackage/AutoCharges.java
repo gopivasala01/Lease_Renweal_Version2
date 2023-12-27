@@ -221,8 +221,9 @@ public class AutoCharges {
 				GenericMethods.handleAlerts();
 
 				try {
-					WebElement errorMessage = GenericMethods
-							.findElementWithWait(By.xpath("//*[@id=\"errorMessages\"]/ul/li"));
+					Thread.sleep(2000);
+					WebElement errorMessage = RunnerClass.driver
+							.findElement(By.xpath("//*[@id=\"errorMessages\"]/ul/li"));
 					if (errorMessage != null && errorMessage.isDisplayed()) {
 						RunnerClass.driver.findElement(By.xpath("//*[@id=\"editAutoChargeForm\"]/div[3]/input[2]")).click();
 					}
