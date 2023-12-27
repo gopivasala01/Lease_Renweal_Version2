@@ -298,7 +298,7 @@ public class OtherInformation {
 
 				// Prior Monthly Rent
 				try {
-					if(!AutoCharges.previousMonthlyRent.isEmpty()|| !AutoCharges.previousMonthlyRent.equalsIgnoreCase(null) || !AutoCharges.previousMonthlyRent.equalsIgnoreCase("0.00")  ) {
+					if(!AutoCharges.previousMonthlyRent.isEmpty() || !AutoCharges.previousMonthlyRent.equalsIgnoreCase("") ) {
 						RunnerClass.actions.moveToElement(RunnerClass.driver.findElement(Locators.priorMonthlyRent)).build()
 								.perform();
 						RunnerClass.driver.findElement(Locators.priorMonthlyRent).click();
