@@ -48,7 +48,9 @@ public class MoveInCharges {
 			// Getting Rent Codes From Arizona
 			UpdateValues.updateDates();
 			UpdateValues.addingValuesToTable();
-			MoveInCharges.checkAvailabilityandaddMoveInCharges();
+			if(MoveInCharges.checkAvailabilityandaddMoveInCharges() == false) {
+				return false;
+			}
 
 			return true;
 		} 
