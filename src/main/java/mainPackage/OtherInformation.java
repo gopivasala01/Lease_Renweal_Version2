@@ -307,6 +307,15 @@ public class OtherInformation {
 						RunnerClass.driver.findElement(Locators.priorMonthlyRent).sendKeys(priorMonthlyRent);
 						Thread.sleep(3000);
 					} 
+					else {
+						RunnerClass.actions.moveToElement(RunnerClass.driver.findElement(Locators.priorMonthlyRent)).build()
+						.perform();
+						RunnerClass.driver.findElement(Locators.priorMonthlyRent).click();
+						RunnerClass.driver.findElement(Locators.priorMonthlyRent)
+						.sendKeys(Keys.chord(Keys.CONTROL, "a", Keys.DELETE));
+						RunnerClass.driver.findElement(Locators.priorMonthlyRent).sendKeys(currentMonthlyRent);
+						Thread.sleep(3000);
+					}
 				}
 				catch (TimeoutException t) {
 					 WebDriverManager.chromedriver().clearDriverCache().setup();
