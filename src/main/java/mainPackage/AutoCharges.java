@@ -331,7 +331,6 @@ public class AutoCharges {
 						GenericMethods.logger.error(description + " Amount Error");
 						RunnerClass.failedReason = RunnerClass.failedReason + "," + " issue in adding Auto Charge - "
 								+ description;
-						RunnerClass.statusID = 1;
 						break;
 
 					}
@@ -341,7 +340,6 @@ public class AutoCharges {
 						GenericMethods.logger.error(" issue in adding Auto Charge - " + description);
 						RunnerClass.failedReason = RunnerClass.failedReason + "," + " issue in adding Auto Charge - "
 								+ description;
-						RunnerClass.statusID = 1;
 						break;
 					} else
 						addingAnAutoCharge(chargeCode, amount, startDate, endDate, description);

@@ -180,7 +180,7 @@ public class UpdateValues {
 			}
 			GetDataFromSQL.updateTable(query1);
 			
-			if(((RunnerClass.company.equals("Boise")||RunnerClass.company.equals("Idaho Falls")||RunnerClass.company.equals("Utah"))&&ReadingLeaseAggrements.rubsFlag==true&&(!ReadingLeaseAggrements.rubsAmount.equals("Error") || !ReadingLeaseAggrements.rubsAmount.equals("n/a"))))
+			if(((RunnerClass.company.equals("Boise")||RunnerClass.company.equals("Idaho Falls")||RunnerClass.company.equals("Utah"))&&ReadingLeaseAggrements.rubsFlag==true&&(!ReadingLeaseAggrements.rubsAmount.equalsIgnoreCase("Error") || !ReadingLeaseAggrements.rubsAmount.equalsIgnoreCase("n/a"))))
 			{
 				query1 = "update automation.LeaseReneWalsAutoChargesConfiguration Set Flag = 1 where ID in (7)";
 				GetDataFromSQL.updateTable(query1);

@@ -114,11 +114,11 @@ public class dataExtractionClass {
 						}
 						return value;
 					}
-					else if(value.contains("n/a")) {
+					/*else if(value.contains("n/a")) {
 						return "n/a";
-					}
+					}*/
 					else {
-						return "Error";
+						continue;
 					}
 					
 					
