@@ -44,8 +44,14 @@ public class dataExtractionClass {
 					
 				}
 				else {
+					if(rent.isEmpty()) {
+						continue;
+					}
+					else {
+						return rent;
+					}
 					//System.out.println("Rent Value= "+rent);
-					return rent;
+					
 				}
 			}
 			catch(Exception e) {
