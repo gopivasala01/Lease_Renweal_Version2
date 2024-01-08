@@ -68,7 +68,7 @@ public class AppConfig {
 			   return "40010 - Rent Income";
 		   case "California":
 			   return "40010 - Rent Income";
-		   case "California PFW":
+		   case "California pfw":
 			   return "40010 - Rent Income";
 		   case "Houston":
 			   return "40010 - Rent Income";
@@ -160,7 +160,7 @@ public class AppConfig {
 			   return "40230 - Pet Rent";
 		   case "California":
 			   return "40230 - Pet Rent";
-		   case "California PFW":
+		   case "California pfw":
 			   return "40230 - Pet Rent";
 		   case "Houston":
 			   return "40230 - Pet Rent";
@@ -250,7 +250,7 @@ public class AppConfig {
 			   return "43060 - Filter Fee";
 		   case "California":
 			   return "43060 - Filter Fee";
-		   case "California PFW":
+		   case "California pfw":
 			   return "43060 - Filter Fee";
 		   case "Houston":
 			   return "43060 - Filter Fee";
@@ -339,7 +339,7 @@ public class AppConfig {
 			   return "43070 - Resident Benefit Package Fee";
 		   case "California":
 			   return "43070 - Resident Benefit Package Fee";
-		   case "California PFW":
+		   case "California pfw":
 			   return "43070 - Resident Benefit Package Fee";
 		   case "Houston":
 			   return "43070 - Resident Benefit Package Fee";
@@ -426,7 +426,7 @@ public class AppConfig {
 			   return "43040 - Resident Renewal Admin Fee"; 
 		   case "California":
 			   return "43040 - Resident Renewal Admin Fee"; 
-		   case "California PFW":
+		   case "California pfw":
 			   return "43040 - Resident Renewal Admin Fee"; 
 		   case "Houston":
 			   return "43040 - Resident Renewal Admin Fee"; 
@@ -513,7 +513,7 @@ public class AppConfig {
 		            return "43050 - Month-to-Month Admin Fee";
 		        case "California":
 		            return "43050 - Month-to-Month Admin Fee";
-		        case "California PFW":
+		        case "California pfw":
 		            return "43050 - Month-to-Month Admin Fee";
 		        case "Houston":
 		            return "43050 - Month-to-Month Admin Fee";
@@ -602,7 +602,7 @@ public class AppConfig {
 			   return "YES"; 
 		   case "California":
 			   return "YES";
-		   case "California PFW":
+		   case "California pfw":
 			   return "YES";
 		   case "Houston":
 			   return "YES";
@@ -689,7 +689,7 @@ public class AppConfig {
 			   return "Yes";
 		   case "California":
 			   return "Yes";
-		   case "California PFW":
+		   case "California pfw":
 			   return "Yes";
 		   case "Houston":
 			   return "Yes";
@@ -777,7 +777,7 @@ public class AppConfig {
 			   return "NO"; 
 		   case "California":
 			   return "NO";
-		   case "California PFW":
+		   case "California pfw":
 			   return "NO";
 		   case "Houston":
 			   return "NO";
@@ -864,7 +864,7 @@ public class AppConfig {
 				   return "No";
 			   case "California":
 				   return "No";
-			   case "California PFW":
+			   case "California pfw":
 				   return "No";
 			   case "Houston":
 				   return "No";
@@ -952,7 +952,7 @@ public class AppConfig {
 			           return "42030 - Utility Reimbursement";
 			       case "California":
 			           return "42030 - Utility Reimbursement";
-			       case "California PFW":
+			       case "California pfw":
 			           return "42030 - Utility Reimbursement";
 			       case "Houston":
 			           return "42030 - Utility Reimbursement";

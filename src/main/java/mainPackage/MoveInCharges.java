@@ -106,7 +106,7 @@ public class MoveInCharges {
 				}
 				// Add new Charge if it is not there
 				if (availabilityCheck == false) {
-					if(RunnerClass.company.equalsIgnoreCase("California")) {
+					if(RunnerClass.company.equalsIgnoreCase("California") || RunnerClass.company.equalsIgnoreCase("California pfw")) {
 						GenericMethods.logger.error("Move in charge not added due to the company being - " + RunnerClass.company);
 						
 					}

@@ -118,6 +118,9 @@ public class dataExtractionClass {
 						if(value.contains("/month")) {
 							value = value.replaceAll("/month", "");
 						}
+						if(value.contains(")")) {
+							continue;
+						}
 						return value;
 					}
 					/*else if(value.contains("n/a")) {

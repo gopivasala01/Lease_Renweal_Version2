@@ -342,7 +342,9 @@ public class AutoCharges {
 								+ description;
 						break;
 					} else
-						addingAnAutoCharge(chargeCode, amount, startDate, endDate, description);
+						if(addingAnAutoCharge(chargeCode, amount, startDate, endDate, description)==false) {
+							return false;
+						}
 				}
 
 			}
