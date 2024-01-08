@@ -41,6 +41,7 @@ public class ReadingLeaseAggrements {
 	public static boolean petRentFlag=false;
 	public static boolean monthlyTaxAmountFlag=false;
 	public static boolean rbpFlag=false;
+	public static boolean rbpOptOutFlag = false;
 	public static boolean rubsFlag=false;
 	
 	
@@ -65,6 +66,7 @@ public class ReadingLeaseAggrements {
 		 petRentFlag=false;
 		 monthlyTaxAmountFlag=false;
 		 rbpFlag=false;
+		 rbpOptOutFlag = false;
 		 rubsFlag=false;
 		
 		try {
@@ -108,6 +110,10 @@ public class ReadingLeaseAggrements {
 			    text = text.replaceAll(System.lineSeparator(), " ");
 			    text = text.trim().replaceAll(" +", " ");
 			    text = text.toLowerCase();
+			    
+			    if(text.contains("Resident Benefits Package Opt-Out Addendum")|| text.contains("resident benefits package opt-out addendum")||text.contains("RESIDENT BENEFITS PACKAGE OPT-OUT ADDENDUM")) {
+			    	rbpOptOutFlag = true;
+			    }
 			    
 			    String pattern = "\\d{1,2}/\\d{1,2}/\\d{4}"; 
 			    
@@ -209,11 +215,14 @@ public class ReadingLeaseAggrements {
 			    	petRent = dataExtractionClass.getValues(text,dataExtractionClass.getDataOf("petRentFromPDF"));
 			    	GenericMethods.logger.info("Pet Rent Amount = "+ petRent);
 			    }
-			    rbpFlag = dataExtractionClass.getFlags(text,dataExtractionClass.getDataOf("rbpAvailabilityCheck"));
-			    if(rbpFlag == true) {
-			    	rbpAmount = dataExtractionClass.getValues(text,dataExtractionClass.getDataOf("rbpFromPDF"));
-			    	GenericMethods.logger.info("RBP Amount = "+ rbpAmount);
+			    if(rbpOptOutFlag == false) {
+			    	   rbpFlag = dataExtractionClass.getFlags(text,dataExtractionClass.getDataOf("rbpAvailabilityCheck"));
+					    if(rbpFlag == true) {
+					    	rbpAmount = dataExtractionClass.getValues(text,dataExtractionClass.getDataOf("rbpFromPDF"));
+					    	GenericMethods.logger.info("RBP Amount = "+ rbpAmount);
+					    }
 			    }
+			 
 			    rubsFlag =dataExtractionClass.getFlags(text,dataExtractionClass.getDataOf("rubsAvailabilityCheck"));
 			    if(rubsFlag == true) {
 			    	rubsAmount = dataExtractionClass.getValuesWithStartandEndText(text,dataExtractionClass.getDataOf("rubsFromPDF"));

@@ -106,18 +106,24 @@ public class MoveInCharges {
 				}
 				// Add new Charge if it is not there
 				if (availabilityCheck == false) {
-					if (amount.equalsIgnoreCase("Error") || amount == "0.00") {
-						GenericMethods.logger.error("Issue in Adding Move in charge - " + description);
-						RunnerClass.failedReason = RunnerClass.failedReason + "," + "Issue in Adding Move in charge - "
-								+ description;
-						GenericMethods.logger.error(description + " is not updated");
-						return true;
+					if(RunnerClass.company.equalsIgnoreCase("California")) {
+						GenericMethods.logger.error("Move in charge not added due to the company being - " + RunnerClass.company);
+						
 					}
-
 					else {
-						addingMoveInCharge(chargeCode, amount, startDate, endDate, description);
-						availabilityCheck = true;
+						if (amount.equalsIgnoreCase("Error") || amount == "0.00") {
+							GenericMethods.logger.error("Issue in Adding Move in charge - " + description);
+							RunnerClass.failedReason = RunnerClass.failedReason + "," + "Issue in Adding Move in charge - "
+									+ description;
+							GenericMethods.logger.error(description + " is not updated");
+							return true;
+						}
 
+						else {
+								addingMoveInCharge(chargeCode, amount, startDate, endDate, description);
+								availabilityCheck = true;
+						}
+					
 					}
 						
 				}
