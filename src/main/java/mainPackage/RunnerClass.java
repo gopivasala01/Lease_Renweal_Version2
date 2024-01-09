@@ -139,21 +139,21 @@ public class RunnerClass {
 								+ failedReason + "',LeaseCompletionDate= getDate() where BuildingName like '%"
 								+ buildingAbbreviation + "%'";
 						GetDataFromSQL.updateTable(updateSuccessStatus);
-						continue;
+						
 					}
 					if (AutoCharges.clearExistingAutoCharges() == false) {
 						String updateSuccessStatus = "Update [Automation].leaseRenewalAutomation Set Status ='Review', StatusID=3,NotAutomatedFields='"
 								+ failedReason + "',LeaseCompletionDate= getDate() where BuildingName like '%"
 								+ buildingAbbreviation + "%'";
 						GetDataFromSQL.updateTable(updateSuccessStatus);
-						continue;
+						
 					}
 					if (AutoCharges.addingNewAutoCharges() == false) {
 						String updateSuccessStatus = "Update [Automation].leaseRenewalAutomation Set Status ='Review', StatusID=3,NotAutomatedFields='"
 								+ failedReason + "',LeaseCompletionDate= getDate() where BuildingName like '%"
 								+ buildingAbbreviation + "%'";
 						GetDataFromSQL.updateTable(updateSuccessStatus);
-						continue;
+						
 					}
 					if (OtherInformation.addingOtherInformation() == false) {
 						String updateSuccessStatus = "Update [Automation].leaseRenewalAutomation Set Status ='Review', StatusID=3,NotAutomatedFields='"
