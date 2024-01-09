@@ -23,6 +23,9 @@ public class Locators {
     public static By scheduledMaintanancePopUp = By.xpath("//*[text()='Scheduled Maintenance Notification']");
     public static By scheduledMaintanancePopUpOkButton = By.id("alertDoNotShow");
     
+    public static By scheduleMaintanancePopUp2 = By.xpath("//appcues[@class='cue-step-0 active']//modal-container");
+    public static By maintananceCloseButton = By.xpath("//a[normalize-space()='×']");
+    
     
     public static By advancedSearch = By.linkText("Advanced Search >>");
     public static By advancedSearch_buildingsSection = By.id("searchResultTable_buildings");

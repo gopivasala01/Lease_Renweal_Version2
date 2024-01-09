@@ -10,6 +10,7 @@ import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -161,6 +162,12 @@ public class DatabaseClass {
 					       
 					      
 						}
+						catch (TimeoutException t) {
+							 WebDriverManager.chromedriver().clearDriverCache().setup();
+							 RunnerClass.failedReason = RunnerClass.failedReason + "," + "TimeOut Error";
+							return false;
+							
+						}
 						catch(Exception e)
 						{
 							GenericMethods.logger.error("Building Not Available");
@@ -208,6 +215,12 @@ public class DatabaseClass {
 			
 		
 		}
+		catch (TimeoutException t) {
+			 WebDriverManager.chromedriver().clearDriverCache().setup();
+			 RunnerClass.failedReason = RunnerClass.failedReason + "," + "TimeOut Error";
+			return false;
+			
+		}
 		catch(Exception e)
 		{
 			e.printStackTrace();
@@ -241,6 +254,12 @@ public class DatabaseClass {
 				driver.findElement(Locators.searchbox).sendKeys(building);
 				wait.until(ExpectedConditions.invisibilityOf(driver.findElement(Locators.searchingLoader)));
 				}
+				catch (TimeoutException t) {
+					 WebDriverManager.chromedriver().clearDriverCache().setup();
+					 RunnerClass.failedReason = RunnerClass.failedReason + "," + "TimeOut Error";
+					return false;
+					
+				}
 				catch(Exception e2) {}
 			}
 			try
@@ -267,6 +286,13 @@ public class DatabaseClass {
 						RunnerClass.failedReason = RunnerClass.failedReason + "," + "Building Not Found";
 						return false;
 					}
+					
+					}
+					catch (TimeoutException t) {
+						 WebDriverManager.chromedriver().clearDriverCache().setup();
+						 RunnerClass.failedReason = RunnerClass.failedReason + "," + "TimeOut Error";
+						return false;
+						
 					}
 					catch(Exception e3) {}
 				}
@@ -291,7 +317,19 @@ public class DatabaseClass {
 						return false;
 					}
 					}
+					catch (TimeoutException t) {
+						 WebDriverManager.chromedriver().clearDriverCache().setup();
+						 RunnerClass.failedReason = RunnerClass.failedReason + "," + "TimeOut Error";
+						return false;
+						
+					}
 					catch(Exception e3) {}
+					}
+					catch (TimeoutException t) {
+						 WebDriverManager.chromedriver().clearDriverCache().setup();
+						 RunnerClass.failedReason = RunnerClass.failedReason + "," + "TimeOut Error";
+						return false;
+						
 					}
 					catch(Exception e)
 					{
@@ -301,6 +339,12 @@ public class DatabaseClass {
 					}
 				}
 			}
+			}
+			catch (TimeoutException t) {
+				 WebDriverManager.chromedriver().clearDriverCache().setup();
+				 RunnerClass.failedReason = RunnerClass.failedReason + "," + "TimeOut Error";
+				return false;
+				
 			}
 			catch(Exception e2)
 			{
@@ -392,6 +436,12 @@ public class DatabaseClass {
 							actions.moveToElement(driver.findElement(By.partialLinkText(leaseName.trim()))).build().perform();
 							driver.findElement(By.partialLinkText(leaseName.trim())).click();
 						}
+						catch (TimeoutException t) {
+							 WebDriverManager.chromedriver().clearDriverCache().setup();
+							 RunnerClass.failedReason = RunnerClass.failedReason + "," + "TimeOut Error";
+							return false;
+							
+						}
 						catch(Exception e)
 						{
 							e.printStackTrace();
@@ -434,6 +484,7 @@ public class DatabaseClass {
 				try
 				{
 					driver.manage().timeouts().implicitlyWait(3,TimeUnit.SECONDS);
+					actions = new Actions(driver);
 			        wait = new WebDriverWait(driver, Duration.ofSeconds(3));
 			        try
 			        {
@@ -449,14 +500,20 @@ public class DatabaseClass {
 					{
 						driver.findElement(Locators.scheduledMaintanancePopUpOkButton).click();
 					}
+					 
 			        }
 			        catch(Exception e) {}
 			        try
 			        {
-			        if(driver.findElement(Locators.scheduledMaintanancePopUpOkButton).isDisplayed())
+			        if(driver.findElement(Locators.scheduledMaintanancePopUpOkButton).isDisplayed()) {
 			        	driver.findElement(Locators.scheduledMaintanancePopUpOkButton).click();
 			        }
+			        else {
+						actions.sendKeys(Keys.ESCAPE);
+					}
+			        }
 			        catch(Exception e) {}
+			        
 					driver.manage().timeouts().implicitlyWait(5,TimeUnit.SECONDS);
 			        wait = new WebDriverWait(driver, Duration.ofSeconds(5));
 				}
