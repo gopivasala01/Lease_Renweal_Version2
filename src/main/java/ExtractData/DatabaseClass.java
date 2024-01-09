@@ -509,7 +509,7 @@ public class DatabaseClass {
 			        	driver.findElement(Locators.scheduledMaintanancePopUpOkButton).click();
 			        }
 			        else {
-						actions.sendKeys(Keys.ESCAPE);
+						actions.sendKeys(Keys.ESCAPE).build().perform();
 					}
 			        }
 			        catch(Exception e) {}
