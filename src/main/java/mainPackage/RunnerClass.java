@@ -162,8 +162,7 @@ public class RunnerClass {
 						GetDataFromSQL.updateTable(updateSuccessStatus);
 						continue;
 					} else {
-						String updateSuccessStatus = "Update [Automation].leaseRenewalAutomation Set Status ='Completed', StatusID=4,NotAutomatedFields='"
-								+ failedReason + "',LeaseCompletionDate= getDate() where BuildingName like '%"
+						String updateSuccessStatus = "Update [Automation].leaseRenewalAutomation Set Status ='Completed', StatusID=4,NotAutomatedFields='',LeaseCompletionDate= getDate() where BuildingName like '%"
 								+ buildingAbbreviation + "%'";
 						GetDataFromSQL.updateTable(updateSuccessStatus);
 						GenericMethods.closeDriver();
