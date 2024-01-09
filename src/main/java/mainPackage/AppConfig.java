@@ -132,6 +132,8 @@ public class AppConfig {
 				  return "40010 - Rent Income";
 		   case "Montana":
 				  return "40010 - Rent Income";
+		   case "Delaware":
+				  return "40010 - Rent Income";
 		   }
 		   return "";
 	   }
@@ -219,6 +221,8 @@ public class AppConfig {
 		   case "New Jersey":
 			   return "40230 - Pet Rent";
 		   case "Montana":
+			   return "40230 - Pet Rent";
+		   case "Delaware":
 			   return "40230 - Pet Rent";
 		   }
 		   return "";
@@ -310,6 +314,8 @@ public class AppConfig {
 			   return "43060 - Filter Fee";
 		   case "Montana":
 			   return "43060 - Filter Fee";
+		   case "Delaware":
+			   return "43060 - Filter Fee";
 			   
 		   }
 		   return "";
@@ -399,6 +405,8 @@ public class AppConfig {
 			   return "43070 - Resident Benefit Package Fee";
 		   case "Montana":
 			   return "43070 - Resident Benefit Package Fee";
+		   case "Delaware":
+			   return "43070 - Resident Benefit Package Fee";
 		   }
 		   return "";
 	   }
@@ -486,6 +494,8 @@ public class AppConfig {
 			   return "43040 - Resident Renewal Admin Fee";
 		   case "Montana":
 			   return "43040 - Resident Renewal Admin Fee";
+		   case "Delaware":
+			   return "43040 - Resident Renewal Admin Fee";
 		    
 		   }
 		   return "";
@@ -572,6 +582,8 @@ public class AppConfig {
 		        case "New Jersey":
 		            return "43050 - Month-to-Month Admin Fee";
 		        case "Montana":
+		            return "43050 - Month-to-Month Admin Fee";
+		        case "Delaware":
 		            return "43050 - Month-to-Month Admin Fee";
 		        default:
 		            return "";
@@ -662,6 +674,8 @@ public class AppConfig {
 			   return "YES";
 		   case "Montana":
 			   return "YES";
+		   case "Delaware":
+			   return "YES";
 		   }
 		   return "";
 	   }
@@ -748,6 +762,8 @@ public class AppConfig {
 		   case "New Jersey":
 			   return "Yes";
 		   case "Montana":
+			   return "Yes";
+		   case "Delaware":
 			   return "Yes";
 		   }
 		   return "";    
@@ -837,6 +853,8 @@ public class AppConfig {
 			   return "NO";
 		   case "Montana":
 			   return "NO";
+		   case "Delaware":
+			   return "NO";
 		   }
 		   return "";
 	   }
@@ -923,6 +941,8 @@ public class AppConfig {
 			   case "New Jersey":
 				   return "No";
 			   case "Montana":
+				   return "No";
+			   case "Delaware":
 				   return "No";
 			   }
 			   return "";    
@@ -1011,6 +1031,8 @@ public class AppConfig {
 			       case "New Jersey":
 			           return "42030 - Utility Reimbursement";
 			       case "Montana":
+			           return "42030 - Utility Reimbursement";
+			       case "Delaware":
 			           return "42030 - Utility Reimbursement";
 			   }
 
