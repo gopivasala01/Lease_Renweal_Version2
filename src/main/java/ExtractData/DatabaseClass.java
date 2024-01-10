@@ -485,10 +485,12 @@ public class DatabaseClass {
 				{
 					driver.manage().timeouts().implicitlyWait(3,TimeUnit.SECONDS);
 					actions = new Actions(driver);
-			        wait = new WebDriverWait(driver, Duration.ofSeconds(1));
+			        wait = new WebDriverWait(driver, Duration.ofSeconds(2));
 			        try {
+			        	Thread.sleep(1000);
 			        	driver.switchTo().frame(driver.findElement(Locators.scheduleMaintananceIFrame));
 			        	if(driver.findElement(Locators.scheduleMaintanancePopUp2).isDisplayed()) {
+			        		Thread.sleep(1000);
 			        		driver.findElement(Locators.maintananceCloseButton).click();
 			        	}
 			        	driver.switchTo().defaultContent();
