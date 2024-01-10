@@ -23,7 +23,8 @@ public class Locators {
     public static By scheduledMaintanancePopUp = By.xpath("//*[text()='Scheduled Maintenance Notification']");
     public static By scheduledMaintanancePopUpOkButton = By.id("alertDoNotShow");
     
-    public static By scheduleMaintanancePopUp2 = By.xpath("//appcues[@class='cue-step-0 active']//modal-container");
+    public static By scheduleMaintananceIFrame = By.xpath("//iframe[@srcdoc='<meta name=\"referrer\" content=\"origin\" />']");
+    public static By scheduleMaintanancePopUp2 = By.xpath("//section[@role='dialog']");
     public static By maintananceCloseButton = By.xpath("//a[normalize-space()='×']");
     
     

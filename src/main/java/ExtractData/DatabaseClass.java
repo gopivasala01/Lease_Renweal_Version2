@@ -485,7 +485,15 @@ public class DatabaseClass {
 				{
 					driver.manage().timeouts().implicitlyWait(3,TimeUnit.SECONDS);
 					actions = new Actions(driver);
-			        wait = new WebDriverWait(driver, Duration.ofSeconds(3));
+			        wait = new WebDriverWait(driver, Duration.ofSeconds(1));
+			        try {
+			        	driver.switchTo().frame(driver.findElement(Locators.scheduleMaintananceIFrame));
+			        	if(driver.findElement(Locators.scheduleMaintanancePopUp2).isDisplayed()) {
+			        		driver.findElement(Locators.maintananceCloseButton).click();
+			        	}
+			        	driver.switchTo().defaultContent();
+			        }
+			        catch(Exception e) {}
 			        try
 			        {
 					if(driver.findElement(Locators.popUpAfterClickingLeaseName).isDisplayed())
@@ -508,12 +516,10 @@ public class DatabaseClass {
 			        if(driver.findElement(Locators.scheduledMaintanancePopUpOkButton).isDisplayed()) {
 			        	driver.findElement(Locators.scheduledMaintanancePopUpOkButton).click();
 			        }
-			        else {
-						actions.sendKeys(Keys.ESCAPE).build().perform();
-					}
-			        }
+			     
+			        } 
 			        catch(Exception e) {}
-			        
+			       
 					driver.manage().timeouts().implicitlyWait(5,TimeUnit.SECONDS);
 			        wait = new WebDriverWait(driver, Duration.ofSeconds(5));
 				}

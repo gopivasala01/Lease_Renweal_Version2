@@ -77,8 +77,8 @@ public class GenericMethods {
         {
         if(RunnerClass.driver.findElement(Locators.loginError).isDisplayed())
         {
-        	logger.error("Login failed");
-		    RunnerClass.failedReason = RunnerClass.failedReason+","+ "Login failed";
+        	logger.error("Login Error/Failed");
+		    RunnerClass.failedReason = RunnerClass.failedReason+","+ "Login Error/Failed";
 			return false;
         }
 
