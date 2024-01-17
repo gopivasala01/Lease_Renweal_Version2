@@ -138,7 +138,8 @@ public class AutoCharges {
 					if ((AppConfig.getResidentBenefitsPackageChargeCode(RunnerClass.company)
 							.contains(autoChargeCode.replaceAll("[.]", "")) && ReadingLeaseAggrements.rbpFlag == true
 							&& !autoChargeAmount.replaceAll("[^0-9]", "")
-									.equals(ReadingLeaseAggrements.rbpAmount.replaceAll("[^0-9]", "")))) {
+									.equals(ReadingLeaseAggrements.rbpAmount.replaceAll("[^0-9]", ""))) || (AppConfig.getResidentBenefitsPackageChargeCode(RunnerClass.company)
+											.contains(autoChargeCode.replaceAll("[.]", "")) && ReadingLeaseAggrements.rbpOptOutFlag == true)) {
 						RBPEdit = true;
 						editButtons.get(k).click();
 						editingExistingAutoCharge();

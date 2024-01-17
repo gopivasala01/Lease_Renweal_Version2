@@ -484,7 +484,6 @@ public class DatabaseClass {
 				try
 				{
 					driver.manage().timeouts().implicitlyWait(3,TimeUnit.SECONDS);
-					actions = new Actions(driver);
 			        wait = new WebDriverWait(driver, Duration.ofSeconds(2));
 			        try {
 			        	Thread.sleep(1000);
