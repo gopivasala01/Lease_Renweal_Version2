@@ -3,6 +3,7 @@ package ExtractData;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.Duration;
 import java.util.List;
@@ -39,7 +40,31 @@ public class DatabaseClass {
 	public static String leaseEntityID;
 	public static String buildingEntityID;
 	
-	
+	public static void insertData(String buildingName, String status, int statusID) throws Exception
+	  {
+
+		  String currentTime = GenericMethods.getCurrentDateTime();
+		  String connectionUrl = "jdbc:sqlserver://azrsrv001.database.windows.net;databaseName=HomeRiverDB;user=service_sql02;password=xzqcoK7T;encrypt=true;trustServerCertificate=true;";
+		  String sql;
+		  if(statusID==1)
+		   sql = "Update Automation.LeaseRenewalAutomation Set Status ='"+status+"', StatusID="+statusID+",NotAutomatedFields=NULL,StartTime= "+currentTime+" where BuildingName like '%"+buildingName+"%'";
+		  else 
+			sql = "Update Automation.LeaseRenewalAutomation Set Status ='"+status+"', StatusID="+statusID+",StartTime= '"+currentTime+"' where BuildingName like '%"+buildingName+"%'";
+        //String sql = "Update [Automation].[LeaseInfo] Set Status = 'Completed', StatusID =4 where OwnerName='Duff, V.'";
+		  
+		    try (Connection conn = DriverManager.getConnection(connectionUrl);
+		        Statement stmt = conn.createStatement();)
+
+		    {
+		      stmt.executeUpdate(sql);
+		      System.out.println("Database updated successfully ");
+		      stmt.close();
+	            conn.close();
+		    } catch (SQLException e) {
+		      e.printStackTrace();
+		    }
+        
+	  }
 	
 	public static boolean getEntityID(String query)
 	{

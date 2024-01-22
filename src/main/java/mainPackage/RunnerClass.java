@@ -64,7 +64,10 @@ public class RunnerClass {
 		GetDataFromSQL.getBuildingsList(AppConfig.pendingRenewalLeases);
 		int j = 0;
 		while (j < 3) {
-			for (int i = 0; i < pendingRenewalLeases.length; i++) {
+			for (int i = 0; i < pendingRenewalLeases.length; i++) 
+			{
+				
+
 				GenericMethods.logger.info(
 						"-------------------------------------------------------------------------------------------");
 				GenericMethods.logger.info(" Record -- " + (i + 1));
@@ -98,7 +101,8 @@ public class RunnerClass {
 						buildingAbbreviation = buildingAbbreviation;
 				} catch (Exception e) {
 				}
-
+				DatabaseClass.insertData(buildingAbbreviation,"Started",6);
+				
 				try {
 					if (GenericMethods.login() == false) {
 						String updateSuccessStatus = "Update [Automation].leaseRenewalAutomation Set Status ='Failed', StatusID=3,NotAutomatedFields='"
