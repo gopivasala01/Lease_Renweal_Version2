@@ -196,7 +196,18 @@ public class MoveInCharges {
 					RunnerClass.driver.findElement(Locators.moveInChargeCancel).click();
 				}
 
-			} catch (Exception e) {
+			}
+			 catch (TimeoutException t) {
+				 WebDriverManager.chromedriver().clearDriverCache().setup();
+				 RunnerClass.failedReason = RunnerClass.failedReason + "," + "TimeOut Error";
+				return false;
+				
+			 }
+			catch (Exception e) {
+				GenericMethods.logger.error("Issue While Saving Move in Charge" + description);
+				RunnerClass.failedReason = RunnerClass.failedReason + "," + "Issue in While Saving Move in Charge - "
+						+ description;
+				return false;
 			}
 			RunnerClass.driver.manage().timeouts().implicitlyWait(100, TimeUnit.SECONDS);
 			RunnerClass.wait = new WebDriverWait(RunnerClass.driver, Duration.ofSeconds(100));
