@@ -66,7 +66,18 @@ public class RunnerClass {
 		while (j < 3) {
 			for (int i = 0; i < pendingRenewalLeases.length; i++) 
 			{
-				
+				if (AppConfig.saveButtonOnAndOff == false) 
+	            {
+	                String updateSuccessStatus = "Update [Automation].leaseRenewalAutomation Set Status ='Failed', StatusID=3,NotAutomatedFields='Save Functionality is Off',LeaseCompletionDate= getDate() where BuildingName like '%" + buildingAbbreviation + "%'";
+	                GetDataFromSQL.updateTable(updateSuccessStatus);
+
+	            } else 
+	            {
+	                try {
+	                    FileUtils.cleanDirectory(new File(AppConfig.downloadFilePath));
+	                } catch (Exception e) {
+	                }
+	            }
 
 				GenericMethods.logger.info(
 						"-------------------------------------------------------------------------------------------");
