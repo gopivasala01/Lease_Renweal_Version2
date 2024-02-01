@@ -150,28 +150,28 @@ public class RunnerClass {
 						continue;
 					}
 					if (MoveInCharges.verifyLedgerForMonhtlyRentStartDate() == false) {
-						String updateSuccessStatus = "Update [Automation].leaseRenewalAutomation Set Status ='Review', StatusID=3,NotAutomatedFields='"
+						String updateSuccessStatus = "Update [Automation].leaseRenewalAutomation Set Status ='Review', StatusID=5,NotAutomatedFields='"
 								+ failedReason + "',LeaseCompletionDate= getDate() where BuildingName like '%"
 								+ buildingAbbreviation + "%'";
 						GetDataFromSQL.updateTable(updateSuccessStatus);
 						
 					}
 					if (AutoCharges.clearExistingAutoCharges() == false) {
-						String updateSuccessStatus = "Update [Automation].leaseRenewalAutomation Set Status ='Review', StatusID=3,NotAutomatedFields='"
+						String updateSuccessStatus = "Update [Automation].leaseRenewalAutomation Set Status ='Review', StatusID=5,NotAutomatedFields='"
 								+ failedReason + "',LeaseCompletionDate= getDate() where BuildingName like '%"
 								+ buildingAbbreviation + "%'";
 						GetDataFromSQL.updateTable(updateSuccessStatus);
 						
 					}
 					if (AutoCharges.addingNewAutoCharges() == false) {
-						String updateSuccessStatus = "Update [Automation].leaseRenewalAutomation Set Status ='Review', StatusID=3,NotAutomatedFields='"
+						String updateSuccessStatus = "Update [Automation].leaseRenewalAutomation Set Status ='Review', StatusID=5,NotAutomatedFields='"
 								+ failedReason + "',LeaseCompletionDate= getDate() where BuildingName like '%"
 								+ buildingAbbreviation + "%'";
 						GetDataFromSQL.updateTable(updateSuccessStatus);
 						
 					}
 					if (OtherInformation.addingOtherInformation() == false) {
-						String updateSuccessStatus = "Update [Automation].leaseRenewalAutomation Set Status ='Review', StatusID=3,NotAutomatedFields='"
+						String updateSuccessStatus = "Update [Automation].leaseRenewalAutomation Set Status ='Review', StatusID=5,NotAutomatedFields='"
 								+ failedReason + "',LeaseCompletionDate= getDate() where BuildingName like '%"
 								+ buildingAbbreviation + "%'";
 						GetDataFromSQL.updateTable(updateSuccessStatus);
