@@ -422,7 +422,13 @@ public class OtherInformation {
 			DatabaseClass.intermittentPopUp(RunnerClass.driver);
 
 			// Related Activities
-			RelatedActivities();
+			if(RelatedActivities()== true) {
+				RunnerClass.failedReason = RunnerClass.failedReason + "," + "Related Activities Failed";
+				return true;
+			}
+			else {
+				return false;
+			}
 		}
 		catch (TimeoutException t) {
 				 WebDriverManager.chromedriver().clearDriverCache().setup();
@@ -453,6 +459,7 @@ public class OtherInformation {
 				}
 			} catch (Exception e1) {
 				// Ignore any exception that might occur during lease fee removal
+				
 			}
 
 			// Related Activities - New Start Date
@@ -499,6 +506,7 @@ public class OtherInformation {
 		} catch (TimeoutException t) {
 			 WebDriverManager.chromedriver().clearDriverCache().setup();
 			 RunnerClass.failedReason = RunnerClass.failedReason + "," + "TimeOut Error";
+			 GenericMethods.logger.error("TimeOut Error");
 			return false;
 			
 		}

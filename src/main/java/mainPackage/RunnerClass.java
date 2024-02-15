@@ -68,8 +68,9 @@ public class RunnerClass {
 			{
 				if (AppConfig.saveButtonOnAndOff == false) 
 	            {
-	                String updateSuccessStatus = "Update [Automation].leaseRenewalAutomation Set Status ='Failed', StatusID=3,NotAutomatedFields='Save Functionality is Off',LeaseCompletionDate= getDate() where BuildingName like '%" + buildingAbbreviation + "%'";
+	                String updateSuccessStatus = "Update [Automation].leaseRenewalAutomation Set Status ='Failed', StatusID=3,NotAutomatedFields='Save Functionality is Off',LeaseCompletionDate= getDate() where BuildingName like '%" + pendingRenewalLeases[i][1] + "%'";
 	                GetDataFromSQL.updateTable(updateSuccessStatus);
+	                break;
 
 	            } else 
 	            {
@@ -80,7 +81,7 @@ public class RunnerClass {
 	            }
 
 				GenericMethods.logger.info(
-						"-------------------------------------------------------------------------------------------");
+ 						"-------------------------------------------------------------------------------------------");
 				GenericMethods.logger.info(" Record -- " + (i + 1));
 				company = pendingRenewalLeases[i][0];
 				buildingAbbreviation = pendingRenewalLeases[i][1];

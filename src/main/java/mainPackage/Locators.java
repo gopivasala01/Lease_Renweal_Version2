@@ -95,7 +95,7 @@ public class Locators {
     public static By clickPath = By.xpath("//*[@id=\"cal1\"]/table/tbody/tr[2]/td[3]/table[3]/tbody/tr/td[2]/a/img");
     public static By clickPath1 = By.xpath("/html/body/div[3]/div[2]/table/tbody/tr/td[2]/form/div[16]/table/tbody/tr/td[1]");
     
-    public static By relatedActivities_newLeaseRenewalPopUpHeading = By.xpath("//*[@id=\"editLeaseRenewalContainer\"]/div[2]/table/tbody/tr[2]/th");
+    public static By relatedActivities_newLeaseRenewalPopUpHeading = By.xpath("//*[@id='editLeaseRenewalContainer']/div[2]/table/tbody/tr[2]/th");
     public static By ledgerTab = By.xpath("//*[@id=\"tab2\"]");
     
     public static By moveInCharges_List =By.xpath("//*[@id='ledgerDataTable']/tbody/tr/td[5]");
