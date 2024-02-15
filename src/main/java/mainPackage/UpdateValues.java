@@ -31,7 +31,11 @@ public class UpdateValues {
 		//Clear all values Configuration table first
 		String query1 = "update automation.LeaseReneWalsAutoChargesConfiguration set Amount = Null, StartDate= Null, EndDate= Null, Flag = Null";
 		GetDataFromSQL.updateTable(query1);
-		
+		startDate="";
+		endDate="";
+		lastDayOfPreviousMonthUsingStartDate="";
+		firstFullMonth="";
+		secondFullMonth="";
 		
 		try {
 			startDate = GenericMethods.convertDate(ReadingLeaseAggrements.commencementDate);
