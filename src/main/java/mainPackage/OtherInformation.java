@@ -104,8 +104,6 @@ public class OtherInformation {
 				if (ReadingLeaseAggrements.rbpFlag == true) { // If
 																					// residentBenefitsPackageAvailabilityCheck
 																					// is true,
-																					// Select the option for "enrolled
-																					// in RBP for PM use"
 					try {
 						RunnerClass.actions
 								.moveToElement(RunnerClass.driver.findElement(Locators.enrolledInRBPForPMUse)).build()
