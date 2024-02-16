@@ -97,9 +97,7 @@ public class RunnerClass {
 					company = "California pfw";
 				}
 
-				completeBuildingAbbreviation = buildingAbbreviation; // This will be used when Building not found in
-																		// first
-																		// attempt
+				completeBuildingAbbreviation = buildingAbbreviation; 
 				try {
 					String a = buildingAbbreviation;
 					a = a.replace(" ", "");

@@ -194,6 +194,9 @@ public class MoveInCharges {
 			try {
 				if (RunnerClass.driver.findElement(Locators.somethingWrongInSavingCharge).isDisplayed()) {
 					RunnerClass.driver.findElement(Locators.moveInChargeCancel).click();
+					GenericMethods.logger.error("Issue While Saving Move in Charge" + description);
+					RunnerClass.failedReason = RunnerClass.failedReason + "," + "Issue in While Saving Move in Charge - "+ description;
+					return false;
 				}
 
 			}
@@ -203,12 +206,7 @@ public class MoveInCharges {
 				return false;
 				
 			 }
-			catch (Exception e) {
-				GenericMethods.logger.error("Issue While Saving Move in Charge" + description);
-				RunnerClass.failedReason = RunnerClass.failedReason + "," + "Issue in While Saving Move in Charge - "
-						+ description;
-				return false;
-			}
+			catch (Exception e) {}
 			RunnerClass.driver.manage().timeouts().implicitlyWait(100, TimeUnit.SECONDS);
 			RunnerClass.wait = new WebDriverWait(RunnerClass.driver, Duration.ofSeconds(100));
 			return true;
