@@ -148,7 +148,7 @@ public class UpdateValues {
 				query = query+"\n Update automation.LeaseReneWalsAutoChargesConfiguration Set ChargeCode = '"+AppConfig.getResidentUtilityBillChargeCode(RunnerClass.company)+"',Amount = '"+ReadingLeaseAggrements.rubsAmount+"',StartDate='"+updated_monthlyRent_StartDate+"',EndDate='',Flag = '' where ID=7";
 			    break;
 			case 6:
-				query = query+"\nUpdate automation.LeaseReneWalsAutoChargesConfiguration Set StartDate='',EndDate='',Flag = '' where ID=11";
+				query = query+"\nUpdate automation.LeaseReneWalsAutoChargesConfiguration Set Amount='',StartDate='',EndDate='',Flag = '' where ID=11";
 				break;
 			}
 		 }

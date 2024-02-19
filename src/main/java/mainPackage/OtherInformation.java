@@ -312,7 +312,7 @@ public class OtherInformation {
 						RunnerClass.driver.findElement(Locators.priorMonthlyRent).click();
 						RunnerClass.driver.findElement(Locators.priorMonthlyRent)
 						.sendKeys(Keys.chord(Keys.CONTROL, "a", Keys.DELETE));
-						if(RunnerClass.runfailedCases == true) {
+						if(RunnerClass.runfailedCases == true && RunnerClass.priorRentCharges != null) {
  							RunnerClass.driver.findElement(Locators.priorMonthlyRent).sendKeys(RunnerClass.priorRentCharges);
 							Thread.sleep(3000);
 						}

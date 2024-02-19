@@ -80,7 +80,7 @@ public class RunnerClass {
 	                    FileUtils.cleanDirectory(new File(AppConfig.downloadFilePath));
 	                } catch (Exception e) {
 	                }
-	            }
+	            } 
 
 				GenericMethods.logger.info(
  						"-------------------------------------------------------------------------------------------");
@@ -90,6 +90,7 @@ public class RunnerClass {
 				leaseOwnerName = pendingRenewalLeases[i][2];
 				statusID = 0;
 				failedReason = "";
+				priorRentCharges="";
 
 				try {
 					FileUtils.cleanDirectory(new File(AppConfig.downloadFilePath));
