@@ -111,7 +111,7 @@ public class MoveInCharges {
 						
 					}
 					else {
-						if (amount.equalsIgnoreCase("Error") || amount == "0.00") {
+						if (amount.equalsIgnoreCase("Error") || amount.equalsIgnoreCase("0.00") || amount.equalsIgnoreCase("n/a")) {
 							GenericMethods.logger.error("Issue in Adding Move in charge - " + description);
 							RunnerClass.failedReason = RunnerClass.failedReason + "," + "Issue in Adding Move in charge - "
 									+ description;

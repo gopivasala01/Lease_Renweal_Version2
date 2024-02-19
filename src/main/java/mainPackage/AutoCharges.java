@@ -424,7 +424,7 @@ public class AutoCharges {
 		catch (Exception e) {
 			try {
 				e.printStackTrace();
-				GenericMethods.logger.error("Issue in adding Move in Charge" + description);
+				GenericMethods.logger.error("Issue in adding Auto Charge" + description);
 				RunnerClass.failedReason = RunnerClass.failedReason + "," + "Issue in adding Auto Charge - "
 						+ description;
 				RunnerClass.driver.findElement(Locators.autoCharge_CancelButton).click();
