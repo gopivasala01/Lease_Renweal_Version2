@@ -121,6 +121,7 @@ public class AutoCharges {
 									.equals(ReadingLeaseAggrements.monthlyRent.replaceAll("[^0-9]", ""))) {
 						monthlyRentEdit = true;
 						previousMonthlyRent = autoChargeAmount;
+						UpdateValues.priorMonthlyRent(previousMonthlyRent);
 						GenericMethods.logger.info("Previous Month rent= " +previousMonthlyRent);
 						editButtons.get(k).click();
 						editingExistingAutoCharge();

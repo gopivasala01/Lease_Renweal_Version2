@@ -147,6 +147,9 @@ public class UpdateValues {
 			case 5: 
 				query = query+"\n Update automation.LeaseReneWalsAutoChargesConfiguration Set ChargeCode = '"+AppConfig.getResidentUtilityBillChargeCode(RunnerClass.company)+"',Amount = '"+ReadingLeaseAggrements.rubsAmount+"',StartDate='"+updated_monthlyRent_StartDate+"',EndDate='',Flag = '' where ID=7";
 			    break;
+			case 6:
+				query = query+"\nUpdate automation.LeaseReneWalsAutoChargesConfiguration Set StartDate='',EndDate='',Flag = '' where ID=11";
+				break;
 			}
 		 }
 		GetDataFromSQL.updateTable(query);
@@ -154,9 +157,9 @@ public class UpdateValues {
 		String query1 ="";
 		//if(RunnerClass.portfolioType=="MCH")
 		//{
-			if(ReadingLeaseAggrements.petRentFlag==false ||(ReadingLeaseAggrements.petRentFlag==true&&(ReadingLeaseAggrements.petRent =="0.00" ||ReadingLeaseAggrements.petRent =="Error" || ReadingLeaseAggrements.petRent =="n/a"  )) )
+			if(ReadingLeaseAggrements.petRentFlag==false ||(ReadingLeaseAggrements.petRentFlag==true&&(ReadingLeaseAggrements.petRent.equalsIgnoreCase("0.00") ||ReadingLeaseAggrements.petRent.equalsIgnoreCase("Error") || ReadingLeaseAggrements.petRent.equalsIgnoreCase("n/a")  )) )
 			{
-				if(ReadingLeaseAggrements.rbpFlag==true && RunnerClass.company!="Hawaii"&& RunnerClass.company!="Chicago PFW")
+				if(ReadingLeaseAggrements.rbpFlag==true && !RunnerClass.company.equalsIgnoreCase("Hawaii")&& !RunnerClass.company.equalsIgnoreCase("Chicago PFW"))
 				{
 						query1 = "update automation.LeaseReneWalsAutoChargesConfiguration Set Flag = 1 where ID in (2,4)";
 				}
@@ -171,7 +174,7 @@ public class UpdateValues {
 			{
 			   if(ReadingLeaseAggrements.petRentFlag==true)
 				{
-				   if(ReadingLeaseAggrements.rbpFlag==true && RunnerClass.company!="Hawaii"&& RunnerClass.company!="Chicago PFW")
+				   if(ReadingLeaseAggrements.rbpFlag==true && !RunnerClass.company.equalsIgnoreCase("Hawaii")&& !RunnerClass.company.equalsIgnoreCase("Chicago PFW"))
 					{
 						query1 = "update automation.LeaseReneWalsAutoChargesConfiguration Set Flag = 1 where ID in (2,4,6)";
 						}
@@ -184,7 +187,7 @@ public class UpdateValues {
 			}
 			GetDataFromSQL.updateTable(query1);
 			
-			if(((RunnerClass.company.equals("Boise")||RunnerClass.company.equals("Idaho Falls")||RunnerClass.company.equals("Utah"))&&ReadingLeaseAggrements.rubsFlag==true&&(!ReadingLeaseAggrements.rubsAmount.equalsIgnoreCase("Error") || !ReadingLeaseAggrements.rubsAmount.equalsIgnoreCase("n/a"))))
+			if(((RunnerClass.company.equals("Boise")||RunnerClass.company.equals("Idaho Falls")||RunnerClass.company.equals("Utah"))&& ReadingLeaseAggrements.rubsFlag==true&& (!ReadingLeaseAggrements.rubsAmount.equalsIgnoreCase("Error") || !ReadingLeaseAggrements.rubsAmount.equalsIgnoreCase("n/a"))))
 			{
 				query1 = "update automation.LeaseReneWalsAutoChargesConfiguration Set Flag = 1 where ID in (7)";
 				GetDataFromSQL.updateTable(query1);
@@ -226,7 +229,22 @@ public class UpdateValues {
 		}
 	}
 	
-	
+	public static boolean priorMonthlyRent(String PriorRent) {
+		try{
+			String query ="";
+			query = "Update automation.LeaseReneWalsAutoChargesConfiguration Set Amount = '"+PriorRent+"',Flag = 1 where ID in (11)";
+			GetDataFromSQL.updateTable(query);
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			GenericMethods.logger.error("Issue in adding values to prior monthly rent");
+			RunnerClass.failedReason =  RunnerClass.failedReason+","+"Internal Error - prior monthly rent";
+			return false;
+		}
+		return true;
+		
+	}
 	
 	public static void getRentCodeForArizona() throws Exception
 	{

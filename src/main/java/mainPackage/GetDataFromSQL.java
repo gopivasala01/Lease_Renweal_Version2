@@ -222,7 +222,47 @@ public class GetDataFromSQL {
 		 return false;
 		}
 	}
-
+	public static boolean getpriorRentCharges()
+	{
+		try
+		{
+		        Connection con = null;
+		        Statement stmt = null;
+		        ResultSet rs = null;
+		            //Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+		            con = DriverManager.getConnection(AppConfig.connectionUrl);
+		            String SQL = AppConfig.getpriorRentCharges;
+		            stmt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+		           // stmt = con.createStatement();
+		            rs = stmt.executeQuery(SQL);
+		            int rows =0;
+		            if (rs.last()) {
+		            	rows = rs.getRow();
+		            	// Move to beginning
+		            	rs.beforeFirst();
+		            }
+		            GenericMethods.logger.info("prior rent with status = "+rows);
+		           int  i=0;
+		            while(rs.next())
+		            {
+		                String  amount = (String) rs.getObject(1);
+		                GenericMethods.logger.info( "Prior Rent = "+ amount );
+		    				
+		    				RunnerClass.priorRentCharges = amount;
+		    				//Monthly Rent From Lease Agreement
+		    				i++;
+		            }	
+		            rs.close();
+		            stmt.close();
+		            con.close();
+		 return true;
+		}
+		catch(Exception e) 
+		{
+			e.printStackTrace();
+		 return false;
+		}
+	}
 
 
 }

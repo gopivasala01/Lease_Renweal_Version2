@@ -306,13 +306,21 @@ public class OtherInformation {
 						Thread.sleep(3000);
 					} 
 					else {
+						GetDataFromSQL.getpriorRentCharges();
 						RunnerClass.actions.moveToElement(RunnerClass.driver.findElement(Locators.priorMonthlyRent)).build()
 						.perform();
 						RunnerClass.driver.findElement(Locators.priorMonthlyRent).click();
 						RunnerClass.driver.findElement(Locators.priorMonthlyRent)
 						.sendKeys(Keys.chord(Keys.CONTROL, "a", Keys.DELETE));
-						RunnerClass.driver.findElement(Locators.priorMonthlyRent).sendKeys(currentMonthlyRent);
-						Thread.sleep(3000);
+						if(RunnerClass.runfailedCases == true) {
+ 							RunnerClass.driver.findElement(Locators.priorMonthlyRent).sendKeys(RunnerClass.priorRentCharges);
+							Thread.sleep(3000);
+						}
+						else {
+							RunnerClass.driver.findElement(Locators.priorMonthlyRent).sendKeys(currentMonthlyRent);
+							Thread.sleep(3000);
+						}
+						
 					}
 				}
 				catch (TimeoutException t) {

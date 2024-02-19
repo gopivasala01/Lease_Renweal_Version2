@@ -156,7 +156,7 @@ public class DatabaseClass {
 		
 		try
 		{
-			String Query = "Select top 1 LeaseEntityID from LeaseFact_Dashboard where LeaseName='" + leaseName +"' and Company= '"+company+"'";
+			String Query = "Select top 1 LeaseEntityID from LeaseFact_Dashboard where LeaseName='" + leaseName +"' and Company= '"+company+"' and IsActive='Yes'";
 			if(getEntityID(Query) == true) {
 				 if(EntityID == null || EntityID == "") {
 			        	//RunnerClass.failedReason = "Building Not Available";

@@ -36,6 +36,7 @@ public class RunnerClass {
 	public static ArrayList<String> failedBuildings = new ArrayList<String>();
 	public static String[][] autoCharges;
 	public static String[][] moveInCharges;
+	public static String priorRentCharges;
 	public static String[] statusList;
 	public static HashMap<String, String> failedReaonsList = new HashMap<String, String>();
 	public static String leaseStatuses[][];
@@ -56,6 +57,7 @@ public class RunnerClass {
 	public static String arizonaRentCode = "";
 	public static String completeBuildingAbbreviation;
 	public static String portfolioName;
+	public static boolean runfailedCases = false;
 
 	public static void main(String[] args) throws Exception {
 		// TODO Auto-generated method stub
@@ -193,6 +195,7 @@ public class RunnerClass {
 
 			
 			if (pendingRenewalLeases.length > 0) {
+				runfailedCases = true;
 				System.out.println((j + 1) + "- Time Looping");
 				j++;
 			}	
