@@ -37,7 +37,7 @@ public class AppConfig {
 	   
 	   public static String excelFileLocation = "E:\\Automation\\Gopi\\Lease Audit Automation";
 	   
-	   public static String getAutoCharges = "Select ChargeCode, Amount, StartDate,EndDate,Description from automation.LeaseReneWalsAutoChargesConfiguration Where Flag =1";
+	   public static String getAutoCharges = "Select ChargeCode, Amount, StartDate,EndDate,Description from automation.LeaseReneWalsAutoChargesConfiguration Where Flag =1 Description !='PriorRentMonthly'";
 	   public static String[] monthlyRentFromPDF = {"Monthly Rent:^Monthly Rent due in the amount of $^ ","Monthly Rent:^Tenant will pay Landlord monthly rent in the amount of $^ ","monthly installments,^on or before the 1st day of each month, in the amount of $^ "};
 	   public static String getMoveInCharges = "Select ChargeCode, Amount, StartDate,EndDate,Description from automation.LeaseReneWalsMoveInChargesConfiguration Where Flag =1";
 	   public static String getpriorRentCharges = "Select Amount from automation.LeaseReneWalsAutoChargesConfiguration Where Description ='PriorRentMonthly' and Flag =1";
