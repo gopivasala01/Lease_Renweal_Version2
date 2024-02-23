@@ -170,6 +170,7 @@ public class DatabaseClass {
 							driver.manage().timeouts().implicitlyWait(10,TimeUnit.SECONDS);
 					        wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 					        driver.navigate().refresh();
+					        Thread.sleep(3000);
 					        intermittentPopUp(driver);
 					        Thread.sleep(2000);
 					        driver.manage().timeouts().implicitlyWait(2,TimeUnit.SECONDS);

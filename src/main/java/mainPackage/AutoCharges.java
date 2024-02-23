@@ -124,16 +124,24 @@ public class AutoCharges {
 						UpdateValues.priorMonthlyRent(previousMonthlyRent);
 						GenericMethods.logger.info("Previous Month rent= " +previousMonthlyRent);
 						editButtons.get(k).click();
-						editingExistingAutoCharge();
-						saveAnAutoCharge();
+						if(editingExistingAutoCharge()==false) {
+							return false;
+						}
+						if(saveAnAutoCharge()==false) {
+							return false;
+						}
 						continue;
 					}
 					if (AppConfig.getHVACAirFilterFeeChargeCode(RunnerClass.company)
 							.contains(autoChargeCode.replaceAll("[.]", ""))) {
 						HVACEdit = true;
 						editButtons.get(k).click();
-						editingExistingAutoCharge();
-						saveAnAutoCharge();
+						if(editingExistingAutoCharge()==false) {
+							return false;
+						}
+						if(saveAnAutoCharge()==false) {
+							return false;
+						}
 						continue;
 					}
 					if ((AppConfig.getResidentBenefitsPackageChargeCode(RunnerClass.company)
@@ -143,8 +151,12 @@ public class AutoCharges {
 											.contains(autoChargeCode.replaceAll("[.]", "")) && ReadingLeaseAggrements.rbpOptOutFlag == true)) {
 						RBPEdit = true;
 						editButtons.get(k).click();
-						editingExistingAutoCharge();
-						saveAnAutoCharge();
+						if(editingExistingAutoCharge()==false) {
+							return false;
+						}
+						if(saveAnAutoCharge()==false) {
+							return false;
+						}
 						continue;
 					}
 
@@ -154,8 +166,12 @@ public class AutoCharges {
 									.equals(ReadingLeaseAggrements.petRent.replaceAll("[^0-9]", "")))) {
 						petRentEdit = true;
 						editButtons.get(k).click();
-						editingExistingAutoCharge();
-						saveAnAutoCharge();
+						if(editingExistingAutoCharge()==false) {
+							return false;
+						}
+						if(saveAnAutoCharge()==false) {
+							return false;
+						}
 						continue;
 
 					}
@@ -165,8 +181,12 @@ public class AutoCharges {
 									.equals(ReadingLeaseAggrements.rubsAmount.replaceAll("[^0-9]", "")))) {
 						RUBSEdit = true;
 						editButtons.get(k).click();
-						editingExistingAutoCharge();
-						saveAnAutoCharge();
+						if(editingExistingAutoCharge()==false) {
+							return false;
+						}
+						if(saveAnAutoCharge()==false) {
+							return false;
+						}
 						continue;
 					}
 				}
