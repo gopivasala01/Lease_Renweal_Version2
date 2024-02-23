@@ -231,7 +231,7 @@ public class GetDataFromSQL {
 		        ResultSet rs = null;
 		            //Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
 		            con = DriverManager.getConnection(AppConfig.connectionUrl);
-		            String SQL = AppConfig.getpriorRentCharges;
+		            String SQL = "Select Amount from automation.LeaseReneWalsPriorRentConfiguration Where Abbreviation = '"+RunnerClass.buildingAbbreviation+"' and Flag ='1'";
 		            stmt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 		           // stmt = con.createStatement();
 		            rs = stmt.executeQuery(SQL);

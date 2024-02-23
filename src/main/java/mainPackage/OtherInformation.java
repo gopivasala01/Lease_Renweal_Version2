@@ -306,6 +306,7 @@ public class OtherInformation {
 						Thread.sleep(3000);
 					} 
 					else {
+						System.out.println("");
 						GetDataFromSQL.getpriorRentCharges();
 						RunnerClass.actions.moveToElement(RunnerClass.driver.findElement(Locators.priorMonthlyRent)).build()
 						.perform();

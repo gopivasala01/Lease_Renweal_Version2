@@ -64,6 +64,8 @@ public class RunnerClass {
 
 		GenericMethods.generateLogs();
 		GetDataFromSQL.getBuildingsList(AppConfig.pendingRenewalLeases);
+		String query = "delete from automation.LeaseReneWalsPriorRentConfiguration";
+		GetDataFromSQL.updateTable(query);
 		int j = 0;
 		while (j < 3) {
 			for (int i = 0; i < pendingRenewalLeases.length; i++) 
@@ -80,7 +82,7 @@ public class RunnerClass {
 	                    FileUtils.cleanDirectory(new File(AppConfig.downloadFilePath));
 	                } catch (Exception e) {
 	                }
-	            } 
+	            }
 
 				GenericMethods.logger.info(
  						"-------------------------------------------------------------------------------------------");

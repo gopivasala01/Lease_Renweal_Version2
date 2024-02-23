@@ -147,9 +147,7 @@ public class UpdateValues {
 			case 5: 
 				query = query+"\n Update automation.LeaseReneWalsAutoChargesConfiguration Set ChargeCode = '"+AppConfig.getResidentUtilityBillChargeCode(RunnerClass.company)+"',Amount = '"+ReadingLeaseAggrements.rubsAmount+"',StartDate='"+updated_monthlyRent_StartDate+"',EndDate='',Flag = '' where ID=7";
 			    break;
-			case 6:
-				query = query+"\nUpdate automation.LeaseReneWalsAutoChargesConfiguration Set Amount='',StartDate='',EndDate='',Flag = '' where ID=11";
-				break;
+				
 			}
 		 }
 		GetDataFromSQL.updateTable(query);
@@ -231,8 +229,9 @@ public class UpdateValues {
 	
 	public static boolean priorMonthlyRent(String PriorRent) {
 		try{
-			String query ="";
-			query = "Update automation.LeaseReneWalsAutoChargesConfiguration Set Amount = '"+PriorRent+"',Flag = 1 where ID in (11)";
+			String query =" ";
+			
+			query = "insert into automation.LeaseReneWalsPriorRentConfiguration (Abbreviation,Amount,Flag) values ('"+RunnerClass.buildingAbbreviation+"','"+PriorRent+"',1)";
 			GetDataFromSQL.updateTable(query);
 		}
 		catch(Exception e)
