@@ -52,6 +52,7 @@ public class GenericMethods {
 		try
 		{
 		WebDriverManager.chromedriver().clearDriverCache().setup();
+		WebDriverManager.chromedriver().clearResolutionCache().setup();
 		RunnerClass.downloadFilePath = AppConfig.downloadFilePath;
 		Map<String, Object> prefs = new HashMap<String, Object>();
 	    // Use File.separator as it will work on any OS
