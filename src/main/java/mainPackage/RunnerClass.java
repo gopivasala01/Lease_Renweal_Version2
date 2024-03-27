@@ -70,7 +70,7 @@ public class RunnerClass {
 		while (j < 3) {
 			for (int i = 0; i < pendingRenewalLeases.length; i++) 
 			{
-				if (AppConfig.saveButtonOnAndOff == false) 
+				/*if (AppConfig.saveButtonOnAndOff == false) 
 	            {
 	                String updateSuccessStatus = "Update [Automation].leaseRenewalAutomation Set Status ='Failed', StatusID=3,NotAutomatedFields='Save Functionality is Off',LeaseCompletionDate= getDate() where BuildingName like '%" + pendingRenewalLeases[i][1] + "%'";
 	                GetDataFromSQL.updateTable(updateSuccessStatus);
@@ -82,7 +82,7 @@ public class RunnerClass {
 	                    FileUtils.cleanDirectory(new File(AppConfig.downloadFilePath));
 	                } catch (Exception e) {
 	                }
-	            }
+	            }*/
 
 				GenericMethods.logger.info(
  						"-------------------------------------------------------------------------------------------");
