@@ -310,6 +310,41 @@ public class GenericMethods {
 	    	 //logger.info("Last Date of Month "+newDate);
 	    	return newDate;
 	    }
+	    public static String dateMinusOneDay(String date) throws Exception {
+	    	try {
+	    		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+		        LocalDate startDate = LocalDate.parse(date, formatter);
+		        LocalDate newDate = startDate.minusDays(1); // Subtract one day
+		        System.out.println("Date minus one day: " + newDate.format(formatter));
+				return newDate.format(formatter);
+	    	}
+	    	catch(Exception e) {
+	    		e.printStackTrace();
+	    		return "Error";
+	    	}
+	        
+	    }
+	    
+	    public static int getDaysInMonth(String dateStr) {
+            // Split the date string into month, day, and year
+            String[] parts = dateStr.split("/");
+            int month = Integer.parseInt(parts[0]);
+            int year = Integer.parseInt(parts[2]);
+
+            // Create a Calendar instance
+            Calendar calendar = Calendar.getInstance();
+
+            // Set the year and month in the calendar
+            calendar.set(Calendar.YEAR, year);
+            calendar.set(Calendar.MONTH, month - 1); // Calendar months are zero-based
+
+            // Get the maximum value for the day of the month
+            int daysInMonth = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
+
+            return daysInMonth;
+        }
+	    
+	    
 	    public static String monthDifference(String date1, String date2) throws Exception
 	    {
 	    	SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy", Locale.ENGLISH);

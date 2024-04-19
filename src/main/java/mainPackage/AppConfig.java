@@ -1,11 +1,12 @@
 package mainPackage;
 
+import PDFDataExtract.ReadingLeaseAggrements;
 
 public class AppConfig {
 	
 	
 
-	public static boolean saveButtonOnAndOff= true;
+	public static boolean saveButtonOnAndOff= false;
 	public static String username= "mds0418@gmail.com";
 	public static String password="KRm#V39fecMDGg#";
 	public static String URL="https://app.propertyware.com/pw/login.jsp";
@@ -15,7 +16,7 @@ public class AppConfig {
 	public static String pdfImage = "C:\\SantoshMurthyP\\Tessaract Images\\";
 	
 	public static String test ="";
-    public static String pendingRenewalLeases = "Select  Company,buildingName,OwnerName from Automation.LeaseRenewalAutomation  where Status = 'In Progress'";//where NotAutomatedFields != ',Unable to download Lease Agreement' ";//where NotAutomatedFields in ('Building Not Available',',Building Not Found') ";//where Status = 'In Progress'";
+    public static String pendingRenewalLeases = "Select Company,buildingName,OwnerName from Automation.LeaseInfo where buildingName like '%Kipuka_828%' ";//"Select  Company,buildingName,OwnerName from Automation.LeaseRenewalAutomation  where Status = 'In Progress'";//where NotAutomatedFields != ',Unable to download Lease Agreement' ";//where NotAutomatedFields in ('Building Not Available',',Building Not Found') ";//where Status = 'In Progress'";
     public static String failedLeasesQuery = "Select  Company,buildingName,OwnerName from Automation.LeaseRenewalAutomation  where NotAutomatedFields in('TimeOut Error',',TimeOut Error')";
     public static String connectionUrl = "jdbc:sqlserver://azrsrv001.database.windows.net;databaseName=HomeRiverDB;user=service_sql02;password=xzqcoK7T;encrypt=true;trustServerCertificate=true;";
     public static String downloadFilePath = "C:\\Users\\gopi\\Documents\\BaseRent Update Files\\New folder";
@@ -1037,6 +1038,103 @@ public class AppConfig {
 			   }
 
 			return "";
+		   }
+		   
+		   public static String getProrateRentChargeCode(String company)
+		   {
+			   switch(company)
+			   {
+			   case "Austin":
+				   return "40010 - Rent Income";
+			   case "California":
+				   return "40010 - Rent Income";
+			   case "California PFW":
+				   return "40010 - Rent Income";
+			   case "North Carolina":
+				   return "40010 - Rent Income";
+			   case "Chattanooga":
+				   return "40010 - Rent Income";
+			   case "Chicago PFW":
+				   return "40010 - Rent Income";
+			   case "Colorado Springs":
+				   return "40010 - Rent Income";
+			   case "Kansas City":
+				   return "40010 - Rent Income";
+			   case "Houston":
+				   return "40010 - Rent Income";
+			   case "Maine":
+				   return "40010 - Rent Income";
+			   case "Savannah":
+				   return "40010 - Rent Income";
+			   case "Alabama":
+				   return "40010 - Rent Income";
+			   case "Arkansas":
+				   return "40010 - Rent Income";
+			   case "Dallas/Fort Worth":
+				   return "40010 - Rent Income";
+			   case "Indiana":
+				   return "40010 - Rent Income";
+			   case "Little Rock":
+				   return "40010 - Rent Income";
+			   case "San Antonio":
+				   return "40010 - Rent Income";
+			   case "Tulsa":
+				   return "40010 - Rent Income";
+			   case "Georgia":
+				   return "40010 - Rent Income";
+			   case "OKC":
+				   return "40010 - Rent Income";
+			   case "South Carolina":
+				   return "40010 - Rent Income";
+			   case "Florida":
+				   return "40010 - Rent Income";
+			   case "Tennessee":
+				   return "40010 - Rent Income";
+			   case "New Mexico":
+				   return "40010 - Rent Income";
+			   case "Ohio":
+				   return "40010 - Rent Income";
+			   case "Pennsylvania":
+				   return "40010 - Rent Income";
+			   case "Lake Havasu":
+				   return "40010 - Rent Income";
+			   case "Columbia - St Louis":
+				   return "40010 - Rent Income";
+			   case "Maryland":
+				   return "40010 - Rent Income";
+			   case "Virginia":
+				   return "40010 - Rent Income";
+			   case "Boise":
+				   return "40010 - Rent Income";
+			   case "Idaho Falls":
+				   return "40010 - Rent Income";
+			   case "Utah":
+				   return "40010 - Rent Income";
+			   case "Spokane":
+				   return "40010 - Rent Income";
+			   case "Washington DC":
+				   return "40010 - Rent Income";
+			   case "Hawaii":
+				   if(ReadingLeaseAggrements.monthlyTaxAmountFlag==false)
+					   return "40010 - Rent Income";
+					   else return "40061 - Rent - Kona";
+			   case "Arizona":
+				   if(RunnerClass.arizonaCodeAvailable==false&&RunnerClass.arizonaCityFromBuildingAddress.contains("Phoenix"))
+					   return "40018 - Rent-PHX";
+				   else if(RunnerClass.arizonaCodeAvailable==false)
+				   return "40010 - Rent Income";
+				   else return RunnerClass.arizonaRentCode;
+			   case "New Jersey":
+				   return "40010 - Rent Income";
+			   case "Montana":
+				   return "40010 - Rent Income";
+			   case "Delaware":
+				   return "40010 - Rent Income";
+			   case "Chicago":
+				   return "40010 - Rent Income";
+				   
+			   }
+			   return "";
 		   }
      
 

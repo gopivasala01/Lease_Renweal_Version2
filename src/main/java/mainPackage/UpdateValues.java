@@ -7,6 +7,7 @@ import java.util.List;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 
+import ExtractData.DatabaseClass;
 import GenericLibrary.GenericMethods;
 import PDFDataExtract.ReadingLeaseAggrements;
 
@@ -16,7 +17,12 @@ public class UpdateValues {
 	public static String lastDayOfPreviousMonthUsingStartDate;
 	public static String firstFullMonth;
 	public static String secondFullMonth;
-	
+	public static String oldLeaseStartDate_ProrateRent;
+	public static String oldLeaseEndDate_ProrateRent;
+	public static String newLeaseEndDate_ProrateRent;
+	public static String priorMonthlyRent;
+	public static String prorateResidentBenefitPackage;
+	public static String prorateMonthlyRent;
 	
 	public static String updated_monthlyRent_StartDate ;
 	public static String updated_ResidentBenefitPackage_StartDate ;
@@ -36,6 +42,15 @@ public class UpdateValues {
 		lastDayOfPreviousMonthUsingStartDate="";
 		firstFullMonth="";
 		secondFullMonth="";
+		oldLeaseStartDate_ProrateRent = "";
+		oldLeaseEndDate_ProrateRent="";
+		newLeaseEndDate_ProrateRent="";
+		prorateResidentBenefitPackage="";
+		prorateMonthlyRent="";
+		updated_monthlyRent_StartDate ="";
+		updated_ResidentBenefitPackage_StartDate ="";
+		updated_petRent_StartDate="" ;
+		priorMonthlyRent ="";
 		
 		try {
 			startDate = GenericMethods.convertDate(ReadingLeaseAggrements.commencementDate);
@@ -65,8 +80,25 @@ public class UpdateValues {
 	        {
 	        	RunnerClass.failedReason = RunnerClass.failedReason + "," + "Issue in Comparing dates- Whether End Date is before Start Date";
 		        
-	        }		
-			
+	        }
+			try {
+				RunnerClass.driver.navigate().refresh();
+				DatabaseClass.intermittentPopUp(RunnerClass.driver);
+				RunnerClass.driver.findElement(Locators.summaryEditButton).click();
+				Thread.sleep(2000);
+				RunnerClass.js.executeScript("window.scrollBy(0,document.body.scrollHeight)");
+				RunnerClass.actions.moveToElement(RunnerClass.driver.findElement(Locators.priorMonthlyRent)).build().perform();
+				String priorAmount = RunnerClass.driver.findElement(Locators.priorMonthlyRent).getAttribute("value");
+				priorMonthlyRent = priorAmount.replace("$", "").replace(",", "");
+				System.out.println("Prior Montly Rent = "+priorMonthlyRent);
+				RunnerClass.actions.moveToElement(RunnerClass.driver.findElement(Locators.cancelLease)).click(RunnerClass.driver.findElement(Locators.cancelLease)).build().perform();
+			}
+			catch(Exception e) {
+				priorMonthlyRent = "Error";
+				GenericMethods.logger.error("Issue in getting prior monthly rent");
+			     RunnerClass.failedReason = RunnerClass.failedReason + "," + "Issue in getting prior monthly rent";
+			     return false;
+			}
 		} catch (Exception e) {
 			GenericMethods.logger.error("Issue in getting or Converting dates");
 		     RunnerClass.failedReason = RunnerClass.failedReason + "," + "Issue in getting or Converting dates";
@@ -113,8 +145,26 @@ public class UpdateValues {
 		updated_monthlyRent_StartDate = firstFullMonth;
 		updated_ResidentBenefitPackage_StartDate = firstFullMonth;
 		updated_petRent_StartDate = firstFullMonth;
+		try {
+			oldLeaseStartDate_ProrateRent = GenericMethods.firstDayOfMonth(UpdateValues.startDate, 0);
+			oldLeaseEndDate_ProrateRent = GenericMethods.dateMinusOneDay(UpdateValues.startDate);
+	    	newLeaseEndDate_ProrateRent = GenericMethods.lastDateOfTheMonth(UpdateValues.startDate);
+	    	
+			if(!ReadingLeaseAggrements.rbpAmount.equalsIgnoreCase("Error")) {
+				prorateResidentBenefitPackage=ProrateAmountCalculator.prorateAmountOld(ReadingLeaseAggrements.rbpAmount);
+			}
+			if(!priorMonthlyRent.equalsIgnoreCase("") ||!priorMonthlyRent.isEmpty() ||!priorMonthlyRent.equalsIgnoreCase("Error")) {
+				prorateMonthlyRent = ProrateAmountCalculator.prorateAmountOld(priorMonthlyRent);  
+			}
+			
+			
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+			
 	    }
-	    
+	
 	    
 	    
 	}
@@ -128,7 +178,7 @@ public class UpdateValues {
 		
 					
 		String query ="";
-		for(int i=1;i<=5;i++)
+		for(int i=1;i<=8;i++)
 		{
 			switch(i)
 			{
@@ -147,7 +197,15 @@ public class UpdateValues {
 			case 5: 
 				query = query+"\n Update automation.LeaseReneWalsAutoChargesConfiguration Set ChargeCode = '"+AppConfig.getResidentUtilityBillChargeCode(RunnerClass.company)+"',Amount = '"+ReadingLeaseAggrements.rubsAmount+"',StartDate='"+updated_monthlyRent_StartDate+"',EndDate='',Flag = '' where ID=7";
 			    break;
-				
+			case 6: 
+				query = query+"\n Update automation.LeaseReneWalsAutoChargesConfiguration Set ChargeCode = '"+AppConfig.getResidentBenefitsPackageChargeCode(RunnerClass.company)+"',Amount = '"+prorateResidentBenefitPackage+"',StartDate='"+oldLeaseStartDate_ProrateRent+"',EndDate='"+oldLeaseEndDate_ProrateRent+"',Flag = '' where ID=14";
+			    break;
+			case 7: 
+				query = query+"\n Update automation.LeaseReneWalsAutoChargesConfiguration Set ChargeCode = '"+AppConfig.getProrateRentChargeCode(RunnerClass.company)+"',Amount = '"+ReadingLeaseAggrements.proratedRent+"',StartDate='"+startDate+"',EndDate='"+newLeaseEndDate_ProrateRent+"',Flag = '' where ID=15";
+			    break;
+			case 8: 
+				query = query+"\n Update automation.LeaseReneWalsAutoChargesConfiguration Set ChargeCode = '"+AppConfig.getMonthlyRentChargeCode(RunnerClass.company)+"',Amount = '"+prorateMonthlyRent+"',StartDate='"+oldLeaseStartDate_ProrateRent+"',EndDate='"+oldLeaseEndDate_ProrateRent+"',Flag = '' where ID=16";
+			    break;
 			}
 		 }
 		GetDataFromSQL.updateTable(query);
@@ -190,7 +248,15 @@ public class UpdateValues {
 				query1 = "update automation.LeaseReneWalsAutoChargesConfiguration Set Flag = 1 where ID in (7)";
 				GetDataFromSQL.updateTable(query1);
 			}
-			
+			if(!ReadingLeaseAggrements.proratedRent.equalsIgnoreCase("Error")|| !ReadingLeaseAggrements.rubsAmount.equalsIgnoreCase("n/a")) {
+				if(ReadingLeaseAggrements.rbpFlag==true) {
+					query1 = "update automation.LeaseReneWalsAutoChargesConfiguration Set Flag = 1 where ID in (14,15,16)";
+				}
+				else {
+					query1 = "update automation.LeaseReneWalsAutoChargesConfiguration Set Flag = 1 where ID in (15,16)";
+				}
+				GetDataFromSQL.updateTable(query1);
+			}
 			
 			try
 			{

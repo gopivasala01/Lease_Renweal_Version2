@@ -408,7 +408,7 @@ public class AutoCharges {
 
 			// Charge Code
 			Select autoChargesDropdown = new Select(RunnerClass.driver.findElement(Locators.accountDropdown));
-			autoChargesDropdown.selectByVisibleText(accountCode); //
+			autoChargesDropdown.selectByVisibleText(accountCode);
 
 			// Start Date
 			RunnerClass.driver.findElement(Locators.autoCharge_StartDate).clear();
