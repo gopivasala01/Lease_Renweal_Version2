@@ -6,7 +6,7 @@ public class AppConfig {
 	
 	
 
-	public static boolean saveButtonOnAndOff= false;
+	public static boolean saveButtonOnAndOff= true;
 	public static String username= "mds0418@gmail.com";
 	public static String password="KRm#V39fecMDGg#";
 	public static String URL="https://app.propertyware.com/pw/login.jsp";
@@ -16,7 +16,7 @@ public class AppConfig {
 	public static String pdfImage = "C:\\SantoshMurthyP\\Tessaract Images\\";
 	
 	public static String test ="";
-    public static String pendingRenewalLeases = "Select Company,buildingName,OwnerName from Automation.LeaseInfo where buildingName like '%Kipuka_828%' ";//"Select  Company,buildingName,OwnerName from Automation.LeaseRenewalAutomation  where Status = 'In Progress'";//where NotAutomatedFields != ',Unable to download Lease Agreement' ";//where NotAutomatedFields in ('Building Not Available',',Building Not Found') ";//where Status = 'In Progress'";
+    public static String pendingRenewalLeases = "Select  Company,buildingName,OwnerName from Automation.LeaseRenewalAutomation  where Status = 'In Progress'";//where NotAutomatedFields != ',Unable to download Lease Agreement' ";//where NotAutomatedFields in ('Building Not Available',',Building Not Found') ";//where Status = 'In Progress'";
     public static String failedLeasesQuery = "Select  Company,buildingName,OwnerName from Automation.LeaseRenewalAutomation  where NotAutomatedFields in('TimeOut Error',',TimeOut Error')";
     public static String connectionUrl = "jdbc:sqlserver://azrsrv001.database.windows.net;databaseName=HomeRiverDB;user=service_sql02;password=xzqcoK7T;encrypt=true;trustServerCertificate=true;";
     public static String downloadFilePath = "C:\\Users\\gopi\\Documents\\BaseRent Update Files\\New folder";
