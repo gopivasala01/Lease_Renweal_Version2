@@ -126,6 +126,7 @@ public class Locators {
     public static By renewalPoupCloseButton = By.xpath("//*[@id='viewStickyNoteForm']/div/div[1]/input[2]");
    
    
-    
+    //Renewal Status
+    public static By renewalStatus = By.xpath("//th[text()='Renewal Status']//following::td[1]/select");
 
 }

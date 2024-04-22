@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.Select;
 
 import ExtractData.DatabaseClass;
 import GenericLibrary.GenericMethods;
@@ -23,6 +24,7 @@ public class UpdateValues {
 	public static String priorMonthlyRent;
 	public static String prorateResidentBenefitPackage;
 	public static String prorateMonthlyRent;
+	public static String renewalStatusValue;
 	
 	public static String updated_monthlyRent_StartDate ;
 	public static String updated_ResidentBenefitPackage_StartDate ;
@@ -51,6 +53,7 @@ public class UpdateValues {
 		updated_ResidentBenefitPackage_StartDate ="";
 		updated_petRent_StartDate="" ;
 		priorMonthlyRent ="";
+		renewalStatusValue="";
 		
 		try {
 			startDate = GenericMethods.convertDate(ReadingLeaseAggrements.commencementDate);
@@ -87,6 +90,20 @@ public class UpdateValues {
 				RunnerClass.driver.findElement(Locators.summaryEditButton).click();
 				Thread.sleep(2000);
 				RunnerClass.js.executeScript("window.scrollBy(0,document.body.scrollHeight)");
+				try {
+					RunnerClass.actions.moveToElement(RunnerClass.driver.findElement(Locators.renewalStatus)).build().perform();
+					Select select = new Select(RunnerClass.driver.findElement(Locators.renewalStatus));
+				    // get selected option with getFirstSelectedOption() with its text
+					String seletedOption =select.getFirstSelectedOption().getText();
+					renewalStatusValue=seletedOption;
+					System.out.println("Renewal Status = "+renewalStatusValue);
+				}
+				catch(Exception e) {
+					renewalStatusValue = "Error";
+					GenericMethods.logger.error("Issue in getting Renewal Status");
+				     RunnerClass.failedReason = RunnerClass.failedReason + "," + "Issue in getting Renewal Status";
+				     
+				}
 				RunnerClass.actions.moveToElement(RunnerClass.driver.findElement(Locators.priorMonthlyRent)).build().perform();
 				String priorAmount = RunnerClass.driver.findElement(Locators.priorMonthlyRent).getAttribute("value");
 				priorMonthlyRent = priorAmount.replace("$", "").replace(",", "");
@@ -146,6 +163,7 @@ public class UpdateValues {
 		updated_ResidentBenefitPackage_StartDate = firstFullMonth;
 		updated_petRent_StartDate = firstFullMonth;
 		try {
+			
 			oldLeaseStartDate_ProrateRent = GenericMethods.firstDayOfMonth(UpdateValues.startDate, 0);
 			oldLeaseEndDate_ProrateRent = GenericMethods.dateMinusOneDay(UpdateValues.startDate);
 	    	newLeaseEndDate_ProrateRent = GenericMethods.lastDateOfTheMonth(UpdateValues.startDate);
@@ -248,16 +266,19 @@ public class UpdateValues {
 				query1 = "update automation.LeaseReneWalsAutoChargesConfiguration Set Flag = 1 where ID in (7)";
 				GetDataFromSQL.updateTable(query1);
 			}
-			if(!ReadingLeaseAggrements.proratedRent.equalsIgnoreCase("Error")|| !ReadingLeaseAggrements.rubsAmount.equalsIgnoreCase("n/a")) {
-				if(ReadingLeaseAggrements.rbpFlag==true) {
-					query1 = "update automation.LeaseReneWalsAutoChargesConfiguration Set Flag = 1 where ID in (14,15,16)";
-				}
-				else {
-					query1 = "update automation.LeaseReneWalsAutoChargesConfiguration Set Flag = 1 where ID in (15,16)";
-				}
-				GetDataFromSQL.updateTable(query1);
-			}
 			
+			if(renewalStatusValue.contains("Charge Renewal Fee - Annual")) {
+				if(!ReadingLeaseAggrements.proratedRent.equalsIgnoreCase("Error")|| !ReadingLeaseAggrements.rubsAmount.equalsIgnoreCase("n/a")) {
+					if(ReadingLeaseAggrements.rbpFlag==true) {
+						query1 = "update automation.LeaseReneWalsAutoChargesConfiguration Set Flag = 1 where ID in (14,15,16)";
+					}
+					else {
+						query1 = "update automation.LeaseReneWalsAutoChargesConfiguration Set Flag = 1 where ID in (15,16)";
+					}
+					GetDataFromSQL.updateTable(query1);
+				}
+			}
+		
 			try
 			{
 			String query2 =null;

@@ -358,7 +358,7 @@ public class AutoCharges {
 					}
 				} 
 				if (availabilityCheck == false) {
-					if (amount.equalsIgnoreCase("Error") || amount.equalsIgnoreCase("0") || amount.equalsIgnoreCase("0.00") || amount.equalsIgnoreCase("n/a")) {
+					if (amount.equalsIgnoreCase("Error") || amount.equalsIgnoreCase("0") || amount.equalsIgnoreCase("0.00") || amount.equalsIgnoreCase("n/a") || amount.equalsIgnoreCase("")) {
 						GenericMethods.logger.error(" Auto Charge Amount is Error or 0 for - " + description);
 						//RunnerClass.failedReason = RunnerClass.failedReason + "," + " issue in adding Auto Charge - "+ description;
 						break;
