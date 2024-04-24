@@ -430,10 +430,10 @@ public class OtherInformation {
 
 			// Related Activities
 			if(RelatedActivities()== true) {
-				RunnerClass.failedReason = RunnerClass.failedReason + "," + "Related Activities Failed";
 				return true;
 			}
 			else {
+				RunnerClass.failedReason = RunnerClass.failedReason + "," + "Related Activities Failed";
 				return false;
 			}
 		}

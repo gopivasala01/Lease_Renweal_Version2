@@ -29,6 +29,7 @@ public class AutoCharges {
 	public static boolean RBPEdit = false;
 	public static boolean petRentEdit = false;
 	public static boolean RUBSEdit = false;
+	public static boolean commonAreaServiceFlag = false;
 
 	public static boolean clearExistingAutoCharges() throws Exception {
 		lastDayOfTheStartDate3 = "";
@@ -38,6 +39,7 @@ public class AutoCharges {
 		RBPEdit = false;
 		petRentEdit = false;
 		RUBSEdit = false;
+		commonAreaServiceFlag = false;
 
 		try {
 			RunnerClass.driver.navigate().refresh();
@@ -50,6 +52,15 @@ public class AutoCharges {
 			RunnerClass.driver.findElement(Locators.summaryEditButton).click();
 
 			existingAutoCharges = RunnerClass.driver.findElements(Locators.autoCharge_List);
+			endDates = RunnerClass.driver.findElements(Locators.autoCharge_List_EndDates);
+			for (int i = 0; i < existingAutoCharges.size(); i++) {
+			    String autoChargeText = existingAutoCharges.get(i).getText().replaceAll("[.]", "");
+			    String endDateText = endDates.get(i).getText();
+			    if (autoChargeText.contains("49010 - Common Area") && endDateText.trim().isEmpty()) {
+			        commonAreaServiceFlag = true;
+			        break; // No need to continue once the condition is met
+			    }
+			}
 
 			for (int k = 0; k < existingAutoCharges.size(); k++) {
 				existingAutoCharges = RunnerClass.driver.findElements(Locators.autoCharge_List);
@@ -175,20 +186,31 @@ public class AutoCharges {
 						continue;
 
 					}
-					if (AppConfig.getResidentUtilityBillChargeCode(RunnerClass.company)
-							.contains(autoChargeCode.replaceAll("[.]", ""))
-							&& (!autoChargeAmount.replaceAll("[^0-9]", "")
-									.equals(ReadingLeaseAggrements.rubsAmount.replaceAll("[^0-9]", "")))) {
-						RUBSEdit = true;
-						editButtons.get(k).click();
-						if(editingExistingAutoCharge()==false) {
-							return false;
+					
+						if (AppConfig.getResidentUtilityBillChargeCode(RunnerClass.company)
+								.contains(autoChargeCode.replaceAll("[.]", ""))
+								&& (!autoChargeAmount.replaceAll("[^0-9]", "")
+										.equals(ReadingLeaseAggrements.rubsAmount.replaceAll("[^0-9]", "")))) {
+							if(commonAreaServiceFlag == true) {
+								GenericMethods.logger.error("Something went wrong in adding RUBS charges");
+								RunnerClass.failedReason = RunnerClass.failedReason + "," + "Something went wrong in adding RUBS charges";
+								return false;
+							}
+							else {
+								RUBSEdit = true;
+								editButtons.get(k).click();
+								if(editingExistingAutoCharge()==false) {
+									return false;
+								}
+								if(saveAnAutoCharge()==false) {
+									return false;
+								}
+								continue;
+							}
+						
 						}
-						if(saveAnAutoCharge()==false) {
-							return false;
-						}
-						continue;
-					}
+					
+					
 				}
 
 			}
@@ -341,6 +363,7 @@ public class AutoCharges {
 					String autoChargeAmount = existingAutoChargeAmounts.get(k).getText();
 					String autoChargeStartDate = startDates.get(k).getText();
 					String autoChargeEndDate = endDates.get(k).getText();
+					
 					if (chargeCode.contains(autoChargeCodes.replaceAll(".", ""))
 							&& autoChargeAmount.substring(1).replaceAll("[^0-9]", "")
 									.equals(amount.replaceAll("[^0-9]", ""))
@@ -361,8 +384,12 @@ public class AutoCharges {
 					if (amount.equalsIgnoreCase("Error") || amount.equalsIgnoreCase("0") || amount.equalsIgnoreCase("0.00") || amount.equalsIgnoreCase("n/a") || amount.equalsIgnoreCase("")) {
 						GenericMethods.logger.error(" Auto Charge Amount is Error or 0 for - " + description);
 						//RunnerClass.failedReason = RunnerClass.failedReason + "," + " issue in adding Auto Charge - "+ description;
-						break;
-					} else
+						continue;
+					} 
+					else if(chargeCode.contains(("42030 - Utility Reimbursement").replaceAll(".", "")) && commonAreaServiceFlag == true) {
+						continue;
+					}
+					else
 						if(addingAnAutoCharge(chargeCode, amount, startDate, endDate, description)==false) {
 							return false;
 						}
