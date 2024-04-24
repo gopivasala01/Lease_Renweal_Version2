@@ -47,7 +47,7 @@ public class OtherInformation {
 				enrolledInRBPForPMUseNo = AppConfig.getEnrolledINRBPForPMUseNo(RunnerClass.company);
 				RBPenrollmentCompleteForSNUseOnly = AppConfig.getRBPenrollmentCompleteForSNUseOnly(RunnerClass.company);
 				RBPenrollmentCompleteForSNUseOnlyNo = AppConfig.getRBPenrollmentCompleteForSNUseOnlyNo(RunnerClass.company);
-				renewalStatus = "RW-4a%3A+CHARGE+RENEWAL+FEE+-+ANNUAL";
+				renewalStatus = "RW-4a: CHARGE RENEWAL FEE - ANNUAL";
 				reneWalFollowupNotes = "Full Lease Executed From " + ReadingLeaseAggrements.commencementDate + " - " + ReadingLeaseAggrements.expirationDate
 						+ " - HRG Automation - "; // Need to calculate Month's difference between StartDate and EndDate
 				renewalExecutionDate = ReadingLeaseAggrements.renewalExecutionDate;
@@ -152,7 +152,7 @@ public class OtherInformation {
 					}
 					Thread.sleep(2000);
 				}
-
+				Thread.sleep(2000);
 				if (ReadingLeaseAggrements.rbpFlag == true) { 
 					try {
 						RunnerClass.actions
@@ -201,7 +201,7 @@ public class OtherInformation {
 						GenericMethods.logger.error("Issue - Other information - RBP Enrollment Complete For SN Use Only (No)");
 					}
 				}
-				Thread.sleep(2000);
+				Thread.sleep(3000);
 
 				// Renewal Status
 				try {
@@ -209,21 +209,32 @@ public class OtherInformation {
 							.build().perform();
 					Select renewalStatusDropdown = new Select(
 							RunnerClass.driver.findElement(Locators.renewalStatusDropdown));
-					renewalStatusDropdown.selectByValue(renewalStatus);
-				}
-				catch (TimeoutException t) {
-					 WebDriverManager.chromedriver().clearDriverCache().setup();
-					 RunnerClass.failedReason = RunnerClass.failedReason + "," + "TimeOut Error";
-					return false;
-					
+					renewalStatusDropdown.selectByVisibleText(renewalStatus);
 				}
 				catch (Exception e) {
-					RunnerClass.statusID = 1;
-					e.printStackTrace();
-					RunnerClass.failedReason = RunnerClass.failedReason + "," + "Other information - Renewal Status";
-					GenericMethods.logger.error("Issue - Other information - Renewal Status");
+					try {
+						RunnerClass.actions.moveToElement(RunnerClass.driver.findElement(Locators.renewalStatusDropdown))
+						.build().perform();
+						Select renewalStatusDropdown = new Select(
+								RunnerClass.driver.findElement(Locators.renewalStatusDropdown));
+						renewalStatusDropdown.selectByValue("RW-4a%3A+CHARGE+RENEWAL+FEE+-+ANNUAL");
+					}
+					catch (TimeoutException t) {
+						 WebDriverManager.chromedriver().clearDriverCache().setup();
+						 RunnerClass.failedReason = RunnerClass.failedReason + "," + "TimeOut Error";
+						return false;
+						
+					}
+					catch (Exception e1) {
+						RunnerClass.statusID = 1;
+						e1.printStackTrace();
+						RunnerClass.failedReason = RunnerClass.failedReason + "," + "Other information - Renewal Status";
+						GenericMethods.logger.error("Issue - Other information - Renewal Status");
+						
+					}
+					
 				}
-
+				Thread.sleep(1000);
 				// Renewal Follow - up Notes
 				try {
 					RunnerClass.actions.moveToElement(RunnerClass.driver.findElement(Locators.renewalFollowUpNotes))
