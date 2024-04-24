@@ -85,8 +85,7 @@ public class RunnerClass {
 	                }
 	            }
 
-				GenericMethods.logger.info(
- 						"-------------------------------------------------------------------------------------------");
+				GenericMethods.logger.info("-------------------------------------------------------------------------------------------");
 				GenericMethods.logger.info(" Record -- " + (i + 1));
 				company = pendingRenewalLeases[i][0];
 				buildingAbbreviation = pendingRenewalLeases[i][1];

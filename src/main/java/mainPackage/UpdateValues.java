@@ -84,7 +84,7 @@ public class UpdateValues {
 	        	RunnerClass.failedReason = RunnerClass.failedReason + "," + "Issue in Comparing dates- Whether End Date is before Start Date";
 		        
 	        }
-			try {
+			/*try {
 				RunnerClass.driver.navigate().refresh();
 				DatabaseClass.intermittentPopUp(RunnerClass.driver);
 				RunnerClass.driver.findElement(Locators.summaryEditButton).click();
@@ -115,7 +115,7 @@ public class UpdateValues {
 				GenericMethods.logger.error("Issue in getting prior monthly rent");
 			     RunnerClass.failedReason = RunnerClass.failedReason + "," + "Issue in getting prior monthly rent";
 			     return false;
-			}
+			} */
 		} catch (Exception e) {
 			GenericMethods.logger.error("Issue in getting or Converting dates");
 		     RunnerClass.failedReason = RunnerClass.failedReason + "," + "Issue in getting or Converting dates";
@@ -162,7 +162,7 @@ public class UpdateValues {
 		updated_monthlyRent_StartDate = firstFullMonth;
 		updated_ResidentBenefitPackage_StartDate = firstFullMonth;
 		updated_petRent_StartDate = firstFullMonth;
-		try {
+		/*try {
 			
 			oldLeaseStartDate_ProrateRent = GenericMethods.firstDayOfMonth(UpdateValues.startDate, 0);
 			oldLeaseEndDate_ProrateRent = GenericMethods.dateMinusOneDay(UpdateValues.startDate);
@@ -179,7 +179,7 @@ public class UpdateValues {
 		}
 		catch(Exception e) {
 			e.printStackTrace();
-		}
+		}*/
 			
 	    }
 	
@@ -267,7 +267,7 @@ public class UpdateValues {
 				GetDataFromSQL.updateTable(query1);
 			}
 			
-			if(renewalStatusValue.contains("Charge Renewal Fee - Annual")) {
+		/*	if(renewalStatusValue.contains("Charge Renewal Fee - Annual")) {
 				if(!ReadingLeaseAggrements.proratedRent.equalsIgnoreCase("Error")|| !ReadingLeaseAggrements.rubsAmount.equalsIgnoreCase("n/a")) {
 					if(ReadingLeaseAggrements.rbpFlag==true) {
 						query1 = "update automation.LeaseReneWalsAutoChargesConfiguration Set Flag = 1 where ID in (14,15,16)";
@@ -277,7 +277,7 @@ public class UpdateValues {
 					}
 					GetDataFromSQL.updateTable(query1);
 				}
-			}
+			} */
 		
 			try
 			{
