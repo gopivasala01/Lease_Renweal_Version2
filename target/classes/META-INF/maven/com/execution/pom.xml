@@ -8,7 +8,7 @@
 		<dependency>
 			<groupId>io.github.bonigarcia</groupId>
 			<artifactId>webdrivermanager</artifactId>
-			<version>5.7.0</version>
+			<version>5.5.3</version>
 		</dependency>
 		<dependency>
 			<groupId>org.seleniumhq.webdriver</groupId>
@@ -19,7 +19,7 @@
 		<dependency>
 			<groupId>org.seleniumhq.selenium</groupId>
 			<artifactId>selenium-java</artifactId>
-			<version>4.18.1</version>
+			<version>4.4.0</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.poi</groupId>
@@ -66,13 +66,8 @@
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-install-plugin</artifactId>
-				<version>3.0.0-M1</version> <!-- Use the latest version available -->
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
-				<version>3.0.0-M1</version>
+				<version>3.0.0-M5</version>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
